@@ -1,0 +1,3556 @@
+{
+ "variant": "fully merged",
+ "operator": "merge",
+ "method": "domain, flat",
+ "construction": {
+  "kind": "ladder",
+  "arg": 0
+ },
+ "scope": "per_domain",
+ "domains": {
+  "car_cabin": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 18 operations: set_window, set_sunroof, set_climate, set_fan_speed, set_vent_direction, set_recirculation, set_light, set_ambient_light, adjust_seat, set_seat_position, set_massage, set_steering_heat, set_door_lock, fold_mirror, set_wiper, set_defrost, set_drive_mode, set_charge_limit. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_window",
+         "set_sunroof",
+         "set_climate",
+         "set_fan_speed",
+         "set_vent_direction",
+         "set_recirculation",
+         "set_light",
+         "set_ambient_light",
+         "adjust_seat",
+         "set_seat_position",
+         "set_massage",
+         "set_steering_heat",
+         "set_door_lock",
+         "fold_mirror",
+         "set_wiper",
+         "set_defrost",
+         "set_drive_mode",
+         "set_charge_limit"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_window::position": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "[set_window] Which window."
+       },
+       "set_window::state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent"
+        ],
+        "description": "[set_window] Target window state."
+       },
+       "set_window::speed": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "express"
+        ],
+        "description": "[set_window] Movement speed."
+       },
+       "set_sunroof::state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent",
+         "tilt"
+        ],
+        "description": "[set_sunroof] Sunroof action."
+       },
+       "set_sunroof::extent": {
+        "type": "integer",
+        "description": "[set_sunroof] Open extent percent."
+       },
+       "set_climate::zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "[set_climate] Cabin zone."
+       },
+       "set_climate::mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "off"
+        ],
+        "description": "[set_climate] HVAC mode."
+       },
+       "set_climate::temperature": {
+        "type": "integer",
+        "description": "[set_climate] Target temperature in Fahrenheit."
+       },
+       "set_fan_speed::zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "[set_fan_speed] Cabin zone."
+       },
+       "set_fan_speed::speed": {
+        "type": "integer",
+        "description": "[set_fan_speed] Fan speed 0-7."
+       },
+       "set_vent_direction::zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "[set_vent_direction] Cabin zone."
+       },
+       "set_vent_direction::direction": {
+        "type": "string",
+        "enum": [
+         "face",
+         "feet",
+         "windshield",
+         "face_and_feet"
+        ],
+        "description": "[set_vent_direction] Airflow direction."
+       },
+       "set_recirculation::mode": {
+        "type": "string",
+        "enum": [
+         "fresh_air",
+         "recirculate",
+         "auto"
+        ],
+        "description": "[set_recirculation] Air intake."
+       },
+       "set_recirculation::auto_defog": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_recirculation] Auto-defog."
+       },
+       "set_light::location": {
+        "type": "string",
+        "enum": [
+         "dome",
+         "footwell",
+         "glovebox",
+         "trunk",
+         "ambient"
+        ],
+        "description": "[set_light] Light location."
+       },
+       "set_light::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_light] On or off."
+       },
+       "set_ambient_light::zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "all"
+        ],
+        "description": "[set_ambient_light] Ambient zone."
+       },
+       "set_ambient_light::color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ],
+        "description": "[set_ambient_light] Ambient color."
+       },
+       "set_ambient_light::brightness": {
+        "type": "integer",
+        "description": "[set_ambient_light] Brightness percent."
+       },
+       "adjust_seat::seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "[adjust_seat] Which seat."
+       },
+       "adjust_seat::function": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "ventilation",
+         "recline"
+        ],
+        "description": "[adjust_seat] What to adjust."
+       },
+       "adjust_seat::level": {
+        "type": "integer",
+        "description": "[adjust_seat] Intensity level 0-3."
+       },
+       "set_seat_position::seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "[set_seat_position] Which seat."
+       },
+       "set_seat_position::axis": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "back",
+         "up",
+         "down",
+         "recline"
+        ],
+        "description": "[set_seat_position] Movement axis."
+       },
+       "set_seat_position::amount": {
+        "type": "integer",
+        "description": "[set_seat_position] Steps to move."
+       },
+       "set_massage::seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger"
+        ],
+        "description": "[set_massage] Which seat."
+       },
+       "set_massage::program": {
+        "type": "string",
+        "enum": [
+         "wave",
+         "pulse",
+         "stretch",
+         "off"
+        ],
+        "description": "[set_massage] Massage program."
+       },
+       "set_massage::intensity": {
+        "type": "integer",
+        "description": "[set_massage] Intensity 1-5."
+       },
+       "set_steering_heat::level": {
+        "type": "integer",
+        "description": "[set_steering_heat] Heat level 0-3."
+       },
+       "set_steering_heat::auto": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_steering_heat] Auto with climate."
+       },
+       "set_door_lock::door": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear_left",
+         "rear_right",
+         "all"
+        ],
+        "description": "[set_door_lock] Which door."
+       },
+       "set_door_lock::state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ],
+        "description": "[set_door_lock] Lock state."
+       },
+       "fold_mirror::side": {
+        "type": "string",
+        "enum": [
+         "left",
+         "right",
+         "both"
+        ],
+        "description": "[fold_mirror] Mirror side."
+       },
+       "fold_mirror::state": {
+        "type": "string",
+        "enum": [
+         "folded",
+         "extended"
+        ],
+        "description": "[fold_mirror] Folded or extended."
+       },
+       "set_wiper::mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "intermittent",
+         "low",
+         "high",
+         "mist"
+        ],
+        "description": "[set_wiper] Wiper mode."
+       },
+       "set_wiper::sensitivity": {
+        "type": "integer",
+        "description": "[set_wiper] Rain sensor sensitivity 1-5."
+       },
+       "set_defrost::zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "both"
+        ],
+        "description": "[set_defrost] Defroster zone."
+       },
+       "set_defrost::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_defrost] On or off."
+       },
+       "set_defrost::minutes": {
+        "type": "integer",
+        "description": "[set_defrost] Run time in minutes."
+       },
+       "set_drive_mode::mode": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "sport",
+         "eco",
+         "snow",
+         "off_road"
+        ],
+        "description": "[set_drive_mode] Drive mode."
+       },
+       "set_drive_mode::regen": {
+        "type": "string",
+        "enum": [
+         "low",
+         "standard",
+         "high"
+        ],
+        "description": "[set_drive_mode] Regenerative braking."
+       },
+       "set_charge_limit::percent": {
+        "type": "integer",
+        "description": "[set_charge_limit] Charge limit percent."
+       },
+       "set_charge_limit::schedule": {
+        "type": "string",
+        "enum": [
+         "now",
+         "off_peak",
+         "scheduled"
+        ],
+        "description": "[set_charge_limit] Charge schedule."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "smart_home": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 16 operations: set_room_light, set_brightness, set_color_temp, set_light_color, set_light_effect, set_fan, set_blinds, set_blind_tilt, set_outlet, set_humidifier, set_motion_sensor, set_door_sensor, set_thermostat_room, announce, run_robot_chore, activate_scene. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_room_light",
+         "set_brightness",
+         "set_color_temp",
+         "set_light_color",
+         "set_light_effect",
+         "set_fan",
+         "set_blinds",
+         "set_blind_tilt",
+         "set_outlet",
+         "set_humidifier",
+         "set_motion_sensor",
+         "set_door_sensor",
+         "set_thermostat_room",
+         "announce",
+         "run_robot_chore",
+         "activate_scene"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_room_light::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_room_light] Which room."
+       },
+       "set_room_light::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_room_light] On or off."
+       },
+       "set_room_light::transition": {
+        "type": "integer",
+        "description": "[set_room_light] Fade time in seconds."
+       },
+       "set_brightness::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_brightness] Which room."
+       },
+       "set_brightness::brightness": {
+        "type": "integer",
+        "description": "[set_brightness] Brightness percent."
+       },
+       "set_brightness::transition": {
+        "type": "integer",
+        "description": "[set_brightness] Fade time in seconds."
+       },
+       "set_color_temp::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_color_temp] Which room."
+       },
+       "set_color_temp::kelvin": {
+        "type": "integer",
+        "description": "[set_color_temp] Color temperature in Kelvin."
+       },
+       "set_light_color::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_light_color] Which room."
+       },
+       "set_light_color::color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ],
+        "description": "[set_light_color] Light color."
+       },
+       "set_light_color::brightness": {
+        "type": "integer",
+        "description": "[set_light_color] Brightness percent."
+       },
+       "set_light_effect::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_light_effect] Which room."
+       },
+       "set_light_effect::effect": {
+        "type": "string",
+        "enum": [
+         "none",
+         "colorloop",
+         "candle",
+         "fireplace",
+         "party"
+        ],
+        "description": "[set_light_effect] Effect."
+       },
+       "set_fan::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_fan] Which room."
+       },
+       "set_fan::speed": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_fan] Fan speed."
+       },
+       "set_fan::direction": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "reverse"
+        ],
+        "description": "[set_fan] Spin direction."
+       },
+       "set_blinds::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_blinds] Which room."
+       },
+       "set_blinds::position": {
+        "type": "integer",
+        "description": "[set_blinds] Open percent."
+       },
+       "set_blind_tilt::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_blind_tilt] Which room."
+       },
+       "set_blind_tilt::angle": {
+        "type": "integer",
+        "description": "[set_blind_tilt] Tilt angle degrees."
+       },
+       "set_outlet::outlet": {
+        "type": "string",
+        "enum": [
+         "tv",
+         "heater",
+         "charger",
+         "lamp",
+         "coffee_maker"
+        ],
+        "description": "[set_outlet] Which outlet."
+       },
+       "set_outlet::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_outlet] On or off."
+       },
+       "set_humidifier::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_humidifier] Which room."
+       },
+       "set_humidifier::humidity": {
+        "type": "integer",
+        "description": "[set_humidifier] Target humidity percent."
+       },
+       "set_motion_sensor::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_motion_sensor] Which room."
+       },
+       "set_motion_sensor::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_motion_sensor] On or off."
+       },
+       "set_motion_sensor::sensitivity": {
+        "type": "integer",
+        "description": "[set_motion_sensor] Sensitivity 1-10."
+       },
+       "set_door_sensor::door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "window"
+        ],
+        "description": "[set_door_sensor] Which sensor."
+       },
+       "set_door_sensor::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_door_sensor] On or off."
+       },
+       "set_thermostat_room::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[set_thermostat_room] Which room."
+       },
+       "set_thermostat_room::temperature": {
+        "type": "integer",
+        "description": "[set_thermostat_room] Target temp F."
+       },
+       "announce::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "[announce] Which room."
+       },
+       "announce::message": {
+        "type": "string",
+        "description": "[announce] Announcement text."
+       },
+       "announce::volume": {
+        "type": "integer",
+        "description": "[announce] Volume percent."
+       },
+       "run_robot_chore::device": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "lawn_mower",
+         "pool_cleaner"
+        ],
+        "description": "[run_robot_chore] Device."
+       },
+       "run_robot_chore::action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "dock"
+        ],
+        "description": "[run_robot_chore] Action."
+       },
+       "activate_scene::scene": {
+        "type": "string",
+        "enum": [
+         "movie",
+         "dinner",
+         "sleep",
+         "morning",
+         "away",
+         "reading",
+         "relax",
+         "focus",
+         "party",
+         "romantic",
+         "cleaning",
+         "gaming"
+        ],
+        "description": "[activate_scene] Scene name."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "climate": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: set_thermostat, set_temp_range, set_thermostat_hold, set_fan_mode, set_vent, set_humidity, set_dehumidifier, set_air_purifier, set_hvac_schedule, set_zone_priority, set_filter_reminder, set_away_mode, set_humidity_alert. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_thermostat",
+         "set_temp_range",
+         "set_thermostat_hold",
+         "set_fan_mode",
+         "set_vent",
+         "set_humidity",
+         "set_dehumidifier",
+         "set_air_purifier",
+         "set_hvac_schedule",
+         "set_zone_priority",
+         "set_filter_reminder",
+         "set_away_mode",
+         "set_humidity_alert"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_thermostat::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_thermostat] HVAC zone."
+       },
+       "set_thermostat::mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "eco",
+         "off"
+        ],
+        "description": "[set_thermostat] Operating mode."
+       },
+       "set_thermostat::temperature": {
+        "type": "integer",
+        "description": "[set_thermostat] Target temp in Fahrenheit."
+       },
+       "set_temp_range::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_temp_range] HVAC zone."
+       },
+       "set_temp_range::heat_to": {
+        "type": "integer",
+        "description": "[set_temp_range] Heat setpoint F."
+       },
+       "set_temp_range::cool_to": {
+        "type": "integer",
+        "description": "[set_temp_range] Cool setpoint F."
+       },
+       "set_thermostat_hold::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_thermostat_hold] HVAC zone."
+       },
+       "set_thermostat_hold::hours": {
+        "type": "integer",
+        "description": "[set_thermostat_hold] Hold duration in hours."
+       },
+       "set_fan_mode::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_fan_mode] HVAC zone."
+       },
+       "set_fan_mode::fan_mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "on",
+         "circulate"
+        ],
+        "description": "[set_fan_mode] Fan mode."
+       },
+       "set_fan_mode::speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_fan_mode] Fan speed."
+       },
+       "set_vent::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_vent] HVAC zone."
+       },
+       "set_vent::open_percent": {
+        "type": "integer",
+        "description": "[set_vent] Vent open percentage."
+       },
+       "set_humidity::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_humidity] HVAC zone."
+       },
+       "set_humidity::humidity": {
+        "type": "integer",
+        "description": "[set_humidity] Target relative humidity percent."
+       },
+       "set_dehumidifier::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_dehumidifier] HVAC zone."
+       },
+       "set_dehumidifier::mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "continuous",
+         "off"
+        ],
+        "description": "[set_dehumidifier] Mode."
+       },
+       "set_dehumidifier::target": {
+        "type": "integer",
+        "description": "[set_dehumidifier] Target humidity percent."
+       },
+       "set_air_purifier::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_air_purifier] HVAC zone."
+       },
+       "set_air_purifier::mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "sleep",
+         "turbo",
+         "off"
+        ],
+        "description": "[set_air_purifier] Purifier mode."
+       },
+       "set_hvac_schedule::schedule": {
+        "type": "string",
+        "enum": [
+         "weekday",
+         "weekend",
+         "vacation",
+         "night"
+        ],
+        "description": "[set_hvac_schedule] Schedule preset."
+       },
+       "set_hvac_schedule::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_hvac_schedule] Enable or disable."
+       },
+       "set_zone_priority::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_zone_priority] HVAC zone."
+       },
+       "set_zone_priority::priority": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "balanced",
+         "savings"
+        ],
+        "description": "[set_zone_priority] Priority."
+       },
+       "set_filter_reminder::component": {
+        "type": "string",
+        "enum": [
+         "hvac",
+         "humidifier",
+         "purifier"
+        ],
+        "description": "[set_filter_reminder] Component."
+       },
+       "set_filter_reminder::months": {
+        "type": "integer",
+        "description": "[set_filter_reminder] Interval in months."
+       },
+       "set_away_mode::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_away_mode] On or off."
+       },
+       "set_away_mode::setback": {
+        "type": "integer",
+        "description": "[set_away_mode] Degrees of setback."
+       },
+       "set_humidity_alert::zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "[set_humidity_alert] HVAC zone."
+       },
+       "set_humidity_alert::threshold": {
+        "type": "integer",
+        "description": "[set_humidity_alert] Threshold percent."
+       },
+       "set_humidity_alert::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_humidity_alert] On or off."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "calendar": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 15 operations: create_event, set_event_duration, move_event, invite_guest, remove_guest, set_event_location, set_reminder, set_recurrence, update_event_status, set_event_color, set_event_visibility, create_task, block_focus_time, set_availability, set_working_hours. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "create_event",
+         "set_event_duration",
+         "move_event",
+         "invite_guest",
+         "remove_guest",
+         "set_event_location",
+         "set_reminder",
+         "set_recurrence",
+         "update_event_status",
+         "set_event_color",
+         "set_event_visibility",
+         "create_task",
+         "block_focus_time",
+         "set_availability",
+         "set_working_hours"
+        ],
+        "description": "Which operation to perform."
+       },
+       "create_event::title": {
+        "type": "string",
+        "description": "[create_event] Event title."
+       },
+       "create_event::calendar": {
+        "type": "string",
+        "enum": [
+         "personal",
+         "work",
+         "family",
+         "shared"
+        ],
+        "description": "[create_event] Target calendar."
+       },
+       "create_event::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[create_event] Day of week."
+       },
+       "create_event::time": {
+        "type": "string",
+        "description": "[create_event] Start time."
+       },
+       "set_event_duration::event": {
+        "type": "string",
+        "description": "[set_event_duration] Event name."
+       },
+       "set_event_duration::minutes": {
+        "type": "integer",
+        "description": "[set_event_duration] Duration in minutes."
+       },
+       "move_event::event": {
+        "type": "string",
+        "description": "[move_event] Event name."
+       },
+       "move_event::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[move_event] New day."
+       },
+       "move_event::time": {
+        "type": "string",
+        "description": "[move_event] New start time."
+       },
+       "invite_guest::event": {
+        "type": "string",
+        "description": "[invite_guest] Event name."
+       },
+       "invite_guest::guest": {
+        "type": "string",
+        "description": "[invite_guest] Guest name or email."
+       },
+       "invite_guest::role": {
+        "type": "string",
+        "enum": [
+         "required",
+         "optional",
+         "organizer"
+        ],
+        "description": "[invite_guest] Guest role."
+       },
+       "remove_guest::event": {
+        "type": "string",
+        "description": "[remove_guest] Event name."
+       },
+       "remove_guest::guest": {
+        "type": "string",
+        "description": "[remove_guest] Guest name."
+       },
+       "set_event_location::event": {
+        "type": "string",
+        "description": "[set_event_location] Event name."
+       },
+       "set_event_location::location": {
+        "type": "string",
+        "description": "[set_event_location] Location."
+       },
+       "set_event_location::type": {
+        "type": "string",
+        "enum": [
+         "in_person",
+         "video",
+         "phone"
+        ],
+        "description": "[set_event_location] Meeting type."
+       },
+       "set_reminder::event": {
+        "type": "string",
+        "description": "[set_reminder] Event name."
+       },
+       "set_reminder::lead_time": {
+        "type": "string",
+        "enum": [
+         "5_min",
+         "15_min",
+         "30_min",
+         "1_hour",
+         "1_day"
+        ],
+        "description": "[set_reminder] Reminder lead time."
+       },
+       "set_reminder::method": {
+        "type": "string",
+        "enum": [
+         "popup",
+         "email",
+         "sms"
+        ],
+        "description": "[set_reminder] Notification method."
+       },
+       "set_recurrence::event": {
+        "type": "string",
+        "description": "[set_recurrence] Event name."
+       },
+       "set_recurrence::frequency": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly",
+         "biweekly",
+         "monthly",
+         "none"
+        ],
+        "description": "[set_recurrence] Recurrence frequency."
+       },
+       "set_recurrence::count": {
+        "type": "integer",
+        "description": "[set_recurrence] Number of occurrences."
+       },
+       "update_event_status::event": {
+        "type": "string",
+        "description": "[update_event_status] Event name."
+       },
+       "update_event_status::status": {
+        "type": "string",
+        "enum": [
+         "accepted",
+         "declined",
+         "tentative"
+        ],
+        "description": "[update_event_status] Response."
+       },
+       "set_event_color::event": {
+        "type": "string",
+        "description": "[set_event_color] Event name."
+       },
+       "set_event_color::color": {
+        "type": "string",
+        "enum": [
+         "red",
+         "blue",
+         "green",
+         "yellow",
+         "purple"
+        ],
+        "description": "[set_event_color] Color."
+       },
+       "set_event_visibility::event": {
+        "type": "string",
+        "description": "[set_event_visibility] Event name."
+       },
+       "set_event_visibility::visibility": {
+        "type": "string",
+        "enum": [
+         "public",
+         "private",
+         "default"
+        ],
+        "description": "[set_event_visibility] Visibility."
+       },
+       "create_task::title": {
+        "type": "string",
+        "description": "[create_task] Task title."
+       },
+       "create_task::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[create_task] Due day."
+       },
+       "create_task::priority": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[create_task] Priority."
+       },
+       "block_focus_time::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[block_focus_time] Day."
+       },
+       "block_focus_time::hours": {
+        "type": "integer",
+        "description": "[block_focus_time] Hours to block."
+       },
+       "set_availability::status": {
+        "type": "string",
+        "enum": [
+         "busy",
+         "free",
+         "out_of_office",
+         "focus"
+        ],
+        "description": "[set_availability] Availability."
+       },
+       "set_availability::until": {
+        "type": "string",
+        "enum": [
+         "end_of_day",
+         "one_hour",
+         "end_of_week"
+        ],
+        "description": "[set_availability] Until."
+       },
+       "set_working_hours::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[set_working_hours] Day."
+       },
+       "set_working_hours::start": {
+        "type": "string",
+        "description": "[set_working_hours] Start time."
+       },
+       "set_working_hours::end": {
+        "type": "string",
+        "description": "[set_working_hours] End time."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "media_player": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 15 operations: playback_control, set_source, play_playlist, queue_track, seek, set_volume, set_mute, set_balance, set_tone, set_play_mode, set_crossfade, set_eq_preset, transfer_playback, group_zones, set_sleep_timer. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "playback_control",
+         "set_source",
+         "play_playlist",
+         "queue_track",
+         "seek",
+         "set_volume",
+         "set_mute",
+         "set_balance",
+         "set_tone",
+         "set_play_mode",
+         "set_crossfade",
+         "set_eq_preset",
+         "transfer_playback",
+         "group_zones",
+         "set_sleep_timer"
+        ],
+        "description": "Which operation to perform."
+       },
+       "playback_control::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[playback_control] Audio zone."
+       },
+       "playback_control::action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "stop",
+         "next",
+         "previous"
+        ],
+        "description": "[playback_control] Playback action."
+       },
+       "set_source::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_source] Audio zone."
+       },
+       "set_source::source": {
+        "type": "string",
+        "enum": [
+         "spotify",
+         "radio",
+         "bluetooth",
+         "airplay",
+         "vinyl"
+        ],
+        "description": "[set_source] Audio source."
+       },
+       "play_playlist::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[play_playlist] Audio zone."
+       },
+       "play_playlist::playlist": {
+        "type": "string",
+        "description": "[play_playlist] Playlist name."
+       },
+       "play_playlist::mode": {
+        "type": "string",
+        "enum": [
+         "in_order",
+         "shuffle"
+        ],
+        "description": "[play_playlist] Play mode."
+       },
+       "queue_track::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[queue_track] Audio zone."
+       },
+       "queue_track::track": {
+        "type": "string",
+        "description": "[queue_track] Track name."
+       },
+       "queue_track::position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "end"
+        ],
+        "description": "[queue_track] Queue position."
+       },
+       "seek::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[seek] Audio zone."
+       },
+       "seek::seconds": {
+        "type": "integer",
+        "description": "[seek] Position in seconds."
+       },
+       "set_volume::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_volume] Audio zone."
+       },
+       "set_volume::volume": {
+        "type": "integer",
+        "description": "[set_volume] Volume percent."
+       },
+       "set_mute::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_mute] Audio zone."
+       },
+       "set_mute::state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ],
+        "description": "[set_mute] Mute state."
+       },
+       "set_mute::fade": {
+        "type": "integer",
+        "description": "[set_mute] Fade seconds."
+       },
+       "set_balance::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_balance] Audio zone."
+       },
+       "set_balance::balance": {
+        "type": "integer",
+        "description": "[set_balance] Balance -10 (left) to 10 (right)."
+       },
+       "set_tone::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_tone] Audio zone."
+       },
+       "set_tone::bass": {
+        "type": "integer",
+        "description": "[set_tone] Bass -5 to 5."
+       },
+       "set_tone::treble": {
+        "type": "integer",
+        "description": "[set_tone] Treble -5 to 5."
+       },
+       "set_play_mode::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_play_mode] Audio zone."
+       },
+       "set_play_mode::mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "repeat_one",
+         "repeat_all",
+         "shuffle"
+        ],
+        "description": "[set_play_mode] Play mode."
+       },
+       "set_crossfade::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_crossfade] Audio zone."
+       },
+       "set_crossfade::seconds": {
+        "type": "integer",
+        "description": "[set_crossfade] Crossfade seconds."
+       },
+       "set_eq_preset::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_eq_preset] Audio zone."
+       },
+       "set_eq_preset::preset": {
+        "type": "string",
+        "enum": [
+         "flat",
+         "bass_boost",
+         "treble_boost",
+         "vocal",
+         "rock",
+         "pop",
+         "jazz",
+         "classical",
+         "electronic",
+         "acoustic",
+         "loudness",
+         "podcast"
+        ],
+        "description": "[set_eq_preset] EQ preset."
+       },
+       "transfer_playback::from_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "[transfer_playback] Source zone."
+       },
+       "transfer_playback::to_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "[transfer_playback] Target zone."
+       },
+       "transfer_playback::include_queue": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ],
+        "description": "[transfer_playback] Take the queue."
+       },
+       "group_zones::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "[group_zones] Audio zone."
+       },
+       "group_zones::action": {
+        "type": "string",
+        "enum": [
+         "group",
+         "ungroup"
+        ],
+        "description": "[group_zones] Action."
+       },
+       "set_sleep_timer::zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "[set_sleep_timer] Audio zone."
+       },
+       "set_sleep_timer::minutes": {
+        "type": "integer",
+        "description": "[set_sleep_timer] Minutes until stop."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "kitchen": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: set_oven, preheat_oven, set_stove_burner, set_burner_timer, run_microwave, set_fridge, set_fridge_mode, make_ice, brew_coffee, boil_kettle, run_dishwasher, set_rangehood, set_kitchen_timer. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_oven",
+         "preheat_oven",
+         "set_stove_burner",
+         "set_burner_timer",
+         "run_microwave",
+         "set_fridge",
+         "set_fridge_mode",
+         "make_ice",
+         "brew_coffee",
+         "boil_kettle",
+         "run_dishwasher",
+         "set_rangehood",
+         "set_kitchen_timer"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_oven::mode": {
+        "type": "string",
+        "enum": [
+         "bake",
+         "broil",
+         "roast",
+         "convection",
+         "warm",
+         "off"
+        ],
+        "description": "[set_oven] Oven mode."
+       },
+       "set_oven::temperature": {
+        "type": "integer",
+        "description": "[set_oven] Temperature in Fahrenheit."
+       },
+       "set_oven::minutes": {
+        "type": "integer",
+        "description": "[set_oven] Cook timer minutes."
+       },
+       "preheat_oven::temperature": {
+        "type": "integer",
+        "description": "[preheat_oven] Temperature in Fahrenheit."
+       },
+       "preheat_oven::rack": {
+        "type": "string",
+        "enum": [
+         "top",
+         "middle",
+         "bottom"
+        ],
+        "description": "[preheat_oven] Rack position."
+       },
+       "set_stove_burner::burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "[set_stove_burner] Which burner."
+       },
+       "set_stove_burner::level": {
+        "type": "integer",
+        "description": "[set_stove_burner] Heat level 0-9."
+       },
+       "set_burner_timer::burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "[set_burner_timer] Which burner."
+       },
+       "set_burner_timer::minutes": {
+        "type": "integer",
+        "description": "[set_burner_timer] Minutes."
+       },
+       "run_microwave::power": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "defrost"
+        ],
+        "description": "[run_microwave] Power level."
+       },
+       "run_microwave::seconds": {
+        "type": "integer",
+        "description": "[run_microwave] Duration in seconds."
+       },
+       "run_microwave::then": {
+        "type": "string",
+        "enum": [
+         "beep",
+         "keep_warm",
+         "silent"
+        ],
+        "description": "[run_microwave] When done."
+       },
+       "set_fridge::compartment": {
+        "type": "string",
+        "enum": [
+         "fridge",
+         "freezer"
+        ],
+        "description": "[set_fridge] Compartment."
+       },
+       "set_fridge::temperature": {
+        "type": "integer",
+        "description": "[set_fridge] Target temperature in Fahrenheit."
+       },
+       "set_fridge_mode::mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "vacation",
+         "quick_cool",
+         "quick_freeze"
+        ],
+        "description": "[set_fridge_mode] Mode."
+       },
+       "set_fridge_mode::door_alarm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_fridge_mode] Door alarm."
+       },
+       "make_ice::mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "cubed",
+         "crushed",
+         "max"
+        ],
+        "description": "[make_ice] Ice mode."
+       },
+       "make_ice::rate": {
+        "type": "string",
+        "enum": [
+         "low",
+         "normal",
+         "fast"
+        ],
+        "description": "[make_ice] Production rate."
+       },
+       "brew_coffee::style": {
+        "type": "string",
+        "enum": [
+         "espresso",
+         "americano",
+         "latte",
+         "cappuccino",
+         "drip"
+        ],
+        "description": "[brew_coffee] Coffee style."
+       },
+       "brew_coffee::size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ],
+        "description": "[brew_coffee] Cup size."
+       },
+       "brew_coffee::strength": {
+        "type": "string",
+        "enum": [
+         "mild",
+         "regular",
+         "strong"
+        ],
+        "description": "[brew_coffee] Strength."
+       },
+       "boil_kettle::temperature": {
+        "type": "integer",
+        "description": "[boil_kettle] Target temperature in Fahrenheit."
+       },
+       "boil_kettle::keep_warm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[boil_kettle] Keep warm."
+       },
+       "run_dishwasher::cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "eco",
+         "heavy",
+         "quick",
+         "rinse"
+        ],
+        "description": "[run_dishwasher] Wash cycle."
+       },
+       "run_dishwasher::dry": {
+        "type": "boolean",
+        "description": "[run_dishwasher] Whether to heat-dry afterwards."
+       },
+       "set_rangehood::fan": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_rangehood] Fan speed."
+       },
+       "set_rangehood::light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_rangehood] Light."
+       },
+       "set_rangehood::boost_minutes": {
+        "type": "integer",
+        "description": "[set_rangehood] Boost timer minutes."
+       },
+       "set_kitchen_timer::label": {
+        "type": "string",
+        "description": "[set_kitchen_timer] Timer label."
+       },
+       "set_kitchen_timer::minutes": {
+        "type": "integer",
+        "description": "[set_kitchen_timer] Timer length in minutes."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "laundry": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: start_wash, set_soil_level, set_water_level, start_dry, set_dry_timer, set_detergent, set_laundry_option, set_delay_start, set_spin_only, control_machine, set_notify, run_drum_clean, steam_refresh. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "start_wash",
+         "set_soil_level",
+         "set_water_level",
+         "start_dry",
+         "set_dry_timer",
+         "set_detergent",
+         "set_laundry_option",
+         "set_delay_start",
+         "set_spin_only",
+         "control_machine",
+         "set_notify",
+         "run_drum_clean",
+         "steam_refresh"
+        ],
+        "description": "Which operation to perform."
+       },
+       "start_wash::cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "delicate",
+         "heavy",
+         "quick",
+         "bedding"
+        ],
+        "description": "[start_wash] Wash cycle."
+       },
+       "start_wash::temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ],
+        "description": "[start_wash] Water temperature."
+       },
+       "start_wash::spin": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "no_spin"
+        ],
+        "description": "[start_wash] Spin speed."
+       },
+       "set_soil_level::soil": {
+        "type": "string",
+        "enum": [
+         "light",
+         "normal",
+         "heavy"
+        ],
+        "description": "[set_soil_level] Soil level."
+       },
+       "set_soil_level::rinses": {
+        "type": "integer",
+        "description": "[set_soil_level] Number of rinses."
+       },
+       "set_water_level::level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "auto"
+        ],
+        "description": "[set_water_level] Water level."
+       },
+       "set_water_level::temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ],
+        "description": "[set_water_level] Water temperature."
+       },
+       "start_dry::level": {
+        "type": "string",
+        "enum": [
+         "damp",
+         "normal",
+         "extra_dry"
+        ],
+        "description": "[start_dry] Dryness level."
+       },
+       "start_dry::heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "air_only"
+        ],
+        "description": "[start_dry] Heat setting."
+       },
+       "start_dry::steam": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[start_dry] Steam."
+       },
+       "set_dry_timer::minutes": {
+        "type": "integer",
+        "description": "[set_dry_timer] Dry minutes."
+       },
+       "set_dry_timer::heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_dry_timer] Heat setting."
+       },
+       "set_detergent::type": {
+        "type": "string",
+        "enum": [
+         "regular",
+         "sensitive",
+         "bleach",
+         "softener"
+        ],
+        "description": "[set_detergent] Detergent type."
+       },
+       "set_detergent::dose": {
+        "type": "integer",
+        "description": "[set_detergent] Dose level 1-5."
+       },
+       "set_detergent::dispense": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "manual"
+        ],
+        "description": "[set_detergent] Dispense."
+       },
+       "set_laundry_option::option": {
+        "type": "string",
+        "enum": [
+         "steam",
+         "prewash",
+         "extra_rinse",
+         "wrinkle_guard"
+        ],
+        "description": "[set_laundry_option] Option."
+       },
+       "set_laundry_option::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_laundry_option] On or off."
+       },
+       "set_delay_start::machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ],
+        "description": "[set_delay_start] Machine."
+       },
+       "set_delay_start::hours": {
+        "type": "integer",
+        "description": "[set_delay_start] Delay in hours."
+       },
+       "set_spin_only::speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_spin_only] Spin speed."
+       },
+       "set_spin_only::minutes": {
+        "type": "integer",
+        "description": "[set_spin_only] Minutes."
+       },
+       "control_machine::machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ],
+        "description": "[control_machine] Machine."
+       },
+       "control_machine::action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "resume",
+         "stop"
+        ],
+        "description": "[control_machine] Action."
+       },
+       "set_notify::method": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "app",
+         "both",
+         "none"
+        ],
+        "description": "[set_notify] Notify method."
+       },
+       "set_notify::volume": {
+        "type": "integer",
+        "description": "[set_notify] Chime volume 0-10."
+       },
+       "run_drum_clean::level": {
+        "type": "string",
+        "enum": [
+         "quick",
+         "deep"
+        ],
+        "description": "[run_drum_clean] Clean level."
+       },
+       "run_drum_clean::reminder": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[run_drum_clean] Reminder."
+       },
+       "steam_refresh::garment": {
+        "type": "string",
+        "enum": [
+         "shirts",
+         "suits",
+         "bedding",
+         "outerwear"
+        ],
+        "description": "[steam_refresh] Garment type."
+       },
+       "steam_refresh::minutes": {
+        "type": "integer",
+        "description": "[steam_refresh] Minutes."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "tv": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: set_input, launch_app, search_content, play_title, playback_seek, set_channel, set_tv_volume, set_mute, set_picture_mode, set_sound_mode, set_audio_output, set_caption, set_sleep_timer. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_input",
+         "launch_app",
+         "search_content",
+         "play_title",
+         "playback_seek",
+         "set_channel",
+         "set_tv_volume",
+         "set_mute",
+         "set_picture_mode",
+         "set_sound_mode",
+         "set_audio_output",
+         "set_caption",
+         "set_sleep_timer"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_input::source": {
+        "type": "string",
+        "enum": [
+         "hdmi1",
+         "hdmi2",
+         "hdmi3",
+         "tv_tuner",
+         "screen_mirror"
+        ],
+        "description": "[set_input] Input source."
+       },
+       "set_input::aspect": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "16_9",
+         "4_3",
+         "zoom"
+        ],
+        "description": "[set_input] Aspect ratio."
+       },
+       "launch_app::app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo",
+         "spotify"
+        ],
+        "description": "[launch_app] App."
+       },
+       "launch_app::profile": {
+        "type": "string",
+        "enum": [
+         "default",
+         "kids",
+         "guest"
+        ],
+        "description": "[launch_app] User profile."
+       },
+       "search_content::app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo"
+        ],
+        "description": "[search_content] App."
+       },
+       "search_content::query": {
+        "type": "string",
+        "description": "[search_content] Search query."
+       },
+       "search_content::type": {
+        "type": "string",
+        "enum": [
+         "any",
+         "movie",
+         "series",
+         "episode"
+        ],
+        "description": "[search_content] Content type."
+       },
+       "play_title::title": {
+        "type": "string",
+        "description": "[play_title] Title."
+       },
+       "play_title::action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "resume",
+         "restart"
+        ],
+        "description": "[play_title] Action."
+       },
+       "play_title::audio": {
+        "type": "string",
+        "enum": [
+         "original",
+         "dubbed",
+         "described"
+        ],
+        "description": "[play_title] Audio track."
+       },
+       "playback_seek::action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "rewind",
+         "fast_forward"
+        ],
+        "description": "[playback_seek] Action."
+       },
+       "playback_seek::seconds": {
+        "type": "integer",
+        "description": "[playback_seek] Seek seconds."
+       },
+       "set_channel::channel": {
+        "type": "integer",
+        "description": "[set_channel] Channel number."
+       },
+       "set_channel::source": {
+        "type": "string",
+        "enum": [
+         "antenna",
+         "cable",
+         "streaming"
+        ],
+        "description": "[set_channel] Channel source."
+       },
+       "set_tv_volume::level": {
+        "type": "integer",
+        "description": "[set_tv_volume] Volume 0-100."
+       },
+       "set_tv_volume::output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ],
+        "description": "[set_tv_volume] Output."
+       },
+       "set_mute::output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ],
+        "description": "[set_mute] Output."
+       },
+       "set_mute::state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ],
+        "description": "[set_mute] Mute state."
+       },
+       "set_picture_mode::mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "cinema",
+         "vivid",
+         "game",
+         "sports",
+         "eco"
+        ],
+        "description": "[set_picture_mode] Picture mode."
+       },
+       "set_picture_mode::brightness": {
+        "type": "integer",
+        "description": "[set_picture_mode] Brightness 0-100."
+       },
+       "set_picture_mode::contrast": {
+        "type": "integer",
+        "description": "[set_picture_mode] Contrast 0-100."
+       },
+       "set_sound_mode::mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "movie",
+         "music",
+         "clear_voice",
+         "night"
+        ],
+        "description": "[set_sound_mode] Sound mode."
+       },
+       "set_sound_mode::bass": {
+        "type": "integer",
+        "description": "[set_sound_mode] Bass -5 to 5."
+       },
+       "set_audio_output::output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones",
+         "bluetooth"
+        ],
+        "description": "[set_audio_output] Audio output."
+       },
+       "set_audio_output::delay_ms": {
+        "type": "integer",
+        "description": "[set_audio_output] A/V sync delay in ms."
+       },
+       "set_caption::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_caption] On or off."
+       },
+       "set_caption::language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french",
+         "german"
+        ],
+        "description": "[set_caption] Caption language."
+       },
+       "set_caption::size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ],
+        "description": "[set_caption] Text size."
+       },
+       "set_sleep_timer::minutes": {
+        "type": "integer",
+        "description": "[set_sleep_timer] Minutes until off."
+       },
+       "set_sleep_timer::action": {
+        "type": "string",
+        "enum": [
+         "power_off",
+         "standby"
+        ],
+        "description": "[set_sleep_timer] End action."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "vacuum": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: start_cleaning, set_suction, set_water_level, spot_clean, set_no_go_zone, dock_control, set_schedule, set_volume, set_carpet_boost, set_child_lock, set_do_not_disturb, set_mop_pad, set_auto_empty. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "start_cleaning",
+         "set_suction",
+         "set_water_level",
+         "spot_clean",
+         "set_no_go_zone",
+         "dock_control",
+         "set_schedule",
+         "set_volume",
+         "set_carpet_boost",
+         "set_child_lock",
+         "set_do_not_disturb",
+         "set_mop_pad",
+         "set_auto_empty"
+        ],
+        "description": "Which operation to perform."
+       },
+       "start_cleaning::room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "whole_house"
+        ],
+        "description": "[start_cleaning] Room to clean."
+       },
+       "start_cleaning::mode": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "vacuum_and_mop"
+        ],
+        "description": "[start_cleaning] Cleaning mode."
+       },
+       "start_cleaning::passes": {
+        "type": "integer",
+        "description": "[start_cleaning] Number of passes."
+       },
+       "set_suction::power": {
+        "type": "string",
+        "enum": [
+         "quiet",
+         "standard",
+         "turbo",
+         "max"
+        ],
+        "description": "[set_suction] Suction power."
+       },
+       "set_suction::area": {
+        "type": "string",
+        "enum": [
+         "whole",
+         "edges",
+         "center"
+        ],
+        "description": "[set_suction] Cleaning area."
+       },
+       "set_suction::edge_clean": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_suction] Edge cleaning."
+       },
+       "set_water_level::level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "[set_water_level] Water level."
+       },
+       "set_water_level::scrub": {
+        "type": "string",
+        "enum": [
+         "light",
+         "deep"
+        ],
+        "description": "[set_water_level] Scrub intensity."
+       },
+       "spot_clean::area": {
+        "type": "string",
+        "description": "[spot_clean] Area description."
+       },
+       "spot_clean::radius": {
+        "type": "integer",
+        "description": "[spot_clean] Radius in feet."
+       },
+       "spot_clean::passes": {
+        "type": "integer",
+        "description": "[spot_clean] Passes."
+       },
+       "set_no_go_zone::zone": {
+        "type": "string",
+        "description": "[set_no_go_zone] Zone label."
+       },
+       "set_no_go_zone::action": {
+        "type": "string",
+        "enum": [
+         "add",
+         "remove"
+        ],
+        "description": "[set_no_go_zone] Action."
+       },
+       "set_no_go_zone::type": {
+        "type": "string",
+        "enum": [
+         "no_go",
+         "no_mop"
+        ],
+        "description": "[set_no_go_zone] Zone type."
+       },
+       "dock_control::action": {
+        "type": "string",
+        "enum": [
+         "return_to_dock",
+         "empty_bin",
+         "resume",
+         "locate"
+        ],
+        "description": "[dock_control] Dock action."
+       },
+       "dock_control::after": {
+        "type": "string",
+        "enum": [
+         "charge",
+         "empty",
+         "both"
+        ],
+        "description": "[dock_control] After docking."
+       },
+       "set_schedule::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "wednesday",
+         "friday",
+         "weekend",
+         "daily"
+        ],
+        "description": "[set_schedule] Day."
+       },
+       "set_schedule::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_schedule] On or off."
+       },
+       "set_schedule::time": {
+        "type": "string",
+        "description": "[set_schedule] Time."
+       },
+       "set_volume::sound": {
+        "type": "string",
+        "enum": [
+         "voice",
+         "beep",
+         "off"
+        ],
+        "description": "[set_volume] Sound type."
+       },
+       "set_volume::level": {
+        "type": "integer",
+        "description": "[set_volume] Volume 0-10."
+       },
+       "set_carpet_boost::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_carpet_boost] On or off."
+       },
+       "set_carpet_boost::level": {
+        "type": "integer",
+        "description": "[set_carpet_boost] Boost level 1-3."
+       },
+       "set_child_lock::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_child_lock] On or off."
+       },
+       "set_child_lock::panel": {
+        "type": "string",
+        "enum": [
+         "buttons",
+         "app",
+         "both"
+        ],
+        "description": "[set_child_lock] Panel."
+       },
+       "set_do_not_disturb::start": {
+        "type": "string",
+        "description": "[set_do_not_disturb] Start time."
+       },
+       "set_do_not_disturb::end": {
+        "type": "string",
+        "description": "[set_do_not_disturb] End time."
+       },
+       "set_do_not_disturb::days": {
+        "type": "string",
+        "enum": [
+         "everyday",
+         "weekdays",
+         "weekends"
+        ],
+        "description": "[set_do_not_disturb] Days."
+       },
+       "set_mop_pad::pad": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "deep_clean",
+         "disposable"
+        ],
+        "description": "[set_mop_pad] Pad type."
+       },
+       "set_mop_pad::action": {
+        "type": "string",
+        "enum": [
+         "attach",
+         "remove"
+        ],
+        "description": "[set_mop_pad] Action."
+       },
+       "set_auto_empty::frequency": {
+        "type": "string",
+        "enum": [
+         "every_run",
+         "daily",
+         "weekly"
+        ],
+        "description": "[set_auto_empty] Frequency."
+       },
+       "set_auto_empty::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_auto_empty] On or off."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "security": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: set_lock, set_auto_lock, set_alarm, set_alarm_delay, control_camera, set_camera_sensitivity, set_camera_privacy, control_garage, control_floodlight, set_motion_light, add_access_code, remove_access_code, set_arm_schedule. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "set_lock",
+         "set_auto_lock",
+         "set_alarm",
+         "set_alarm_delay",
+         "control_camera",
+         "set_camera_sensitivity",
+         "set_camera_privacy",
+         "control_garage",
+         "control_floodlight",
+         "set_motion_light",
+         "add_access_code",
+         "remove_access_code",
+         "set_arm_schedule"
+        ],
+        "description": "Which operation to perform."
+       },
+       "set_lock::door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "[set_lock] Which lock."
+       },
+       "set_lock::state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ],
+        "description": "[set_lock] Lock state."
+       },
+       "set_auto_lock::door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "[set_auto_lock] Which lock."
+       },
+       "set_auto_lock::minutes": {
+        "type": "integer",
+        "description": "[set_auto_lock] Auto-lock delay minutes."
+       },
+       "set_alarm::mode": {
+        "type": "string",
+        "enum": [
+         "disarm",
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ],
+        "description": "[set_alarm] Alarm mode."
+       },
+       "set_alarm_delay::phase": {
+        "type": "string",
+        "enum": [
+         "entry",
+         "exit"
+        ],
+        "description": "[set_alarm_delay] Phase."
+       },
+       "set_alarm_delay::seconds": {
+        "type": "integer",
+        "description": "[set_alarm_delay] Delay seconds."
+       },
+       "control_camera::camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "[control_camera] Which camera."
+       },
+       "control_camera::action": {
+        "type": "string",
+        "enum": [
+         "enable",
+         "disable",
+         "snapshot",
+         "start_recording"
+        ],
+        "description": "[control_camera] Camera action."
+       },
+       "control_camera::quality": {
+        "type": "string",
+        "enum": [
+         "hd",
+         "sd"
+        ],
+        "description": "[control_camera] Quality."
+       },
+       "set_camera_sensitivity::camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "[set_camera_sensitivity] Which camera."
+       },
+       "set_camera_sensitivity::level": {
+        "type": "integer",
+        "description": "[set_camera_sensitivity] Sensitivity 1-10."
+       },
+       "set_camera_sensitivity::zone": {
+        "type": "string",
+        "enum": [
+         "full",
+         "near",
+         "far"
+        ],
+        "description": "[set_camera_sensitivity] Detection zone."
+       },
+       "set_camera_privacy::camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "[set_camera_privacy] Which camera."
+       },
+       "set_camera_privacy::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_camera_privacy] On or off."
+       },
+       "control_garage::state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed"
+        ],
+        "description": "[control_garage] Garage state."
+       },
+       "control_garage::light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[control_garage] Garage light."
+       },
+       "control_floodlight::location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ],
+        "description": "[control_floodlight] Floodlight location."
+       },
+       "control_floodlight::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[control_floodlight] On or off."
+       },
+       "control_floodlight::brightness": {
+        "type": "integer",
+        "description": "[control_floodlight] Brightness percent."
+       },
+       "set_motion_light::location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ],
+        "description": "[set_motion_light] Location."
+       },
+       "set_motion_light::seconds": {
+        "type": "integer",
+        "description": "[set_motion_light] Stay-on seconds."
+       },
+       "add_access_code::name": {
+        "type": "string",
+        "description": "[add_access_code] Code owner name."
+       },
+       "add_access_code::code": {
+        "type": "string",
+        "description": "[add_access_code] 4-digit code."
+       },
+       "add_access_code::lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "[add_access_code] Which lock."
+       },
+       "remove_access_code::name": {
+        "type": "string",
+        "description": "[remove_access_code] Code owner name."
+       },
+       "remove_access_code::lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "[remove_access_code] Which lock."
+       },
+       "set_arm_schedule::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[set_arm_schedule] Day."
+       },
+       "set_arm_schedule::mode": {
+        "type": "string",
+        "enum": [
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ],
+        "description": "[set_arm_schedule] Arm mode."
+       },
+       "set_arm_schedule::time": {
+        "type": "string",
+        "description": "[set_arm_schedule] Time."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "smartwatch": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: start_workout, control_workout, set_goal, log_water, log_weight, set_heart_alert, set_timer, set_alarm, start_breathing, send_message, set_watch_mode, set_watch_face, set_sleep_tracking. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "start_workout",
+         "control_workout",
+         "set_goal",
+         "log_water",
+         "log_weight",
+         "set_heart_alert",
+         "set_timer",
+         "set_alarm",
+         "start_breathing",
+         "send_message",
+         "set_watch_mode",
+         "set_watch_face",
+         "set_sleep_tracking"
+        ],
+        "description": "Which operation to perform."
+       },
+       "start_workout::activity": {
+        "type": "string",
+        "enum": [
+         "running",
+         "cycling",
+         "swimming",
+         "yoga",
+         "hiking",
+         "rowing"
+        ],
+        "description": "[start_workout] Activity."
+       },
+       "start_workout::goal_type": {
+        "type": "string",
+        "enum": [
+         "open",
+         "distance",
+         "time",
+         "calories"
+        ],
+        "description": "[start_workout] Goal type."
+       },
+       "start_workout::goal_value": {
+        "type": "integer",
+        "description": "[start_workout] Goal value."
+       },
+       "control_workout::action": {
+        "type": "string",
+        "enum": [
+         "pause",
+         "resume",
+         "end",
+         "lap"
+        ],
+        "description": "[control_workout] Action."
+       },
+       "control_workout::auto_pause": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[control_workout] Auto-pause."
+       },
+       "set_goal::metric": {
+        "type": "string",
+        "enum": [
+         "steps",
+         "calories",
+         "active_minutes",
+         "stand_hours"
+        ],
+        "description": "[set_goal] Goal metric."
+       },
+       "set_goal::value": {
+        "type": "integer",
+        "description": "[set_goal] Target value."
+       },
+       "set_goal::period": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly"
+        ],
+        "description": "[set_goal] Period."
+       },
+       "log_water::drink": {
+        "type": "string",
+        "enum": [
+         "water",
+         "coffee",
+         "tea",
+         "juice"
+        ],
+        "description": "[log_water] Drink."
+       },
+       "log_water::milliliters": {
+        "type": "integer",
+        "description": "[log_water] Amount in milliliters."
+       },
+       "log_weight::pounds": {
+        "type": "integer",
+        "description": "[log_weight] Weight in pounds."
+       },
+       "log_weight::time": {
+        "type": "string",
+        "enum": [
+         "morning",
+         "evening"
+        ],
+        "description": "[log_weight] Time of day."
+       },
+       "set_heart_alert::kind": {
+        "type": "string",
+        "enum": [
+         "high",
+         "low"
+        ],
+        "description": "[set_heart_alert] Alert kind."
+       },
+       "set_heart_alert::bpm": {
+        "type": "integer",
+        "description": "[set_heart_alert] Threshold in bpm."
+       },
+       "set_timer::type": {
+        "type": "string",
+        "enum": [
+         "countdown",
+         "stopwatch",
+         "interval"
+        ],
+        "description": "[set_timer] Timer type."
+       },
+       "set_timer::minutes": {
+        "type": "integer",
+        "description": "[set_timer] Minutes."
+       },
+       "set_timer::label": {
+        "type": "string",
+        "description": "[set_timer] Timer label."
+       },
+       "set_alarm::time": {
+        "type": "string",
+        "description": "[set_alarm] Alarm time."
+       },
+       "set_alarm::day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "[set_alarm] Day."
+       },
+       "set_alarm::sound": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "radio",
+         "vibrate"
+        ],
+        "description": "[set_alarm] Alarm sound."
+       },
+       "start_breathing::minutes": {
+        "type": "integer",
+        "description": "[start_breathing] Minutes."
+       },
+       "start_breathing::pace": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "relaxed"
+        ],
+        "description": "[start_breathing] Pace."
+       },
+       "send_message::contact": {
+        "type": "string",
+        "description": "[send_message] Contact name."
+       },
+       "send_message::text": {
+        "type": "string",
+        "description": "[send_message] Message text."
+       },
+       "send_message::priority": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "urgent"
+        ],
+        "description": "[send_message] Priority."
+       },
+       "set_watch_mode::mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "low_power",
+         "theater",
+         "sleep",
+         "do_not_disturb"
+        ],
+        "description": "[set_watch_mode] Watch mode."
+       },
+       "set_watch_mode::brightness": {
+        "type": "integer",
+        "description": "[set_watch_mode] Brightness 0-100."
+       },
+       "set_watch_face::face": {
+        "type": "string",
+        "enum": [
+         "analog",
+         "digital",
+         "activity",
+         "minimal"
+        ],
+        "description": "[set_watch_face] Watch face."
+       },
+       "set_watch_face::color": {
+        "type": "string",
+        "enum": [
+         "blue",
+         "green",
+         "red",
+         "orange",
+         "white"
+        ],
+        "description": "[set_watch_face] Accent color."
+       },
+       "set_sleep_tracking::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_sleep_tracking] On or off."
+       },
+       "set_sleep_tracking::bedtime": {
+        "type": "string",
+        "description": "[set_sleep_tracking] Bedtime."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ],
+  "navigation": [
+   {
+    "type": "function",
+    "function": {
+     "name": "execute",
+     "description": "Dispatch entry point handling ONLY these 13 operations: navigate_to, add_waypoint, share_eta, remove_waypoint, find_poi, avoid_route, set_speed_alert, set_map_view, set_traffic_layer, set_voice_guidance, set_units, set_lane_guidance, set_alternate_routes. Pick `operation`, then supply that operation's namespaced arguments.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "operation": {
+        "type": "string",
+        "enum": [
+         "navigate_to",
+         "add_waypoint",
+         "share_eta",
+         "remove_waypoint",
+         "find_poi",
+         "avoid_route",
+         "set_speed_alert",
+         "set_map_view",
+         "set_traffic_layer",
+         "set_voice_guidance",
+         "set_units",
+         "set_lane_guidance",
+         "set_alternate_routes"
+        ],
+        "description": "Which operation to perform."
+       },
+       "navigate_to::destination": {
+        "type": "string",
+        "description": "[navigate_to] Destination."
+       },
+       "navigate_to::route": {
+        "type": "string",
+        "enum": [
+         "fastest",
+         "shortest",
+         "eco",
+         "scenic"
+        ],
+        "description": "[navigate_to] Route preference."
+       },
+       "navigate_to::depart": {
+        "type": "string",
+        "enum": [
+         "now",
+         "in_15",
+         "in_30"
+        ],
+        "description": "[navigate_to] Departure."
+       },
+       "add_waypoint::place": {
+        "type": "string",
+        "description": "[add_waypoint] Waypoint."
+       },
+       "add_waypoint::position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "before_destination"
+        ],
+        "description": "[add_waypoint] Insert position."
+       },
+       "add_waypoint::minutes": {
+        "type": "integer",
+        "description": "[add_waypoint] Planned stop minutes."
+       },
+       "share_eta::contact": {
+        "type": "string",
+        "description": "[share_eta] Contact name."
+       },
+       "share_eta::interval": {
+        "type": "string",
+        "enum": [
+         "once",
+         "live",
+         "on_arrival"
+        ],
+        "description": "[share_eta] Update interval."
+       },
+       "remove_waypoint::place": {
+        "type": "string",
+        "description": "[remove_waypoint] Waypoint."
+       },
+       "find_poi::category": {
+        "type": "string",
+        "enum": [
+         "gas",
+         "food",
+         "coffee",
+         "rest_stop",
+         "charging",
+         "parking"
+        ],
+        "description": "[find_poi] POI category."
+       },
+       "find_poi::sort": {
+        "type": "string",
+        "enum": [
+         "distance",
+         "rating",
+         "price"
+        ],
+        "description": "[find_poi] Sort by."
+       },
+       "find_poi::open_now": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ],
+        "description": "[find_poi] Open now only."
+       },
+       "avoid_route::option": {
+        "type": "string",
+        "enum": [
+         "tolls",
+         "highways",
+         "ferries",
+         "traffic"
+        ],
+        "description": "[avoid_route] Avoidance."
+       },
+       "avoid_route::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[avoid_route] On or off."
+       },
+       "avoid_route::scope": {
+        "type": "string",
+        "enum": [
+         "this_trip",
+         "always"
+        ],
+        "description": "[avoid_route] Scope."
+       },
+       "set_speed_alert::mph": {
+        "type": "integer",
+        "description": "[set_speed_alert] Speed limit in mph."
+       },
+       "set_speed_alert::tolerance": {
+        "type": "integer",
+        "description": "[set_speed_alert] Tolerance over limit in mph."
+       },
+       "set_map_view::view": {
+        "type": "string",
+        "enum": [
+         "north_up",
+         "heading_up",
+         "3d",
+         "satellite"
+        ],
+        "description": "[set_map_view] Map view."
+       },
+       "set_map_view::zoom": {
+        "type": "integer",
+        "description": "[set_map_view] Zoom level 1-20."
+       },
+       "set_traffic_layer::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_traffic_layer] On or off."
+       },
+       "set_traffic_layer::reroute": {
+        "type": "string",
+        "enum": [
+         "ask",
+         "auto",
+         "never"
+        ],
+        "description": "[set_traffic_layer] Auto-reroute."
+       },
+       "set_voice_guidance::level": {
+        "type": "string",
+        "enum": [
+         "off",
+         "minimal",
+         "normal",
+         "detailed"
+        ],
+        "description": "[set_voice_guidance] Verbosity."
+       },
+       "set_voice_guidance::language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french"
+        ],
+        "description": "[set_voice_guidance] Language."
+       },
+       "set_voice_guidance::volume": {
+        "type": "integer",
+        "description": "[set_voice_guidance] Voice volume 0-100."
+       },
+       "set_units::units": {
+        "type": "string",
+        "enum": [
+         "miles",
+         "kilometers"
+        ],
+        "description": "[set_units] Distance units."
+       },
+       "set_units::temp_units": {
+        "type": "string",
+        "enum": [
+         "fahrenheit",
+         "celsius"
+        ],
+        "description": "[set_units] Temperature units."
+       },
+       "set_lane_guidance::state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_lane_guidance] On or off."
+       },
+       "set_lane_guidance::junction_view": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_lane_guidance] Junction view."
+       },
+       "set_alternate_routes::count": {
+        "type": "integer",
+        "description": "[set_alternate_routes] Number of alternates 0-3."
+       },
+       "set_alternate_routes::preview": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "[set_alternate_routes] Preview."
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

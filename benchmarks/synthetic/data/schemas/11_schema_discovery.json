@@ -1,0 +1,89 @@
+{
+ "variant": "schema discovery",
+ "operator": "schema discovery",
+ "method": "-",
+ "construction": {
+  "kind": "hierarchy",
+  "arg": "disclose"
+ },
+ "scope": "catalog",
+ "tools": [
+  {
+   "type": "function",
+   "function": {
+    "name": "list_methods",
+    "description": "List a class's methods with their FULL argument schemas. Call this first: `invoke` requires the exact argument names, which are only available here.",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "class": {
+       "type": "string",
+       "enum": [
+        "calendar",
+        "car_cabin",
+        "climate",
+        "kitchen",
+        "laundry",
+        "media_player",
+        "navigation",
+        "security",
+        "smart_home",
+        "smartwatch",
+        "tv",
+        "vacuum"
+       ],
+       "description": "The class to inspect."
+      }
+     },
+     "required": [
+      "class"
+     ]
+    }
+   }
+  },
+  {
+   "type": "function",
+   "function": {
+    "name": "invoke",
+    "description": "Invoke one method of one class. Available methods — calendar: create_event, set_event_duration, move_event, invite_guest, remove_guest, set_event_location, set_reminder, set_recurrence, update_event_status, set_event_color, set_event_visibility, create_task, block_focus_time, set_availability, set_working_hours; car_cabin: set_window, set_sunroof, set_climate, set_fan_speed, set_vent_direction, set_recirculation, set_light, set_ambient_light, adjust_seat, set_seat_position, set_massage, set_steering_heat, set_door_lock, fold_mirror, set_wiper, set_defrost, set_drive_mode, set_charge_limit; climate: set_thermostat, set_temp_range, set_thermostat_hold, set_fan_mode, set_vent, set_humidity, set_dehumidifier, set_air_purifier, set_hvac_schedule, set_zone_priority, set_filter_reminder, set_away_mode, set_humidity_alert; kitchen: set_oven, preheat_oven, set_stove_burner, set_burner_timer, run_microwave, set_fridge, set_fridge_mode, make_ice, brew_coffee, boil_kettle, run_dishwasher, set_rangehood, set_kitchen_timer; laundry: start_wash, set_soil_level, set_water_level, start_dry, set_dry_timer, set_detergent, set_laundry_option, set_delay_start, set_spin_only, control_machine, set_notify, run_drum_clean, steam_refresh; media_player: playback_control, set_source, play_playlist, queue_track, seek, set_volume, set_mute, set_balance, set_tone, set_play_mode, set_crossfade, set_eq_preset, transfer_playback, group_zones, set_sleep_timer; navigation: navigate_to, add_waypoint, share_eta, remove_waypoint, find_poi, avoid_route, set_speed_alert, set_map_view, set_traffic_layer, set_voice_guidance, set_units, set_lane_guidance, set_alternate_routes; security: set_lock, set_auto_lock, set_alarm, set_alarm_delay, control_camera, set_camera_sensitivity, set_camera_privacy, control_garage, control_floodlight, set_motion_light, add_access_code, remove_access_code, set_arm_schedule; smart_home: set_room_light, set_brightness, set_color_temp, set_light_color, set_light_effect, set_fan, set_blinds, set_blind_tilt, set_outlet, set_humidifier, set_motion_sensor, set_door_sensor, set_thermostat_room, announce, run_robot_chore, activate_scene; smartwatch: start_workout, control_workout, set_goal, log_water, log_weight, set_heart_alert, set_timer, set_alarm, start_breathing, send_message, set_watch_mode, set_watch_face, set_sleep_tracking; tv: set_input, launch_app, search_content, play_title, playback_seek, set_channel, set_tv_volume, set_mute, set_picture_mode, set_sound_mode, set_audio_output, set_caption, set_sleep_timer; vacuum: start_cleaning, set_suction, set_water_level, spot_clean, set_no_go_zone, dock_control, set_schedule, set_volume, set_carpet_boost, set_child_lock, set_do_not_disturb, set_mop_pad, set_auto_empty. Argument names/types come from `list_methods`.",
+    "parameters": {
+     "type": "object",
+     "properties": {
+      "class": {
+       "type": "string",
+       "enum": [
+        "calendar",
+        "car_cabin",
+        "climate",
+        "kitchen",
+        "laundry",
+        "media_player",
+        "navigation",
+        "security",
+        "smart_home",
+        "smartwatch",
+        "tv",
+        "vacuum"
+       ],
+       "description": "The class owning the method."
+      },
+      "method": {
+       "type": "string",
+       "description": "Method name within the class."
+      },
+      "arguments": {
+       "type": "object",
+       "description": "The method's arguments, per list_methods."
+      }
+     },
+     "required": [
+      "class",
+      "method",
+      "arguments"
+     ]
+    }
+   }
+  }
+ ],
+ "note": "list_methods(class) returns the native schemas of that class's methods (the per-domain native catalog); invoke(class, method, arguments) executes one."
+}

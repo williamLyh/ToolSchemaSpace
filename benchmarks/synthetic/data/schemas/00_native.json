@@ -1,0 +1,5885 @@
+{
+ "variant": "native",
+ "operator": "native",
+ "method": "-",
+ "construction": {
+  "kind": "ladder",
+  "arg": 5
+ },
+ "scope": "per_domain",
+ "domains": {
+  "car_cabin": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_window",
+     "description": "Open, close, or vent a window at a speed.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "position": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "Which window."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent"
+        ],
+        "description": "Target window state."
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "express"
+        ],
+        "description": "Movement speed."
+       }
+      },
+      "required": [
+       "position",
+       "state",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sunroof",
+     "description": "Set the sunroof position to a given extent.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent",
+         "tilt"
+        ],
+        "description": "Sunroof action."
+       },
+       "extent": {
+        "type": "integer",
+        "description": "Open extent percent."
+       }
+      },
+      "required": [
+       "state",
+       "extent"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_climate",
+     "description": "Set the climate control for a cabin zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "Cabin zone."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "off"
+        ],
+        "description": "HVAC mode."
+       },
+       "temperature": {
+        "type": "integer",
+        "description": "Target temperature in Fahrenheit."
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan_speed",
+     "description": "Set the cabin blower fan speed.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "Cabin zone."
+       },
+       "speed": {
+        "type": "integer",
+        "description": "Fan speed 0-7."
+       }
+      },
+      "required": [
+       "zone",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_vent_direction",
+     "description": "Set the airflow direction for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ],
+        "description": "Cabin zone."
+       },
+       "direction": {
+        "type": "string",
+        "enum": [
+         "face",
+         "feet",
+         "windshield",
+         "face_and_feet"
+        ],
+        "description": "Airflow direction."
+       }
+      },
+      "required": [
+       "zone",
+       "direction"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_recirculation",
+     "description": "Set the cabin air intake mode and auto-defog.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "fresh_air",
+         "recirculate",
+         "auto"
+        ],
+        "description": "Air intake."
+       },
+       "auto_defog": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Auto-defog."
+       }
+      },
+      "required": [
+       "mode",
+       "auto_defog"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light",
+     "description": "Turn an interior light on or off.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "dome",
+         "footwell",
+         "glovebox",
+         "trunk",
+         "ambient"
+        ],
+        "description": "Light location."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "location",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_ambient_light",
+     "description": "Set the cabin ambient lighting zone, color and brightness.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "all"
+        ],
+        "description": "Ambient zone."
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ],
+        "description": "Ambient color."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness percent."
+       }
+      },
+      "required": [
+       "zone",
+       "color",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "adjust_seat",
+     "description": "Adjust a seat's heating, ventilation or recline level.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "Which seat."
+       },
+       "function": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "ventilation",
+         "recline"
+        ],
+        "description": "What to adjust."
+       },
+       "level": {
+        "type": "integer",
+        "description": "Intensity level 0-3."
+       }
+      },
+      "required": [
+       "seat",
+       "function",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_seat_position",
+     "description": "Move a seat along an axis by an amount.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "Which seat."
+       },
+       "axis": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "back",
+         "up",
+         "down",
+         "recline"
+        ],
+        "description": "Movement axis."
+       },
+       "amount": {
+        "type": "integer",
+        "description": "Steps to move."
+       }
+      },
+      "required": [
+       "seat",
+       "axis",
+       "amount"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_massage",
+     "description": "Run a seat massage program at an intensity.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger"
+        ],
+        "description": "Which seat."
+       },
+       "program": {
+        "type": "string",
+        "enum": [
+         "wave",
+         "pulse",
+         "stretch",
+         "off"
+        ],
+        "description": "Massage program."
+       },
+       "intensity": {
+        "type": "integer",
+        "description": "Intensity 1-5."
+       }
+      },
+      "required": [
+       "seat",
+       "program",
+       "intensity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_steering_heat",
+     "description": "Set the heated steering wheel level and auto mode.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "integer",
+        "description": "Heat level 0-3."
+       },
+       "auto": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Auto with climate."
+       }
+      },
+      "required": [
+       "level",
+       "auto"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_door_lock",
+     "description": "Lock or unlock a door.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear_left",
+         "rear_right",
+         "all"
+        ],
+        "description": "Which door."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ],
+        "description": "Lock state."
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "fold_mirror",
+     "description": "Fold or unfold a side mirror.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "side": {
+        "type": "string",
+        "enum": [
+         "left",
+         "right",
+         "both"
+        ],
+        "description": "Mirror side."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "folded",
+         "extended"
+        ],
+        "description": "Folded or extended."
+       }
+      },
+      "required": [
+       "side",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_wiper",
+     "description": "Set the windshield wiper mode and rain sensitivity.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "intermittent",
+         "low",
+         "high",
+         "mist"
+        ],
+        "description": "Wiper mode."
+       },
+       "sensitivity": {
+        "type": "integer",
+        "description": "Rain sensor sensitivity 1-5."
+       }
+      },
+      "required": [
+       "mode",
+       "sensitivity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_defrost",
+     "description": "Turn a defroster on or off for a number of minutes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "both"
+        ],
+        "description": "Defroster zone."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Run time in minutes."
+       }
+      },
+      "required": [
+       "zone",
+       "state",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_drive_mode",
+     "description": "Select the driving mode and regen level.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "sport",
+         "eco",
+         "snow",
+         "off_road"
+        ],
+        "description": "Drive mode."
+       },
+       "regen": {
+        "type": "string",
+        "enum": [
+         "low",
+         "standard",
+         "high"
+        ],
+        "description": "Regenerative braking."
+       }
+      },
+      "required": [
+       "mode",
+       "regen"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_charge_limit",
+     "description": "Set the EV battery charge limit and schedule.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "percent": {
+        "type": "integer",
+        "description": "Charge limit percent."
+       },
+       "schedule": {
+        "type": "string",
+        "enum": [
+         "now",
+         "off_peak",
+         "scheduled"
+        ],
+        "description": "Charge schedule."
+       }
+      },
+      "required": [
+       "percent",
+       "schedule"
+      ]
+     }
+    }
+   }
+  ],
+  "smart_home": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_room_light",
+     "description": "Switch a room's lights on or off with an optional fade.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "transition": {
+        "type": "integer",
+        "description": "Fade time in seconds."
+       }
+      },
+      "required": [
+       "room",
+       "state",
+       "transition"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_brightness",
+     "description": "Set a room light's brightness with an optional fade.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness percent."
+       },
+       "transition": {
+        "type": "integer",
+        "description": "Fade time in seconds."
+       }
+      },
+      "required": [
+       "room",
+       "brightness",
+       "transition"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_color_temp",
+     "description": "Set a room light's white color temperature.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "kelvin": {
+        "type": "integer",
+        "description": "Color temperature in Kelvin."
+       }
+      },
+      "required": [
+       "room",
+       "kelvin"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light_color",
+     "description": "Set a room light's color and brightness.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ],
+        "description": "Light color."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness percent."
+       }
+      },
+      "required": [
+       "room",
+       "color",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light_effect",
+     "description": "Apply a dynamic lighting effect to a room.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "effect": {
+        "type": "string",
+        "enum": [
+         "none",
+         "colorloop",
+         "candle",
+         "fireplace",
+         "party"
+        ],
+        "description": "Effect."
+       }
+      },
+      "required": [
+       "room",
+       "effect"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan",
+     "description": "Control a ceiling fan speed and direction.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Fan speed."
+       },
+       "direction": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "reverse"
+        ],
+        "description": "Spin direction."
+       }
+      },
+      "required": [
+       "room",
+       "speed",
+       "direction"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_blinds",
+     "description": "Set blinds position to a percent.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "position": {
+        "type": "integer",
+        "description": "Open percent."
+       }
+      },
+      "required": [
+       "room",
+       "position"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_blind_tilt",
+     "description": "Tilt a room's blind slats.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "angle": {
+        "type": "integer",
+        "description": "Tilt angle degrees."
+       }
+      },
+      "required": [
+       "room",
+       "angle"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_outlet",
+     "description": "Switch a smart outlet on or off.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "outlet": {
+        "type": "string",
+        "enum": [
+         "tv",
+         "heater",
+         "charger",
+         "lamp",
+         "coffee_maker"
+        ],
+        "description": "Which outlet."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "outlet",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidifier",
+     "description": "Set a room humidifier target.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "humidity": {
+        "type": "integer",
+        "description": "Target humidity percent."
+       }
+      },
+      "required": [
+       "room",
+       "humidity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_motion_sensor",
+     "description": "Arm or disarm a room motion sensor with a sensitivity.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "sensitivity": {
+        "type": "integer",
+        "description": "Sensitivity 1-10."
+       }
+      },
+      "required": [
+       "room",
+       "state",
+       "sensitivity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_door_sensor",
+     "description": "Enable or disable a contact sensor.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "window"
+        ],
+        "description": "Which sensor."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat_room",
+     "description": "Set a room's smart thermostat.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "temperature": {
+        "type": "integer",
+        "description": "Target temp F."
+       }
+      },
+      "required": [
+       "room",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "announce",
+     "description": "Play a text-to-speech announcement in a room at a volume.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ],
+        "description": "Which room."
+       },
+       "message": {
+        "type": "string",
+        "description": "Announcement text."
+       },
+       "volume": {
+        "type": "integer",
+        "description": "Volume percent."
+       }
+      },
+      "required": [
+       "room",
+       "message",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_robot_chore",
+     "description": "Run a household robot chore.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "device": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "lawn_mower",
+         "pool_cleaner"
+        ],
+        "description": "Device."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "dock"
+        ],
+        "description": "Action."
+       }
+      },
+      "required": [
+       "device",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "activate_scene",
+     "description": "Activate a predefined home scene.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "scene": {
+        "type": "string",
+        "enum": [
+         "movie",
+         "dinner",
+         "sleep",
+         "morning",
+         "away",
+         "reading",
+         "relax",
+         "focus",
+         "party",
+         "romantic",
+         "cleaning",
+         "gaming"
+        ],
+        "description": "Scene name."
+       }
+      },
+      "required": [
+       "scene"
+      ]
+     }
+    }
+   }
+  ],
+  "climate": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat",
+     "description": "Set a zone thermostat mode and target temperature.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "eco",
+         "off"
+        ],
+        "description": "Operating mode."
+       },
+       "temperature": {
+        "type": "integer",
+        "description": "Target temp in Fahrenheit."
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_temp_range",
+     "description": "Set a zone's heat/cool setpoint range for auto mode.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "heat_to": {
+        "type": "integer",
+        "description": "Heat setpoint F."
+       },
+       "cool_to": {
+        "type": "integer",
+        "description": "Cool setpoint F."
+       }
+      },
+      "required": [
+       "zone",
+       "heat_to",
+       "cool_to"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat_hold",
+     "description": "Hold a zone setpoint for some hours.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "hours": {
+        "type": "integer",
+        "description": "Hold duration in hours."
+       }
+      },
+      "required": [
+       "zone",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan_mode",
+     "description": "Set the HVAC fan mode and speed for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "fan_mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "on",
+         "circulate"
+        ],
+        "description": "Fan mode."
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Fan speed."
+       }
+      },
+      "required": [
+       "zone",
+       "fan_mode",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_vent",
+     "description": "Set how far a zone's air vent is open.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "open_percent": {
+        "type": "integer",
+        "description": "Vent open percentage."
+       }
+      },
+      "required": [
+       "zone",
+       "open_percent"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidity",
+     "description": "Set the target humidity for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "humidity": {
+        "type": "integer",
+        "description": "Target relative humidity percent."
+       }
+      },
+      "required": [
+       "zone",
+       "humidity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_dehumidifier",
+     "description": "Set a zone dehumidifier mode and target.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "continuous",
+         "off"
+        ],
+        "description": "Mode."
+       },
+       "target": {
+        "type": "integer",
+        "description": "Target humidity percent."
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "target"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_air_purifier",
+     "description": "Set an air purifier mode for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "sleep",
+         "turbo",
+         "off"
+        ],
+        "description": "Purifier mode."
+       }
+      },
+      "required": [
+       "zone",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_hvac_schedule",
+     "description": "Enable or disable a named HVAC schedule.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "schedule": {
+        "type": "string",
+        "enum": [
+         "weekday",
+         "weekend",
+         "vacation",
+         "night"
+        ],
+        "description": "Schedule preset."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Enable or disable."
+       }
+      },
+      "required": [
+       "schedule",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_zone_priority",
+     "description": "Set a zone's comfort priority.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "balanced",
+         "savings"
+        ],
+        "description": "Priority."
+       }
+      },
+      "required": [
+       "zone",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_filter_reminder",
+     "description": "Set a filter change reminder for a component.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "component": {
+        "type": "string",
+        "enum": [
+         "hvac",
+         "humidifier",
+         "purifier"
+        ],
+        "description": "Component."
+       },
+       "months": {
+        "type": "integer",
+        "description": "Interval in months."
+       }
+      },
+      "required": [
+       "component",
+       "months"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_away_mode",
+     "description": "Turn whole-home away mode on or off with a setback.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "setback": {
+        "type": "integer",
+        "description": "Degrees of setback."
+       }
+      },
+      "required": [
+       "state",
+       "setback"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidity_alert",
+     "description": "Set a high-humidity alert for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ],
+        "description": "HVAC zone."
+       },
+       "threshold": {
+        "type": "integer",
+        "description": "Threshold percent."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "zone",
+       "threshold",
+       "state"
+      ]
+     }
+    }
+   }
+  ],
+  "calendar": [
+   {
+    "type": "function",
+    "function": {
+     "name": "create_event",
+     "description": "Create a calendar event.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string",
+        "description": "Event title."
+       },
+       "calendar": {
+        "type": "string",
+        "enum": [
+         "personal",
+         "work",
+         "family",
+         "shared"
+        ],
+        "description": "Target calendar."
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Day of week."
+       },
+       "time": {
+        "type": "string",
+        "description": "Start time."
+       }
+      },
+      "required": [
+       "title",
+       "calendar",
+       "day",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_duration",
+     "description": "Set how long an event lasts.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Duration in minutes."
+       }
+      },
+      "required": [
+       "event",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "move_event",
+     "description": "Move an event to a new day and time.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "New day."
+       },
+       "time": {
+        "type": "string",
+        "description": "New start time."
+       }
+      },
+      "required": [
+       "event",
+       "day",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "invite_guest",
+     "description": "Invite a guest to an event with a role.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "guest": {
+        "type": "string",
+        "description": "Guest name or email."
+       },
+       "role": {
+        "type": "string",
+        "enum": [
+         "required",
+         "optional",
+         "organizer"
+        ],
+        "description": "Guest role."
+       }
+      },
+      "required": [
+       "event",
+       "guest",
+       "role"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_guest",
+     "description": "Remove a guest from an event.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "guest": {
+        "type": "string",
+        "description": "Guest name."
+       }
+      },
+      "required": [
+       "event",
+       "guest"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_location",
+     "description": "Set an event's location and type.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "location": {
+        "type": "string",
+        "description": "Location."
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "in_person",
+         "video",
+         "phone"
+        ],
+        "description": "Meeting type."
+       }
+      },
+      "required": [
+       "event",
+       "location",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_reminder",
+     "description": "Set a reminder lead time and method on an event.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "lead_time": {
+        "type": "string",
+        "enum": [
+         "5_min",
+         "15_min",
+         "30_min",
+         "1_hour",
+         "1_day"
+        ],
+        "description": "Reminder lead time."
+       },
+       "method": {
+        "type": "string",
+        "enum": [
+         "popup",
+         "email",
+         "sms"
+        ],
+        "description": "Notification method."
+       }
+      },
+      "required": [
+       "event",
+       "lead_time",
+       "method"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_recurrence",
+     "description": "Set how often an event repeats and how many times.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "frequency": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly",
+         "biweekly",
+         "monthly",
+         "none"
+        ],
+        "description": "Recurrence frequency."
+       },
+       "count": {
+        "type": "integer",
+        "description": "Number of occurrences."
+       }
+      },
+      "required": [
+       "event",
+       "frequency",
+       "count"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "update_event_status",
+     "description": "Update an event's response status.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "status": {
+        "type": "string",
+        "enum": [
+         "accepted",
+         "declined",
+         "tentative"
+        ],
+        "description": "Response."
+       }
+      },
+      "required": [
+       "event",
+       "status"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_color",
+     "description": "Set an event's color label.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "red",
+         "blue",
+         "green",
+         "yellow",
+         "purple"
+        ],
+        "description": "Color."
+       }
+      },
+      "required": [
+       "event",
+       "color"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_visibility",
+     "description": "Set an event's visibility.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string",
+        "description": "Event name."
+       },
+       "visibility": {
+        "type": "string",
+        "enum": [
+         "public",
+         "private",
+         "default"
+        ],
+        "description": "Visibility."
+       }
+      },
+      "required": [
+       "event",
+       "visibility"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "create_task",
+     "description": "Create a to-do task with a priority.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string",
+        "description": "Task title."
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Due day."
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Priority."
+       }
+      },
+      "required": [
+       "title",
+       "day",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "block_focus_time",
+     "description": "Block focus time on a day for some hours.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Day."
+       },
+       "hours": {
+        "type": "integer",
+        "description": "Hours to block."
+       }
+      },
+      "required": [
+       "day",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_availability",
+     "description": "Set your availability status until a point.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "status": {
+        "type": "string",
+        "enum": [
+         "busy",
+         "free",
+         "out_of_office",
+         "focus"
+        ],
+        "description": "Availability."
+       },
+       "until": {
+        "type": "string",
+        "enum": [
+         "end_of_day",
+         "one_hour",
+         "end_of_week"
+        ],
+        "description": "Until."
+       }
+      },
+      "required": [
+       "status",
+       "until"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_working_hours",
+     "description": "Set your working hours for a day.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Day."
+       },
+       "start": {
+        "type": "string",
+        "description": "Start time."
+       },
+       "end": {
+        "type": "string",
+        "description": "End time."
+       }
+      },
+      "required": [
+       "day",
+       "start",
+       "end"
+      ]
+     }
+    }
+   }
+  ],
+  "media_player": [
+   {
+    "type": "function",
+    "function": {
+     "name": "playback_control",
+     "description": "Control playback in a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "stop",
+         "next",
+         "previous"
+        ],
+        "description": "Playback action."
+       }
+      },
+      "required": [
+       "zone",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_source",
+     "description": "Select the audio source for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "source": {
+        "type": "string",
+        "enum": [
+         "spotify",
+         "radio",
+         "bluetooth",
+         "airplay",
+         "vinyl"
+        ],
+        "description": "Audio source."
+       }
+      },
+      "required": [
+       "zone",
+       "source"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "play_playlist",
+     "description": "Play a named playlist in a zone with a play mode.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "playlist": {
+        "type": "string",
+        "description": "Playlist name."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "in_order",
+         "shuffle"
+        ],
+        "description": "Play mode."
+       }
+      },
+      "required": [
+       "zone",
+       "playlist",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "queue_track",
+     "description": "Add a track to a zone's queue at a position.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "track": {
+        "type": "string",
+        "description": "Track name."
+       },
+       "position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "end"
+        ],
+        "description": "Queue position."
+       }
+      },
+      "required": [
+       "zone",
+       "track",
+       "position"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "seek",
+     "description": "Seek to a position in the current track.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Position in seconds."
+       }
+      },
+      "required": [
+       "zone",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_volume",
+     "description": "Set the volume level in a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "volume": {
+        "type": "integer",
+        "description": "Volume percent."
+       }
+      },
+      "required": [
+       "zone",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mute",
+     "description": "Mute or unmute a zone with a fade.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ],
+        "description": "Mute state."
+       },
+       "fade": {
+        "type": "integer",
+        "description": "Fade seconds."
+       }
+      },
+      "required": [
+       "zone",
+       "state",
+       "fade"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_balance",
+     "description": "Set the left/right balance for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "balance": {
+        "type": "integer",
+        "description": "Balance -10 (left) to 10 (right)."
+       }
+      },
+      "required": [
+       "zone",
+       "balance"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_tone",
+     "description": "Set bass and treble for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "bass": {
+        "type": "integer",
+        "description": "Bass -5 to 5."
+       },
+       "treble": {
+        "type": "integer",
+        "description": "Treble -5 to 5."
+       }
+      },
+      "required": [
+       "zone",
+       "bass",
+       "treble"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_play_mode",
+     "description": "Set repeat/shuffle mode for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "repeat_one",
+         "repeat_all",
+         "shuffle"
+        ],
+        "description": "Play mode."
+       }
+      },
+      "required": [
+       "zone",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_crossfade",
+     "description": "Set crossfade seconds for a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Crossfade seconds."
+       }
+      },
+      "required": [
+       "zone",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_eq_preset",
+     "description": "Apply an equalizer preset to a zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "preset": {
+        "type": "string",
+        "enum": [
+         "flat",
+         "bass_boost",
+         "treble_boost",
+         "vocal",
+         "rock",
+         "pop",
+         "jazz",
+         "classical",
+         "electronic",
+         "acoustic",
+         "loudness",
+         "podcast"
+        ],
+        "description": "EQ preset."
+       }
+      },
+      "required": [
+       "zone",
+       "preset"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "transfer_playback",
+     "description": "Transfer playback between zones, optionally taking the queue.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "from_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "Source zone."
+       },
+       "to_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "Target zone."
+       },
+       "include_queue": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ],
+        "description": "Take the queue."
+       }
+      },
+      "required": [
+       "from_zone",
+       "to_zone",
+       "include_queue"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "group_zones",
+     "description": "Group or ungroup a zone with the main zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ],
+        "description": "Audio zone."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "group",
+         "ungroup"
+        ],
+        "description": "Action."
+       }
+      },
+      "required": [
+       "zone",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_timer",
+     "description": "Set a sleep timer that stops a zone after some minutes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ],
+        "description": "Audio zone."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes until stop."
+       }
+      },
+      "required": [
+       "zone",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "kitchen": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_oven",
+     "description": "Set the oven mode, temperature and timer.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "bake",
+         "broil",
+         "roast",
+         "convection",
+         "warm",
+         "off"
+        ],
+        "description": "Oven mode."
+       },
+       "temperature": {
+        "type": "integer",
+        "description": "Temperature in Fahrenheit."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Cook timer minutes."
+       }
+      },
+      "required": [
+       "mode",
+       "temperature",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "preheat_oven",
+     "description": "Preheat the oven to a temperature on a rack.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "temperature": {
+        "type": "integer",
+        "description": "Temperature in Fahrenheit."
+       },
+       "rack": {
+        "type": "string",
+        "enum": [
+         "top",
+         "middle",
+         "bottom"
+        ],
+        "description": "Rack position."
+       }
+      },
+      "required": [
+       "temperature",
+       "rack"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_stove_burner",
+     "description": "Set a stove burner heat level.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "Which burner."
+       },
+       "level": {
+        "type": "integer",
+        "description": "Heat level 0-9."
+       }
+      },
+      "required": [
+       "burner",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_burner_timer",
+     "description": "Set a timer on a stove burner.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ],
+        "description": "Which burner."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes."
+       }
+      },
+      "required": [
+       "burner",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_microwave",
+     "description": "Run the microwave at a power level for a duration with an end action.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "power": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "defrost"
+        ],
+        "description": "Power level."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Duration in seconds."
+       },
+       "then": {
+        "type": "string",
+        "enum": [
+         "beep",
+         "keep_warm",
+         "silent"
+        ],
+        "description": "When done."
+       }
+      },
+      "required": [
+       "power",
+       "seconds",
+       "then"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fridge",
+     "description": "Set a fridge or freezer compartment temperature.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "compartment": {
+        "type": "string",
+        "enum": [
+         "fridge",
+         "freezer"
+        ],
+        "description": "Compartment."
+       },
+       "temperature": {
+        "type": "integer",
+        "description": "Target temperature in Fahrenheit."
+       }
+      },
+      "required": [
+       "compartment",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fridge_mode",
+     "description": "Set a special fridge mode and door alarm.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "vacation",
+         "quick_cool",
+         "quick_freeze"
+        ],
+        "description": "Mode."
+       },
+       "door_alarm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Door alarm."
+       }
+      },
+      "required": [
+       "mode",
+       "door_alarm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "make_ice",
+     "description": "Set the ice maker mode and rate.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "cubed",
+         "crushed",
+         "max"
+        ],
+        "description": "Ice mode."
+       },
+       "rate": {
+        "type": "string",
+        "enum": [
+         "low",
+         "normal",
+         "fast"
+        ],
+        "description": "Production rate."
+       }
+      },
+      "required": [
+       "mode",
+       "rate"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "brew_coffee",
+     "description": "Brew coffee with a given style, size and strength.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "style": {
+        "type": "string",
+        "enum": [
+         "espresso",
+         "americano",
+         "latte",
+         "cappuccino",
+         "drip"
+        ],
+        "description": "Coffee style."
+       },
+       "size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ],
+        "description": "Cup size."
+       },
+       "strength": {
+        "type": "string",
+        "enum": [
+         "mild",
+         "regular",
+         "strong"
+        ],
+        "description": "Strength."
+       }
+      },
+      "required": [
+       "style",
+       "size",
+       "strength"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "boil_kettle",
+     "description": "Boil the kettle to a target temperature with keep-warm.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "temperature": {
+        "type": "integer",
+        "description": "Target temperature in Fahrenheit."
+       },
+       "keep_warm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Keep warm."
+       }
+      },
+      "required": [
+       "temperature",
+       "keep_warm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_dishwasher",
+     "description": "Start the dishwasher on a cycle.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "eco",
+         "heavy",
+         "quick",
+         "rinse"
+        ],
+        "description": "Wash cycle."
+       },
+       "dry": {
+        "type": "boolean",
+        "description": "Whether to heat-dry afterwards."
+       }
+      },
+      "required": [
+       "cycle",
+       "dry"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_rangehood",
+     "description": "Set the range hood fan, light and boost timer.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "fan": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Fan speed."
+       },
+       "light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Light."
+       },
+       "boost_minutes": {
+        "type": "integer",
+        "description": "Boost timer minutes."
+       }
+      },
+      "required": [
+       "fan",
+       "light",
+       "boost_minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_kitchen_timer",
+     "description": "Start a labeled kitchen timer.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "label": {
+        "type": "string",
+        "description": "Timer label."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Timer length in minutes."
+       }
+      },
+      "required": [
+       "label",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "laundry": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_wash",
+     "description": "Start a washer cycle.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "delicate",
+         "heavy",
+         "quick",
+         "bedding"
+        ],
+        "description": "Wash cycle."
+       },
+       "temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ],
+        "description": "Water temperature."
+       },
+       "spin": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "no_spin"
+        ],
+        "description": "Spin speed."
+       }
+      },
+      "required": [
+       "cycle",
+       "temperature",
+       "spin"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_soil_level",
+     "description": "Set the wash soil level and rinse count.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "soil": {
+        "type": "string",
+        "enum": [
+         "light",
+         "normal",
+         "heavy"
+        ],
+        "description": "Soil level."
+       },
+       "rinses": {
+        "type": "integer",
+        "description": "Number of rinses."
+       }
+      },
+      "required": [
+       "soil",
+       "rinses"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_water_level",
+     "description": "Set the washer water level and temperature.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "auto"
+        ],
+        "description": "Water level."
+       },
+       "temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ],
+        "description": "Water temperature."
+       }
+      },
+      "required": [
+       "level",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "start_dry",
+     "description": "Start a dryer cycle with optional steam.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "damp",
+         "normal",
+         "extra_dry"
+        ],
+        "description": "Dryness level."
+       },
+       "heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "air_only"
+        ],
+        "description": "Heat setting."
+       },
+       "steam": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Steam."
+       }
+      },
+      "required": [
+       "level",
+       "heat",
+       "steam"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_dry_timer",
+     "description": "Set a timed dry duration and heat.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer",
+        "description": "Dry minutes."
+       },
+       "heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Heat setting."
+       }
+      },
+      "required": [
+       "minutes",
+       "heat"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_detergent",
+     "description": "Set the detergent type, dose and dispense mode.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "enum": [
+         "regular",
+         "sensitive",
+         "bleach",
+         "softener"
+        ],
+        "description": "Detergent type."
+       },
+       "dose": {
+        "type": "integer",
+        "description": "Dose level 1-5."
+       },
+       "dispense": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "manual"
+        ],
+        "description": "Dispense."
+       }
+      },
+      "required": [
+       "type",
+       "dose",
+       "dispense"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_laundry_option",
+     "description": "Toggle a laundry option.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "option": {
+        "type": "string",
+        "enum": [
+         "steam",
+         "prewash",
+         "extra_rinse",
+         "wrinkle_guard"
+        ],
+        "description": "Option."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "option",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_delay_start",
+     "description": "Delay the start of a machine's next cycle.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ],
+        "description": "Machine."
+       },
+       "hours": {
+        "type": "integer",
+        "description": "Delay in hours."
+       }
+      },
+      "required": [
+       "machine",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_spin_only",
+     "description": "Run a spin-only cycle at a speed for some minutes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Spin speed."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes."
+       }
+      },
+      "required": [
+       "speed",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_machine",
+     "description": "Pause, resume, stop or start a machine.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ],
+        "description": "Machine."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "resume",
+         "stop"
+        ],
+        "description": "Action."
+       }
+      },
+      "required": [
+       "machine",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_notify",
+     "description": "Set an end-of-cycle notification method and volume.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "method": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "app",
+         "both",
+         "none"
+        ],
+        "description": "Notify method."
+       },
+       "volume": {
+        "type": "integer",
+        "description": "Chime volume 0-10."
+       }
+      },
+      "required": [
+       "method",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_drum_clean",
+     "description": "Run a washer drum self-clean and set the reminder.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "quick",
+         "deep"
+        ],
+        "description": "Clean level."
+       },
+       "reminder": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Reminder."
+       }
+      },
+      "required": [
+       "level",
+       "reminder"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "steam_refresh",
+     "description": "Steam-refresh a garment type for some minutes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "garment": {
+        "type": "string",
+        "enum": [
+         "shirts",
+         "suits",
+         "bedding",
+         "outerwear"
+        ],
+        "description": "Garment type."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes."
+       }
+      },
+      "required": [
+       "garment",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "tv": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_input",
+     "description": "Switch the TV input source and aspect ratio.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "source": {
+        "type": "string",
+        "enum": [
+         "hdmi1",
+         "hdmi2",
+         "hdmi3",
+         "tv_tuner",
+         "screen_mirror"
+        ],
+        "description": "Input source."
+       },
+       "aspect": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "16_9",
+         "4_3",
+         "zoom"
+        ],
+        "description": "Aspect ratio."
+       }
+      },
+      "required": [
+       "source",
+       "aspect"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "launch_app",
+     "description": "Open a streaming app on a profile.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo",
+         "spotify"
+        ],
+        "description": "App."
+       },
+       "profile": {
+        "type": "string",
+        "enum": [
+         "default",
+         "kids",
+         "guest"
+        ],
+        "description": "User profile."
+       }
+      },
+      "required": [
+       "app",
+       "profile"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "search_content",
+     "description": "Search for a title within an app and filter by type.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo"
+        ],
+        "description": "App."
+       },
+       "query": {
+        "type": "string",
+        "description": "Search query."
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "any",
+         "movie",
+         "series",
+         "episode"
+        ],
+        "description": "Content type."
+       }
+      },
+      "required": [
+       "app",
+       "query",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "play_title",
+     "description": "Play a specific title with playback controls and audio track.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string",
+        "description": "Title."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "resume",
+         "restart"
+        ],
+        "description": "Action."
+       },
+       "audio": {
+        "type": "string",
+        "enum": [
+         "original",
+         "dubbed",
+         "described"
+        ],
+        "description": "Audio track."
+       }
+      },
+      "required": [
+       "title",
+       "action",
+       "audio"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "playback_seek",
+     "description": "Seek or control playback on the TV.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "rewind",
+         "fast_forward"
+        ],
+        "description": "Action."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Seek seconds."
+       }
+      },
+      "required": [
+       "action",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_channel",
+     "description": "Tune to a TV channel on a source.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "channel": {
+        "type": "integer",
+        "description": "Channel number."
+       },
+       "source": {
+        "type": "string",
+        "enum": [
+         "antenna",
+         "cable",
+         "streaming"
+        ],
+        "description": "Channel source."
+       }
+      },
+      "required": [
+       "channel",
+       "source"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_tv_volume",
+     "description": "Set the TV volume on an output.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "integer",
+        "description": "Volume 0-100."
+       },
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ],
+        "description": "Output."
+       }
+      },
+      "required": [
+       "level",
+       "output"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mute",
+     "description": "Mute or unmute an output.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ],
+        "description": "Output."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ],
+        "description": "Mute state."
+       }
+      },
+      "required": [
+       "output",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_picture_mode",
+     "description": "Set the picture mode, brightness and contrast.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "cinema",
+         "vivid",
+         "game",
+         "sports",
+         "eco"
+        ],
+        "description": "Picture mode."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness 0-100."
+       },
+       "contrast": {
+        "type": "integer",
+        "description": "Contrast 0-100."
+       }
+      },
+      "required": [
+       "mode",
+       "brightness",
+       "contrast"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sound_mode",
+     "description": "Set the sound mode and bass level.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "movie",
+         "music",
+         "clear_voice",
+         "night"
+        ],
+        "description": "Sound mode."
+       },
+       "bass": {
+        "type": "integer",
+        "description": "Bass -5 to 5."
+       }
+      },
+      "required": [
+       "mode",
+       "bass"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_audio_output",
+     "description": "Select the TV audio output device and sync delay.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones",
+         "bluetooth"
+        ],
+        "description": "Audio output."
+       },
+       "delay_ms": {
+        "type": "integer",
+        "description": "A/V sync delay in ms."
+       }
+      },
+      "required": [
+       "output",
+       "delay_ms"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_caption",
+     "description": "Turn closed captions on or off in a language at a text size.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french",
+         "german"
+        ],
+        "description": "Caption language."
+       },
+       "size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ],
+        "description": "Text size."
+       }
+      },
+      "required": [
+       "state",
+       "language",
+       "size"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_timer",
+     "description": "Set a sleep timer with an end action.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes until off."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "power_off",
+         "standby"
+        ],
+        "description": "End action."
+       }
+      },
+      "required": [
+       "minutes",
+       "action"
+      ]
+     }
+    }
+   }
+  ],
+  "vacuum": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_cleaning",
+     "description": "Start cleaning a room in a mode for a number of passes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "whole_house"
+        ],
+        "description": "Room to clean."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "vacuum_and_mop"
+        ],
+        "description": "Cleaning mode."
+       },
+       "passes": {
+        "type": "integer",
+        "description": "Number of passes."
+       }
+      },
+      "required": [
+       "room",
+       "mode",
+       "passes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_suction",
+     "description": "Set the suction power and edge cleaning.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "power": {
+        "type": "string",
+        "enum": [
+         "quiet",
+         "standard",
+         "turbo",
+         "max"
+        ],
+        "description": "Suction power."
+       },
+       "area": {
+        "type": "string",
+        "enum": [
+         "whole",
+         "edges",
+         "center"
+        ],
+        "description": "Cleaning area."
+       },
+       "edge_clean": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Edge cleaning."
+       }
+      },
+      "required": [
+       "power",
+       "area",
+       "edge_clean"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_water_level",
+     "description": "Set the mopping water level and scrub intensity.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ],
+        "description": "Water level."
+       },
+       "scrub": {
+        "type": "string",
+        "enum": [
+         "light",
+         "deep"
+        ],
+        "description": "Scrub intensity."
+       }
+      },
+      "required": [
+       "level",
+       "scrub"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "spot_clean",
+     "description": "Spot-clean a specific area with a radius and passes.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "area": {
+        "type": "string",
+        "description": "Area description."
+       },
+       "radius": {
+        "type": "integer",
+        "description": "Radius in feet."
+       },
+       "passes": {
+        "type": "integer",
+        "description": "Passes."
+       }
+      },
+      "required": [
+       "area",
+       "radius",
+       "passes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_no_go_zone",
+     "description": "Add or remove a zone of a given type.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "description": "Zone label."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "add",
+         "remove"
+        ],
+        "description": "Action."
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "no_go",
+         "no_mop"
+        ],
+        "description": "Zone type."
+       }
+      },
+      "required": [
+       "zone",
+       "action",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "dock_control",
+     "description": "Send the robot to dock with an after-dock action.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "return_to_dock",
+         "empty_bin",
+         "resume",
+         "locate"
+        ],
+        "description": "Dock action."
+       },
+       "after": {
+        "type": "string",
+        "enum": [
+         "charge",
+         "empty",
+         "both"
+        ],
+        "description": "After docking."
+       }
+      },
+      "required": [
+       "action",
+       "after"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_schedule",
+     "description": "Schedule cleaning on a day at a time.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "wednesday",
+         "friday",
+         "weekend",
+         "daily"
+        ],
+        "description": "Day."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "time": {
+        "type": "string",
+        "description": "Time."
+       }
+      },
+      "required": [
+       "day",
+       "state",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_volume",
+     "description": "Set the robot's alert sound and volume.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "sound": {
+        "type": "string",
+        "enum": [
+         "voice",
+         "beep",
+         "off"
+        ],
+        "description": "Sound type."
+       },
+       "level": {
+        "type": "integer",
+        "description": "Volume 0-10."
+       }
+      },
+      "required": [
+       "sound",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_carpet_boost",
+     "description": "Turn carpet auto-boost on or off at a level.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "level": {
+        "type": "integer",
+        "description": "Boost level 1-3."
+       }
+      },
+      "required": [
+       "state",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_child_lock",
+     "description": "Turn the child lock on or off for a panel.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "panel": {
+        "type": "string",
+        "enum": [
+         "buttons",
+         "app",
+         "both"
+        ],
+        "description": "Panel."
+       }
+      },
+      "required": [
+       "state",
+       "panel"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_do_not_disturb",
+     "description": "Set a do-not-disturb window on given days.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "start": {
+        "type": "string",
+        "description": "Start time."
+       },
+       "end": {
+        "type": "string",
+        "description": "End time."
+       },
+       "days": {
+        "type": "string",
+        "enum": [
+         "everyday",
+         "weekdays",
+         "weekends"
+        ],
+        "description": "Days."
+       }
+      },
+      "required": [
+       "start",
+       "end",
+       "days"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mop_pad",
+     "description": "Attach or remove a mop pad of a given type.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "pad": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "deep_clean",
+         "disposable"
+        ],
+        "description": "Pad type."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "attach",
+         "remove"
+        ],
+        "description": "Action."
+       }
+      },
+      "required": [
+       "pad",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_auto_empty",
+     "description": "Set the auto-empty dock frequency.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "frequency": {
+        "type": "string",
+        "enum": [
+         "every_run",
+         "daily",
+         "weekly"
+        ],
+        "description": "Frequency."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "frequency",
+       "state"
+      ]
+     }
+    }
+   }
+  ],
+  "security": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_lock",
+     "description": "Lock or unlock a smart lock.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "Which lock."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ],
+        "description": "Lock state."
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_auto_lock",
+     "description": "Set auto-lock delay on a lock.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "Which lock."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Auto-lock delay minutes."
+       }
+      },
+      "required": [
+       "door",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm",
+     "description": "Set the alarm system mode.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "disarm",
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ],
+        "description": "Alarm mode."
+       }
+      },
+      "required": [
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm_delay",
+     "description": "Set the alarm entry/exit delay.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "phase": {
+        "type": "string",
+        "enum": [
+         "entry",
+         "exit"
+        ],
+        "description": "Phase."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Delay seconds."
+       }
+      },
+      "required": [
+       "phase",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_camera",
+     "description": "Control a security camera at a quality.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "Which camera."
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "enable",
+         "disable",
+         "snapshot",
+         "start_recording"
+        ],
+        "description": "Camera action."
+       },
+       "quality": {
+        "type": "string",
+        "enum": [
+         "hd",
+         "sd"
+        ],
+        "description": "Quality."
+       }
+      },
+      "required": [
+       "camera",
+       "action",
+       "quality"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_camera_sensitivity",
+     "description": "Set a camera's motion sensitivity and zone.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "Which camera."
+       },
+       "level": {
+        "type": "integer",
+        "description": "Sensitivity 1-10."
+       },
+       "zone": {
+        "type": "string",
+        "enum": [
+         "full",
+         "near",
+         "far"
+        ],
+        "description": "Detection zone."
+       }
+      },
+      "required": [
+       "camera",
+       "level",
+       "zone"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_camera_privacy",
+     "description": "Turn a camera's privacy mode on or off.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ],
+        "description": "Which camera."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       }
+      },
+      "required": [
+       "camera",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_garage",
+     "description": "Open or close the garage door and toggle its light.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed"
+        ],
+        "description": "Garage state."
+       },
+       "light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Garage light."
+       }
+      },
+      "required": [
+       "state",
+       "light"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_floodlight",
+     "description": "Turn an exterior floodlight on or off at a brightness.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ],
+        "description": "Floodlight location."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness percent."
+       }
+      },
+      "required": [
+       "location",
+       "state",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_motion_light",
+     "description": "Set a motion-activated light timeout.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ],
+        "description": "Location."
+       },
+       "seconds": {
+        "type": "integer",
+        "description": "Stay-on seconds."
+       }
+      },
+      "required": [
+       "location",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "add_access_code",
+     "description": "Add a guest access code to a lock.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "Code owner name."
+       },
+       "code": {
+        "type": "string",
+        "description": "4-digit code."
+       },
+       "lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "Which lock."
+       }
+      },
+      "required": [
+       "name",
+       "code",
+       "lock"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_access_code",
+     "description": "Remove a guest access code from a lock.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "Code owner name."
+       },
+       "lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ],
+        "description": "Which lock."
+       }
+      },
+      "required": [
+       "name",
+       "lock"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_arm_schedule",
+     "description": "Schedule auto-arming for a day.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Day."
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ],
+        "description": "Arm mode."
+       },
+       "time": {
+        "type": "string",
+        "description": "Time."
+       }
+      },
+      "required": [
+       "day",
+       "mode",
+       "time"
+      ]
+     }
+    }
+   }
+  ],
+  "smartwatch": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_workout",
+     "description": "Start a workout with a goal type and value.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "activity": {
+        "type": "string",
+        "enum": [
+         "running",
+         "cycling",
+         "swimming",
+         "yoga",
+         "hiking",
+         "rowing"
+        ],
+        "description": "Activity."
+       },
+       "goal_type": {
+        "type": "string",
+        "enum": [
+         "open",
+         "distance",
+         "time",
+         "calories"
+        ],
+        "description": "Goal type."
+       },
+       "goal_value": {
+        "type": "integer",
+        "description": "Goal value."
+       }
+      },
+      "required": [
+       "activity",
+       "goal_type",
+       "goal_value"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_workout",
+     "description": "Control the current workout with auto-pause.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "pause",
+         "resume",
+         "end",
+         "lap"
+        ],
+        "description": "Action."
+       },
+       "auto_pause": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Auto-pause."
+       }
+      },
+      "required": [
+       "action",
+       "auto_pause"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_goal",
+     "description": "Set an activity goal over a period.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "metric": {
+        "type": "string",
+        "enum": [
+         "steps",
+         "calories",
+         "active_minutes",
+         "stand_hours"
+        ],
+        "description": "Goal metric."
+       },
+       "value": {
+        "type": "integer",
+        "description": "Target value."
+       },
+       "period": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly"
+        ],
+        "description": "Period."
+       }
+      },
+      "required": [
+       "metric",
+       "value",
+       "period"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "log_water",
+     "description": "Log a drink intake.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "drink": {
+        "type": "string",
+        "enum": [
+         "water",
+         "coffee",
+         "tea",
+         "juice"
+        ],
+        "description": "Drink."
+       },
+       "milliliters": {
+        "type": "integer",
+        "description": "Amount in milliliters."
+       }
+      },
+      "required": [
+       "drink",
+       "milliliters"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "log_weight",
+     "description": "Log a body weight reading at a time of day.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "pounds": {
+        "type": "integer",
+        "description": "Weight in pounds."
+       },
+       "time": {
+        "type": "string",
+        "enum": [
+         "morning",
+         "evening"
+        ],
+        "description": "Time of day."
+       }
+      },
+      "required": [
+       "pounds",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_heart_alert",
+     "description": "Set a high/low heart-rate alert.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "kind": {
+        "type": "string",
+        "enum": [
+         "high",
+         "low"
+        ],
+        "description": "Alert kind."
+       },
+       "bpm": {
+        "type": "integer",
+        "description": "Threshold in bpm."
+       }
+      },
+      "required": [
+       "kind",
+       "bpm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_timer",
+     "description": "Start a labeled timer or stopwatch.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "enum": [
+         "countdown",
+         "stopwatch",
+         "interval"
+        ],
+        "description": "Timer type."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes."
+       },
+       "label": {
+        "type": "string",
+        "description": "Timer label."
+       }
+      },
+      "required": [
+       "type",
+       "minutes",
+       "label"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm",
+     "description": "Set a watch alarm for a day with a sound.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "time": {
+        "type": "string",
+        "description": "Alarm time."
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ],
+        "description": "Day."
+       },
+       "sound": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "radio",
+         "vibrate"
+        ],
+        "description": "Alarm sound."
+       }
+      },
+      "required": [
+       "time",
+       "day",
+       "sound"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "start_breathing",
+     "description": "Start a guided breathing session.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer",
+        "description": "Minutes."
+       },
+       "pace": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "relaxed"
+        ],
+        "description": "Pace."
+       }
+      },
+      "required": [
+       "minutes",
+       "pace"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "send_message",
+     "description": "Send a quick message to a contact at a priority.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "contact": {
+        "type": "string",
+        "description": "Contact name."
+       },
+       "text": {
+        "type": "string",
+        "description": "Message text."
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "urgent"
+        ],
+        "description": "Priority."
+       }
+      },
+      "required": [
+       "contact",
+       "text",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_watch_mode",
+     "description": "Set the watch power/focus mode and screen brightness.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "low_power",
+         "theater",
+         "sleep",
+         "do_not_disturb"
+        ],
+        "description": "Watch mode."
+       },
+       "brightness": {
+        "type": "integer",
+        "description": "Brightness 0-100."
+       }
+      },
+      "required": [
+       "mode",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_watch_face",
+     "description": "Set the watch face and accent color.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "face": {
+        "type": "string",
+        "enum": [
+         "analog",
+         "digital",
+         "activity",
+         "minimal"
+        ],
+        "description": "Watch face."
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "blue",
+         "green",
+         "red",
+         "orange",
+         "white"
+        ],
+        "description": "Accent color."
+       }
+      },
+      "required": [
+       "face",
+       "color"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_tracking",
+     "description": "Turn sleep tracking on or off with a bedtime.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "bedtime": {
+        "type": "string",
+        "description": "Bedtime."
+       }
+      },
+      "required": [
+       "state",
+       "bedtime"
+      ]
+     }
+    }
+   }
+  ],
+  "navigation": [
+   {
+    "type": "function",
+    "function": {
+     "name": "navigate_to",
+     "description": "Start navigation to a destination with a route preference and departure.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "destination": {
+        "type": "string",
+        "description": "Destination."
+       },
+       "route": {
+        "type": "string",
+        "enum": [
+         "fastest",
+         "shortest",
+         "eco",
+         "scenic"
+        ],
+        "description": "Route preference."
+       },
+       "depart": {
+        "type": "string",
+        "enum": [
+         "now",
+         "in_15",
+         "in_30"
+        ],
+        "description": "Departure."
+       }
+      },
+      "required": [
+       "destination",
+       "route",
+       "depart"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "add_waypoint",
+     "description": "Add a stop along the route at a position for a planned duration.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "place": {
+        "type": "string",
+        "description": "Waypoint."
+       },
+       "position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "before_destination"
+        ],
+        "description": "Insert position."
+       },
+       "minutes": {
+        "type": "integer",
+        "description": "Planned stop minutes."
+       }
+      },
+      "required": [
+       "place",
+       "position",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "share_eta",
+     "description": "Share your ETA with a contact at an interval.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "contact": {
+        "type": "string",
+        "description": "Contact name."
+       },
+       "interval": {
+        "type": "string",
+        "enum": [
+         "once",
+         "live",
+         "on_arrival"
+        ],
+        "description": "Update interval."
+       }
+      },
+      "required": [
+       "contact",
+       "interval"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_waypoint",
+     "description": "Remove a waypoint from the route.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "place": {
+        "type": "string",
+        "description": "Waypoint."
+       }
+      },
+      "required": [
+       "place"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "find_poi",
+     "description": "Find a category of place, sorted and optionally open now.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "category": {
+        "type": "string",
+        "enum": [
+         "gas",
+         "food",
+         "coffee",
+         "rest_stop",
+         "charging",
+         "parking"
+        ],
+        "description": "POI category."
+       },
+       "sort": {
+        "type": "string",
+        "enum": [
+         "distance",
+         "rating",
+         "price"
+        ],
+        "description": "Sort by."
+       },
+       "open_now": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ],
+        "description": "Open now only."
+       }
+      },
+      "required": [
+       "category",
+       "sort",
+       "open_now"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "avoid_route",
+     "description": "Toggle a routing avoidance option for a scope.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "option": {
+        "type": "string",
+        "enum": [
+         "tolls",
+         "highways",
+         "ferries",
+         "traffic"
+        ],
+        "description": "Avoidance."
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "scope": {
+        "type": "string",
+        "enum": [
+         "this_trip",
+         "always"
+        ],
+        "description": "Scope."
+       }
+      },
+      "required": [
+       "option",
+       "state",
+       "scope"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_speed_alert",
+     "description": "Set a speed warning threshold and tolerance.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mph": {
+        "type": "integer",
+        "description": "Speed limit in mph."
+       },
+       "tolerance": {
+        "type": "integer",
+        "description": "Tolerance over limit in mph."
+       }
+      },
+      "required": [
+       "mph",
+       "tolerance"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_map_view",
+     "description": "Set the map display mode and zoom.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "view": {
+        "type": "string",
+        "enum": [
+         "north_up",
+         "heading_up",
+         "3d",
+         "satellite"
+        ],
+        "description": "Map view."
+       },
+       "zoom": {
+        "type": "integer",
+        "description": "Zoom level 1-20."
+       }
+      },
+      "required": [
+       "view",
+       "zoom"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_traffic_layer",
+     "description": "Turn the live traffic layer on or off with a reroute policy.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "reroute": {
+        "type": "string",
+        "enum": [
+         "ask",
+         "auto",
+         "never"
+        ],
+        "description": "Auto-reroute."
+       }
+      },
+      "required": [
+       "state",
+       "reroute"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_voice_guidance",
+     "description": "Set voice guidance verbosity, language and volume.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "off",
+         "minimal",
+         "normal",
+         "detailed"
+        ],
+        "description": "Verbosity."
+       },
+       "language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french"
+        ],
+        "description": "Language."
+       },
+       "volume": {
+        "type": "integer",
+        "description": "Voice volume 0-100."
+       }
+      },
+      "required": [
+       "level",
+       "language",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_units",
+     "description": "Set distance and temperature units.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "units": {
+        "type": "string",
+        "enum": [
+         "miles",
+         "kilometers"
+        ],
+        "description": "Distance units."
+       },
+       "temp_units": {
+        "type": "string",
+        "enum": [
+         "fahrenheit",
+         "celsius"
+        ],
+        "description": "Temperature units."
+       }
+      },
+      "required": [
+       "units",
+       "temp_units"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_lane_guidance",
+     "description": "Set lane guidance detail and junction view.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "On or off."
+       },
+       "junction_view": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Junction view."
+       }
+      },
+      "required": [
+       "state",
+       "junction_view"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alternate_routes",
+     "description": "Set how many alternate routes to show and whether to preview them.",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "count": {
+        "type": "integer",
+        "description": "Number of alternates 0-3."
+       },
+       "preview": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ],
+        "description": "Preview."
+       }
+      },
+      "required": [
+       "count",
+       "preview"
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

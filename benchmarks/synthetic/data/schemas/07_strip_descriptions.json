@@ -1,0 +1,5488 @@
+{
+ "variant": "strip descriptions",
+ "operator": "strip descriptions",
+ "method": "-",
+ "construction": {
+  "kind": "spec",
+  "arg": "s_nodesc.json"
+ },
+ "scope": "per_domain",
+ "domains": {
+  "car_cabin": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_window",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "position": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent"
+        ]
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "express"
+        ]
+       }
+      },
+      "required": [
+       "position",
+       "state",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sunroof",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed",
+         "vent",
+         "tilt"
+        ]
+       },
+       "extent": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "state",
+       "extent"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_climate",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "off"
+        ]
+       },
+       "temperature": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan_speed",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ]
+       },
+       "speed": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_vent_direction",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear",
+         "all"
+        ]
+       },
+       "direction": {
+        "type": "string",
+        "enum": [
+         "face",
+         "feet",
+         "windshield",
+         "face_and_feet"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "direction"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_recirculation",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "fresh_air",
+         "recirculate",
+         "auto"
+        ]
+       },
+       "auto_defog": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "mode",
+       "auto_defog"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "dome",
+         "footwell",
+         "glovebox",
+         "trunk",
+         "ambient"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "location",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_ambient_light",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "all"
+        ]
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "color",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "adjust_seat",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ]
+       },
+       "function": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "ventilation",
+         "recline"
+        ]
+       },
+       "level": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "seat",
+       "function",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_seat_position",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger",
+         "rear_left",
+         "rear_right"
+        ]
+       },
+       "axis": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "back",
+         "up",
+         "down",
+         "recline"
+        ]
+       },
+       "amount": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "seat",
+       "axis",
+       "amount"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_massage",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "front_passenger"
+        ]
+       },
+       "program": {
+        "type": "string",
+        "enum": [
+         "wave",
+         "pulse",
+         "stretch",
+         "off"
+        ]
+       },
+       "intensity": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "seat",
+       "program",
+       "intensity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_steering_heat",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "integer"
+       },
+       "auto": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "auto"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_door_lock",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "driver",
+         "passenger",
+         "rear_left",
+         "rear_right",
+         "all"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ]
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "fold_mirror",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "side": {
+        "type": "string",
+        "enum": [
+         "left",
+         "right",
+         "both"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "folded",
+         "extended"
+        ]
+       }
+      },
+      "required": [
+       "side",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_wiper",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "intermittent",
+         "low",
+         "high",
+         "mist"
+        ]
+       },
+       "sensitivity": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mode",
+       "sensitivity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_defrost",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "front",
+         "rear",
+         "both"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "state",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_drive_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "sport",
+         "eco",
+         "snow",
+         "off_road"
+        ]
+       },
+       "regen": {
+        "type": "string",
+        "enum": [
+         "low",
+         "standard",
+         "high"
+        ]
+       }
+      },
+      "required": [
+       "mode",
+       "regen"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_charge_limit",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "percent": {
+        "type": "integer"
+       },
+       "schedule": {
+        "type": "string",
+        "enum": [
+         "now",
+         "off_peak",
+         "scheduled"
+        ]
+       }
+      },
+      "required": [
+       "percent",
+       "schedule"
+      ]
+     }
+    }
+   }
+  ],
+  "smart_home": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_room_light",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "transition": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "state",
+       "transition"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_brightness",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       },
+       "transition": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "brightness",
+       "transition"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_color_temp",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "kelvin": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "kelvin"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light_color",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "warm_white",
+         "soft_white",
+         "neutral_white",
+         "cool_white",
+         "daylight",
+         "amber",
+         "gold",
+         "coral",
+         "red",
+         "crimson",
+         "magenta",
+         "pink",
+         "purple",
+         "indigo",
+         "blue",
+         "sky_blue",
+         "teal",
+         "green",
+         "lime"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "color",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_light_effect",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "effect": {
+        "type": "string",
+        "enum": [
+         "none",
+         "colorloop",
+         "candle",
+         "fireplace",
+         "party"
+        ]
+       }
+      },
+      "required": [
+       "room",
+       "effect"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ]
+       },
+       "direction": {
+        "type": "string",
+        "enum": [
+         "forward",
+         "reverse"
+        ]
+       }
+      },
+      "required": [
+       "room",
+       "speed",
+       "direction"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_blinds",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "position": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "position"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_blind_tilt",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "angle": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "angle"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_outlet",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "outlet": {
+        "type": "string",
+        "enum": [
+         "tv",
+         "heater",
+         "charger",
+         "lamp",
+         "coffee_maker"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "outlet",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidifier",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "humidity": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "humidity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_motion_sensor",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "sensitivity": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "state",
+       "sensitivity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_door_sensor",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "window"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat_room",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "temperature": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "announce",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "office",
+         "hallway"
+        ]
+       },
+       "message": {
+        "type": "string"
+       },
+       "volume": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "message",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_robot_chore",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "device": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "lawn_mower",
+         "pool_cleaner"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "dock"
+        ]
+       }
+      },
+      "required": [
+       "device",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "activate_scene",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "scene": {
+        "type": "string",
+        "enum": [
+         "movie",
+         "dinner",
+         "sleep",
+         "morning",
+         "away",
+         "reading",
+         "relax",
+         "focus",
+         "party",
+         "romantic",
+         "cleaning",
+         "gaming"
+        ]
+       }
+      },
+      "required": [
+       "scene"
+      ]
+     }
+    }
+   }
+  ],
+  "climate": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "heat",
+         "cool",
+         "auto",
+         "eco",
+         "off"
+        ]
+       },
+       "temperature": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_temp_range",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "heat_to": {
+        "type": "integer"
+       },
+       "cool_to": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "heat_to",
+       "cool_to"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_thermostat_hold",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "hours": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fan_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "fan_mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "on",
+         "circulate"
+        ]
+       },
+       "speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "fan_mode",
+       "speed"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_vent",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "open_percent": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "open_percent"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidity",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "humidity": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "humidity"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_dehumidifier",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "continuous",
+         "off"
+        ]
+       },
+       "target": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "mode",
+       "target"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_air_purifier",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "sleep",
+         "turbo",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_hvac_schedule",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "schedule": {
+        "type": "string",
+        "enum": [
+         "weekday",
+         "weekend",
+         "vacation",
+         "night"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "schedule",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_zone_priority",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "comfort",
+         "balanced",
+         "savings"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_filter_reminder",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "component": {
+        "type": "string",
+        "enum": [
+         "hvac",
+         "humidifier",
+         "purifier"
+        ]
+       },
+       "months": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "component",
+       "months"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_away_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "setback": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "state",
+       "setback"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_humidity_alert",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "upstairs",
+         "downstairs",
+         "basement",
+         "whole_house"
+        ]
+       },
+       "threshold": {
+        "type": "integer"
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "threshold",
+       "state"
+      ]
+     }
+    }
+   }
+  ],
+  "calendar": [
+   {
+    "type": "function",
+    "function": {
+     "name": "create_event",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string"
+       },
+       "calendar": {
+        "type": "string",
+        "enum": [
+         "personal",
+         "work",
+         "family",
+         "shared"
+        ]
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "time": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "title",
+       "calendar",
+       "day",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_duration",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "event",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "move_event",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "time": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "event",
+       "day",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "invite_guest",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "guest": {
+        "type": "string"
+       },
+       "role": {
+        "type": "string",
+        "enum": [
+         "required",
+         "optional",
+         "organizer"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "guest",
+       "role"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_guest",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "guest": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "event",
+       "guest"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_location",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "location": {
+        "type": "string"
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "in_person",
+         "video",
+         "phone"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "location",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_reminder",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "lead_time": {
+        "type": "string",
+        "enum": [
+         "5_min",
+         "15_min",
+         "30_min",
+         "1_hour",
+         "1_day"
+        ]
+       },
+       "method": {
+        "type": "string",
+        "enum": [
+         "popup",
+         "email",
+         "sms"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "lead_time",
+       "method"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_recurrence",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "frequency": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly",
+         "biweekly",
+         "monthly",
+         "none"
+        ]
+       },
+       "count": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "event",
+       "frequency",
+       "count"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "update_event_status",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "enum": [
+         "accepted",
+         "declined",
+         "tentative"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "status"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_color",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "red",
+         "blue",
+         "green",
+         "yellow",
+         "purple"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "color"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_event_visibility",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "event": {
+        "type": "string"
+       },
+       "visibility": {
+        "type": "string",
+        "enum": [
+         "public",
+         "private",
+         "default"
+        ]
+       }
+      },
+      "required": [
+       "event",
+       "visibility"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "create_task",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string"
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ]
+       }
+      },
+      "required": [
+       "title",
+       "day",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "block_focus_time",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "hours": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "day",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_availability",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "status": {
+        "type": "string",
+        "enum": [
+         "busy",
+         "free",
+         "out_of_office",
+         "focus"
+        ]
+       },
+       "until": {
+        "type": "string",
+        "enum": [
+         "end_of_day",
+         "one_hour",
+         "end_of_week"
+        ]
+       }
+      },
+      "required": [
+       "status",
+       "until"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_working_hours",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "start": {
+        "type": "string"
+       },
+       "end": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "day",
+       "start",
+       "end"
+      ]
+     }
+    }
+   }
+  ],
+  "media_player": [
+   {
+    "type": "function",
+    "function": {
+     "name": "playback_control",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "stop",
+         "next",
+         "previous"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_source",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "source": {
+        "type": "string",
+        "enum": [
+         "spotify",
+         "radio",
+         "bluetooth",
+         "airplay",
+         "vinyl"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "source"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "play_playlist",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "playlist": {
+        "type": "string"
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "in_order",
+         "shuffle"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "playlist",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "queue_track",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "track": {
+        "type": "string"
+       },
+       "position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "end"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "track",
+       "position"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "seek",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_volume",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "volume": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mute",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ]
+       },
+       "fade": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "state",
+       "fade"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_balance",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "balance": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "balance"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_tone",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "bass": {
+        "type": "integer"
+       },
+       "treble": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "bass",
+       "treble"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_play_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "repeat_one",
+         "repeat_all",
+         "shuffle"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_crossfade",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_eq_preset",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "preset": {
+        "type": "string",
+        "enum": [
+         "flat",
+         "bass_boost",
+         "treble_boost",
+         "vocal",
+         "rock",
+         "pop",
+         "jazz",
+         "classical",
+         "electronic",
+         "acoustic",
+         "loudness",
+         "podcast"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "preset"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "transfer_playback",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "from_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ]
+       },
+       "to_zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ]
+       },
+       "include_queue": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ]
+       }
+      },
+      "required": [
+       "from_zone",
+       "to_zone",
+       "include_queue"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "group_zones",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "group",
+         "ungroup"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "patio",
+         "all"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "zone",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "kitchen": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_oven",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "bake",
+         "broil",
+         "roast",
+         "convection",
+         "warm",
+         "off"
+        ]
+       },
+       "temperature": {
+        "type": "integer"
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mode",
+       "temperature",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "preheat_oven",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "temperature": {
+        "type": "integer"
+       },
+       "rack": {
+        "type": "string",
+        "enum": [
+         "top",
+         "middle",
+         "bottom"
+        ]
+       }
+      },
+      "required": [
+       "temperature",
+       "rack"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_stove_burner",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ]
+       },
+       "level": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "burner",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_burner_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "burner": {
+        "type": "string",
+        "enum": [
+         "front_left",
+         "front_right",
+         "rear_left",
+         "rear_right"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "burner",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_microwave",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "power": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "defrost"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       },
+       "then": {
+        "type": "string",
+        "enum": [
+         "beep",
+         "keep_warm",
+         "silent"
+        ]
+       }
+      },
+      "required": [
+       "power",
+       "seconds",
+       "then"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fridge",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "compartment": {
+        "type": "string",
+        "enum": [
+         "fridge",
+         "freezer"
+        ]
+       },
+       "temperature": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "compartment",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_fridge_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "vacation",
+         "quick_cool",
+         "quick_freeze"
+        ]
+       },
+       "door_alarm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "mode",
+       "door_alarm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "make_ice",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "off",
+         "cubed",
+         "crushed",
+         "max"
+        ]
+       },
+       "rate": {
+        "type": "string",
+        "enum": [
+         "low",
+         "normal",
+         "fast"
+        ]
+       }
+      },
+      "required": [
+       "mode",
+       "rate"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "brew_coffee",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "style": {
+        "type": "string",
+        "enum": [
+         "espresso",
+         "americano",
+         "latte",
+         "cappuccino",
+         "drip"
+        ]
+       },
+       "size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ]
+       },
+       "strength": {
+        "type": "string",
+        "enum": [
+         "mild",
+         "regular",
+         "strong"
+        ]
+       }
+      },
+      "required": [
+       "style",
+       "size",
+       "strength"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "boil_kettle",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "temperature": {
+        "type": "integer"
+       },
+       "keep_warm": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "temperature",
+       "keep_warm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_dishwasher",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "eco",
+         "heavy",
+         "quick",
+         "rinse"
+        ]
+       },
+       "dry": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "cycle",
+       "dry"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_rangehood",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "fan": {
+        "type": "string",
+        "enum": [
+         "off",
+         "low",
+         "medium",
+         "high"
+        ]
+       },
+       "light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "boost_minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "fan",
+       "light",
+       "boost_minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_kitchen_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "label": {
+        "type": "string"
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "label",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "laundry": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_wash",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "cycle": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "delicate",
+         "heavy",
+         "quick",
+         "bedding"
+        ]
+       },
+       "temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ]
+       },
+       "spin": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "no_spin"
+        ]
+       }
+      },
+      "required": [
+       "cycle",
+       "temperature",
+       "spin"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_soil_level",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "soil": {
+        "type": "string",
+        "enum": [
+         "light",
+         "normal",
+         "heavy"
+        ]
+       },
+       "rinses": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "soil",
+       "rinses"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_water_level",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "auto"
+        ]
+       },
+       "temperature": {
+        "type": "string",
+        "enum": [
+         "cold",
+         "warm",
+         "hot"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "temperature"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "start_dry",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "damp",
+         "normal",
+         "extra_dry"
+        ]
+       },
+       "heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high",
+         "air_only"
+        ]
+       },
+       "steam": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "heat",
+       "steam"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_dry_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer"
+       },
+       "heat": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ]
+       }
+      },
+      "required": [
+       "minutes",
+       "heat"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_detergent",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "enum": [
+         "regular",
+         "sensitive",
+         "bleach",
+         "softener"
+        ]
+       },
+       "dose": {
+        "type": "integer"
+       },
+       "dispense": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "manual"
+        ]
+       }
+      },
+      "required": [
+       "type",
+       "dose",
+       "dispense"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_laundry_option",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "option": {
+        "type": "string",
+        "enum": [
+         "steam",
+         "prewash",
+         "extra_rinse",
+         "wrinkle_guard"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "option",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_delay_start",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ]
+       },
+       "hours": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "machine",
+       "hours"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_spin_only",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "speed": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "speed",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_machine",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "machine": {
+        "type": "string",
+        "enum": [
+         "washer",
+         "dryer"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "start",
+         "pause",
+         "resume",
+         "stop"
+        ]
+       }
+      },
+      "required": [
+       "machine",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_notify",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "method": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "app",
+         "both",
+         "none"
+        ]
+       },
+       "volume": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "method",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "run_drum_clean",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "quick",
+         "deep"
+        ]
+       },
+       "reminder": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "reminder"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "steam_refresh",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "garment": {
+        "type": "string",
+        "enum": [
+         "shirts",
+         "suits",
+         "bedding",
+         "outerwear"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "garment",
+       "minutes"
+      ]
+     }
+    }
+   }
+  ],
+  "tv": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_input",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "source": {
+        "type": "string",
+        "enum": [
+         "hdmi1",
+         "hdmi2",
+         "hdmi3",
+         "tv_tuner",
+         "screen_mirror"
+        ]
+       },
+       "aspect": {
+        "type": "string",
+        "enum": [
+         "auto",
+         "16_9",
+         "4_3",
+         "zoom"
+        ]
+       }
+      },
+      "required": [
+       "source",
+       "aspect"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "launch_app",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo",
+         "spotify"
+        ]
+       },
+       "profile": {
+        "type": "string",
+        "enum": [
+         "default",
+         "kids",
+         "guest"
+        ]
+       }
+      },
+      "required": [
+       "app",
+       "profile"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "search_content",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "app": {
+        "type": "string",
+        "enum": [
+         "netflix",
+         "youtube",
+         "prime",
+         "disney",
+         "hbo"
+        ]
+       },
+       "query": {
+        "type": "string"
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "any",
+         "movie",
+         "series",
+         "episode"
+        ]
+       }
+      },
+      "required": [
+       "app",
+       "query",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "play_title",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "title": {
+        "type": "string"
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "resume",
+         "restart"
+        ]
+       },
+       "audio": {
+        "type": "string",
+        "enum": [
+         "original",
+         "dubbed",
+         "described"
+        ]
+       }
+      },
+      "required": [
+       "title",
+       "action",
+       "audio"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "playback_seek",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "play",
+         "pause",
+         "rewind",
+         "fast_forward"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "action",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_channel",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "channel": {
+        "type": "integer"
+       },
+       "source": {
+        "type": "string",
+        "enum": [
+         "antenna",
+         "cable",
+         "streaming"
+        ]
+       }
+      },
+      "required": [
+       "channel",
+       "source"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_tv_volume",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "integer"
+       },
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "output"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mute",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "muted",
+         "unmuted"
+        ]
+       }
+      },
+      "required": [
+       "output",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_picture_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "cinema",
+         "vivid",
+         "game",
+         "sports",
+         "eco"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       },
+       "contrast": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mode",
+       "brightness",
+       "contrast"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sound_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "movie",
+         "music",
+         "clear_voice",
+         "night"
+        ]
+       },
+       "bass": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mode",
+       "bass"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_audio_output",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "output": {
+        "type": "string",
+        "enum": [
+         "tv_speakers",
+         "soundbar",
+         "headphones",
+         "bluetooth"
+        ]
+       },
+       "delay_ms": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "output",
+       "delay_ms"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_caption",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french",
+         "german"
+        ]
+       },
+       "size": {
+        "type": "string",
+        "enum": [
+         "small",
+         "medium",
+         "large"
+        ]
+       }
+      },
+      "required": [
+       "state",
+       "language",
+       "size"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer"
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "power_off",
+         "standby"
+        ]
+       }
+      },
+      "required": [
+       "minutes",
+       "action"
+      ]
+     }
+    }
+   }
+  ],
+  "vacuum": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_cleaning",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "room": {
+        "type": "string",
+        "enum": [
+         "living_room",
+         "kitchen",
+         "bedroom",
+         "bathroom",
+         "whole_house"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "vacuum",
+         "mop",
+         "vacuum_and_mop"
+        ]
+       },
+       "passes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "room",
+       "mode",
+       "passes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_suction",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "power": {
+        "type": "string",
+        "enum": [
+         "quiet",
+         "standard",
+         "turbo",
+         "max"
+        ]
+       },
+       "area": {
+        "type": "string",
+        "enum": [
+         "whole",
+         "edges",
+         "center"
+        ]
+       },
+       "edge_clean": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "power",
+       "area",
+       "edge_clean"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_water_level",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "low",
+         "medium",
+         "high"
+        ]
+       },
+       "scrub": {
+        "type": "string",
+        "enum": [
+         "light",
+         "deep"
+        ]
+       }
+      },
+      "required": [
+       "level",
+       "scrub"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "spot_clean",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "area": {
+        "type": "string"
+       },
+       "radius": {
+        "type": "integer"
+       },
+       "passes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "area",
+       "radius",
+       "passes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_no_go_zone",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "zone": {
+        "type": "string"
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "add",
+         "remove"
+        ]
+       },
+       "type": {
+        "type": "string",
+        "enum": [
+         "no_go",
+         "no_mop"
+        ]
+       }
+      },
+      "required": [
+       "zone",
+       "action",
+       "type"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "dock_control",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "return_to_dock",
+         "empty_bin",
+         "resume",
+         "locate"
+        ]
+       },
+       "after": {
+        "type": "string",
+        "enum": [
+         "charge",
+         "empty",
+         "both"
+        ]
+       }
+      },
+      "required": [
+       "action",
+       "after"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_schedule",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "wednesday",
+         "friday",
+         "weekend",
+         "daily"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "time": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "day",
+       "state",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_volume",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "sound": {
+        "type": "string",
+        "enum": [
+         "voice",
+         "beep",
+         "off"
+        ]
+       },
+       "level": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "sound",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_carpet_boost",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "level": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "state",
+       "level"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_child_lock",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "panel": {
+        "type": "string",
+        "enum": [
+         "buttons",
+         "app",
+         "both"
+        ]
+       }
+      },
+      "required": [
+       "state",
+       "panel"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_do_not_disturb",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "start": {
+        "type": "string"
+       },
+       "end": {
+        "type": "string"
+       },
+       "days": {
+        "type": "string",
+        "enum": [
+         "everyday",
+         "weekdays",
+         "weekends"
+        ]
+       }
+      },
+      "required": [
+       "start",
+       "end",
+       "days"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_mop_pad",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "pad": {
+        "type": "string",
+        "enum": [
+         "standard",
+         "deep_clean",
+         "disposable"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "attach",
+         "remove"
+        ]
+       }
+      },
+      "required": [
+       "pad",
+       "action"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_auto_empty",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "frequency": {
+        "type": "string",
+        "enum": [
+         "every_run",
+         "daily",
+         "weekly"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "frequency",
+       "state"
+      ]
+     }
+    }
+   }
+  ],
+  "security": [
+   {
+    "type": "function",
+    "function": {
+     "name": "set_lock",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "locked",
+         "unlocked"
+        ]
+       }
+      },
+      "required": [
+       "door",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_auto_lock",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "door",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "disarm",
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ]
+       }
+      },
+      "required": [
+       "mode"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm_delay",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "phase": {
+        "type": "string",
+        "enum": [
+         "entry",
+         "exit"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "phase",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_camera",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ]
+       },
+       "action": {
+        "type": "string",
+        "enum": [
+         "enable",
+         "disable",
+         "snapshot",
+         "start_recording"
+        ]
+       },
+       "quality": {
+        "type": "string",
+        "enum": [
+         "hd",
+         "sd"
+        ]
+       }
+      },
+      "required": [
+       "camera",
+       "action",
+       "quality"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_camera_sensitivity",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ]
+       },
+       "level": {
+        "type": "integer"
+       },
+       "zone": {
+        "type": "string",
+        "enum": [
+         "full",
+         "near",
+         "far"
+        ]
+       }
+      },
+      "required": [
+       "camera",
+       "level",
+       "zone"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_camera_privacy",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "camera": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "doorbell"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "camera",
+       "state"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_garage",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "open",
+         "closed"
+        ]
+       },
+       "light": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "state",
+       "light"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_floodlight",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "location",
+       "state",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_motion_light",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "location": {
+        "type": "string",
+        "enum": [
+         "front",
+         "back",
+         "driveway",
+         "side"
+        ]
+       },
+       "seconds": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "location",
+       "seconds"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "add_access_code",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string"
+       },
+       "code": {
+        "type": "string"
+       },
+       "lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ]
+       }
+      },
+      "required": [
+       "name",
+       "code",
+       "lock"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_access_code",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string"
+       },
+       "lock": {
+        "type": "string",
+        "enum": [
+         "front_door",
+         "back_door",
+         "garage",
+         "side_gate"
+        ]
+       }
+      },
+      "required": [
+       "name",
+       "lock"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_arm_schedule",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "mode": {
+        "type": "string",
+        "enum": [
+         "arm_home",
+         "arm_away",
+         "arm_night"
+        ]
+       },
+       "time": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "day",
+       "mode",
+       "time"
+      ]
+     }
+    }
+   }
+  ],
+  "smartwatch": [
+   {
+    "type": "function",
+    "function": {
+     "name": "start_workout",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "activity": {
+        "type": "string",
+        "enum": [
+         "running",
+         "cycling",
+         "swimming",
+         "yoga",
+         "hiking",
+         "rowing"
+        ]
+       },
+       "goal_type": {
+        "type": "string",
+        "enum": [
+         "open",
+         "distance",
+         "time",
+         "calories"
+        ]
+       },
+       "goal_value": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "activity",
+       "goal_type",
+       "goal_value"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "control_workout",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "action": {
+        "type": "string",
+        "enum": [
+         "pause",
+         "resume",
+         "end",
+         "lap"
+        ]
+       },
+       "auto_pause": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "action",
+       "auto_pause"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_goal",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "metric": {
+        "type": "string",
+        "enum": [
+         "steps",
+         "calories",
+         "active_minutes",
+         "stand_hours"
+        ]
+       },
+       "value": {
+        "type": "integer"
+       },
+       "period": {
+        "type": "string",
+        "enum": [
+         "daily",
+         "weekly"
+        ]
+       }
+      },
+      "required": [
+       "metric",
+       "value",
+       "period"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "log_water",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "drink": {
+        "type": "string",
+        "enum": [
+         "water",
+         "coffee",
+         "tea",
+         "juice"
+        ]
+       },
+       "milliliters": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "drink",
+       "milliliters"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "log_weight",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "pounds": {
+        "type": "integer"
+       },
+       "time": {
+        "type": "string",
+        "enum": [
+         "morning",
+         "evening"
+        ]
+       }
+      },
+      "required": [
+       "pounds",
+       "time"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_heart_alert",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "kind": {
+        "type": "string",
+        "enum": [
+         "high",
+         "low"
+        ]
+       },
+       "bpm": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "kind",
+       "bpm"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_timer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "enum": [
+         "countdown",
+         "stopwatch",
+         "interval"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       },
+       "label": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "type",
+       "minutes",
+       "label"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alarm",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "time": {
+        "type": "string"
+       },
+       "day": {
+        "type": "string",
+        "enum": [
+         "monday",
+         "tuesday",
+         "wednesday",
+         "thursday",
+         "friday",
+         "saturday",
+         "sunday"
+        ]
+       },
+       "sound": {
+        "type": "string",
+        "enum": [
+         "chime",
+         "radio",
+         "vibrate"
+        ]
+       }
+      },
+      "required": [
+       "time",
+       "day",
+       "sound"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "start_breathing",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "minutes": {
+        "type": "integer"
+       },
+       "pace": {
+        "type": "string",
+        "enum": [
+         "slow",
+         "normal",
+         "relaxed"
+        ]
+       }
+      },
+      "required": [
+       "minutes",
+       "pace"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "send_message",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "contact": {
+        "type": "string"
+       },
+       "text": {
+        "type": "string"
+       },
+       "priority": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "urgent"
+        ]
+       }
+      },
+      "required": [
+       "contact",
+       "text",
+       "priority"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_watch_mode",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mode": {
+        "type": "string",
+        "enum": [
+         "normal",
+         "low_power",
+         "theater",
+         "sleep",
+         "do_not_disturb"
+        ]
+       },
+       "brightness": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mode",
+       "brightness"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_watch_face",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "face": {
+        "type": "string",
+        "enum": [
+         "analog",
+         "digital",
+         "activity",
+         "minimal"
+        ]
+       },
+       "color": {
+        "type": "string",
+        "enum": [
+         "blue",
+         "green",
+         "red",
+         "orange",
+         "white"
+        ]
+       }
+      },
+      "required": [
+       "face",
+       "color"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_sleep_tracking",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "bedtime": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "state",
+       "bedtime"
+      ]
+     }
+    }
+   }
+  ],
+  "navigation": [
+   {
+    "type": "function",
+    "function": {
+     "name": "navigate_to",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "destination": {
+        "type": "string"
+       },
+       "route": {
+        "type": "string",
+        "enum": [
+         "fastest",
+         "shortest",
+         "eco",
+         "scenic"
+        ]
+       },
+       "depart": {
+        "type": "string",
+        "enum": [
+         "now",
+         "in_15",
+         "in_30"
+        ]
+       }
+      },
+      "required": [
+       "destination",
+       "route",
+       "depart"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "add_waypoint",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "place": {
+        "type": "string"
+       },
+       "position": {
+        "type": "string",
+        "enum": [
+         "next",
+         "before_destination"
+        ]
+       },
+       "minutes": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "place",
+       "position",
+       "minutes"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "share_eta",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "contact": {
+        "type": "string"
+       },
+       "interval": {
+        "type": "string",
+        "enum": [
+         "once",
+         "live",
+         "on_arrival"
+        ]
+       }
+      },
+      "required": [
+       "contact",
+       "interval"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "remove_waypoint",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "place": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "place"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "find_poi",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "category": {
+        "type": "string",
+        "enum": [
+         "gas",
+         "food",
+         "coffee",
+         "rest_stop",
+         "charging",
+         "parking"
+        ]
+       },
+       "sort": {
+        "type": "string",
+        "enum": [
+         "distance",
+         "rating",
+         "price"
+        ]
+       },
+       "open_now": {
+        "type": "string",
+        "enum": [
+         "yes",
+         "no"
+        ]
+       }
+      },
+      "required": [
+       "category",
+       "sort",
+       "open_now"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "avoid_route",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "option": {
+        "type": "string",
+        "enum": [
+         "tolls",
+         "highways",
+         "ferries",
+         "traffic"
+        ]
+       },
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "scope": {
+        "type": "string",
+        "enum": [
+         "this_trip",
+         "always"
+        ]
+       }
+      },
+      "required": [
+       "option",
+       "state",
+       "scope"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_speed_alert",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "mph": {
+        "type": "integer"
+       },
+       "tolerance": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "mph",
+       "tolerance"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_map_view",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "view": {
+        "type": "string",
+        "enum": [
+         "north_up",
+         "heading_up",
+         "3d",
+         "satellite"
+        ]
+       },
+       "zoom": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "view",
+       "zoom"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_traffic_layer",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "reroute": {
+        "type": "string",
+        "enum": [
+         "ask",
+         "auto",
+         "never"
+        ]
+       }
+      },
+      "required": [
+       "state",
+       "reroute"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_voice_guidance",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "level": {
+        "type": "string",
+        "enum": [
+         "off",
+         "minimal",
+         "normal",
+         "detailed"
+        ]
+       },
+       "language": {
+        "type": "string",
+        "enum": [
+         "english",
+         "spanish",
+         "french"
+        ]
+       },
+       "volume": {
+        "type": "integer"
+       }
+      },
+      "required": [
+       "level",
+       "language",
+       "volume"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_units",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "units": {
+        "type": "string",
+        "enum": [
+         "miles",
+         "kilometers"
+        ]
+       },
+       "temp_units": {
+        "type": "string",
+        "enum": [
+         "fahrenheit",
+         "celsius"
+        ]
+       }
+      },
+      "required": [
+       "units",
+       "temp_units"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_lane_guidance",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "state": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       },
+       "junction_view": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "state",
+       "junction_view"
+      ]
+     }
+    }
+   },
+   {
+    "type": "function",
+    "function": {
+     "name": "set_alternate_routes",
+     "description": "",
+     "parameters": {
+      "type": "object",
+      "properties": {
+       "count": {
+        "type": "integer"
+       },
+       "preview": {
+        "type": "string",
+        "enum": [
+         "on",
+         "off"
+        ]
+       }
+      },
+      "required": [
+       "count",
+       "preview"
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

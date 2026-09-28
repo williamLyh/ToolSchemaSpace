@@ -1,0 +1,80 @@
+[
+ {
+  "file": "00_native.json",
+  "variant": "native",
+  "scope": "per_domain",
+  "n_tools": 168
+ },
+ {
+  "file": "01_fully_merged.json",
+  "variant": "fully merged",
+  "scope": "per_domain",
+  "n_tools": 12
+ },
+ {
+  "file": "02_class_dispatch.json",
+  "variant": "class dispatch",
+  "scope": "catalog",
+  "n_tools": 12
+ },
+ {
+  "file": "03_fully_split.json",
+  "variant": "fully split",
+  "scope": "per_domain",
+  "n_tools": 1824
+ },
+ {
+  "file": "04_interval_split.json",
+  "variant": "interval split",
+  "scope": "per_domain",
+  "n_tools": 267
+ },
+ {
+  "file": "05_nested_args.json",
+  "variant": "nested args",
+  "scope": "per_domain",
+  "n_tools": 168
+ },
+ {
+  "file": "06_namespaced_names.json",
+  "variant": "namespaced names",
+  "scope": "catalog",
+  "n_tools": 168
+ },
+ {
+  "file": "07_strip_descriptions.json",
+  "variant": "strip descriptions",
+  "scope": "per_domain",
+  "n_tools": 168
+ },
+ {
+  "file": "08_reorder_arguments.json",
+  "variant": "reorder arguments",
+  "scope": "per_domain",
+  "n_tools": 168
+ },
+ {
+  "file": "09_transaction.json",
+  "variant": "transaction",
+  "scope": "per_domain",
+  "n_tools": 727
+ },
+ {
+  "file": "10_reference_resolution.json",
+  "variant": "reference resolution",
+  "scope": "per_domain",
+  "n_tools": 211
+ },
+ {
+  "file": "11_schema_discovery.json",
+  "variant": "schema discovery",
+  "scope": "catalog",
+  "n_tools": 2
+ },
+ {
+  "file": "12_composed.json",
+  "variant": "composed",
+  "scope": "per_domain",
+  "n_tools": 1303
+ }
+]
