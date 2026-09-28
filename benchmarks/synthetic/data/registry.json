@@ -1,0 +1,396 @@
+{
+ "about": "Every schema variant evaluated in the paper. kind=ladder: SchemaAdapter(k=arg), SCHEMA_K=10 (k=5 is native), run with SCHEMA_VARIANT=arg python -m eval.run_agentic; kind=spec: operators.compile_spec on data/specs/<arg>, run with SCHEMA_SPEC=benchmarks/synthetic/data/specs/<arg> python -m eval.run_agentic (class_*/random_neutral_*/anti_class_neutral_* use python -m eval.run_class_grouping); kind=hierarchy: HIER_ARM=<arg> python -m eval.run_hierarchy. Other spec files in data/specs (seeds r1-r4 of the random/anti-class groups, pred2/pred4, curryind, currypart, mg*) are exploratory arms not reported in the paper.",
+ "variants": [
+  {
+   "name": "native",
+   "figure": "Figure 2",
+   "operator": "native",
+   "method": "-",
+   "kind": "ladder",
+   "arg": 5
+  },
+  {
+   "name": "fully merged",
+   "figure": "Figure 2",
+   "operator": "merge",
+   "method": "domain, flat",
+   "kind": "ladder",
+   "arg": 0
+  },
+  {
+   "name": "class dispatch",
+   "figure": "Figure 2",
+   "operator": "merge",
+   "method": "catalog, class groups",
+   "kind": "hierarchy",
+   "arg": "dispatch"
+  },
+  {
+   "name": "fully split",
+   "figure": "Figure 2",
+   "operator": "split",
+   "method": "all enums (finest ladder step)",
+   "kind": "ladder",
+   "arg": 9
+  },
+  {
+   "name": "interval split",
+   "figure": "Figure 2",
+   "operator": "split",
+   "method": "numeric predicate, one cut",
+   "kind": "spec",
+   "arg": "pred.json"
+  },
+  {
+   "name": "nested args",
+   "figure": "Figure 2",
+   "operator": "nest",
+   "method": "arguments into one object",
+   "kind": "spec",
+   "arg": "pack.json"
+  },
+  {
+   "name": "namespaced names",
+   "figure": "Figure 2",
+   "operator": "rename",
+   "method": "class prefix",
+   "kind": "hierarchy",
+   "arg": "qualified"
+  },
+  {
+   "name": "strip descriptions",
+   "figure": "Figure 2",
+   "operator": "strip descriptions",
+   "method": "-",
+   "kind": "spec",
+   "arg": "s_nodesc.json"
+  },
+  {
+   "name": "reorder arguments",
+   "figure": "Figure 2",
+   "operator": "reorder arguments",
+   "method": "-",
+   "kind": "spec",
+   "arg": "s_shuffle.json"
+  },
+  {
+   "name": "transaction",
+   "figure": "Figure 2",
+   "operator": "transaction",
+   "method": "every function",
+   "kind": "spec",
+   "arg": "curry.json"
+  },
+  {
+   "name": "reference resolution",
+   "figure": "Figure 2",
+   "operator": "reference resolution",
+   "method": "-",
+   "kind": "spec",
+   "arg": "indirect.json"
+  },
+  {
+   "name": "schema discovery",
+   "figure": "Figure 2",
+   "operator": "schema discovery",
+   "method": "-",
+   "kind": "hierarchy",
+   "arg": "disclose"
+  },
+  {
+   "name": "composed",
+   "figure": "Figure 2",
+   "operator": "composition",
+   "method": "several operators in one catalog",
+   "kind": "spec",
+   "arg": "mixed.json"
+  },
+  {
+   "name": "merge · domain 0.29x",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "partial domain merge (0.29x of native function count)",
+   "kind": "ladder",
+   "arg": 1
+  },
+  {
+   "name": "merge · domain 0.46x",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "partial domain merge (0.46x of native function count)",
+   "kind": "ladder",
+   "arg": 2
+  },
+  {
+   "name": "merge · domain 0.69x",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "partial domain merge (0.69x of native function count)",
+   "kind": "ladder",
+   "arg": 3
+  },
+  {
+   "name": "merge · domain 0.85x",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "partial domain merge (0.85x of native function count)",
+   "kind": "ladder",
+   "arg": 4
+  },
+  {
+   "name": "merge · domain, nested",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "domain, nested argument structure",
+   "kind": "spec",
+   "arg": "merge_full_nested.json"
+  },
+  {
+   "name": "merge · domain, union",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "domain, union argument structure",
+   "kind": "spec",
+   "arg": "merge_full_union.json"
+  },
+  {
+   "name": "merge · semantic groups",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "semantic groups",
+   "kind": "spec",
+   "arg": "mgroup_sem.json"
+  },
+  {
+   "name": "merge · random groups",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "random groups",
+   "kind": "spec",
+   "arg": "mgroup_rand.json"
+  },
+  {
+   "name": "merge · anti-semantic groups",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "anti-semantic groups",
+   "kind": "spec",
+   "arg": "mgroup_anti.json"
+  },
+  {
+   "name": "merge · catalog, neutral names",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "class groups, neutral names",
+   "kind": "spec",
+   "arg": "class_neutral.json"
+  },
+  {
+   "name": "merge · catalog, random classes",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "random class-sized groups",
+   "kind": "spec",
+   "arg": "random_neutral_r0.json"
+  },
+  {
+   "name": "merge · catalog, anti-classes",
+   "figure": "Appendix Figure 4",
+   "operator": "merge",
+   "method": "anti-class groups",
+   "kind": "spec",
+   "arg": "anti_class_neutral_r0.json"
+  },
+  {
+   "name": "native · whole catalog",
+   "figure": "Appendix Figure 4",
+   "operator": "control",
+   "method": "all 168 functions, native names",
+   "kind": "hierarchy",
+   "arg": "flat",
+   "note": "control for class dispatch and namespaced names, not a rename"
+  },
+  {
+   "name": "split · enum 1.5x",
+   "figure": "Appendix Figure 4",
+   "operator": "split",
+   "method": "partial enum split (1.5x of native function count)",
+   "kind": "ladder",
+   "arg": 6
+  },
+  {
+   "name": "split · enum 2.9x",
+   "figure": "Appendix Figure 4",
+   "operator": "split",
+   "method": "partial enum split (2.9x of native function count)",
+   "kind": "ladder",
+   "arg": 7
+  },
+  {
+   "name": "split · enum 5.4x",
+   "figure": "Appendix Figure 4",
+   "operator": "split",
+   "method": "partial enum split (5.4x of native function count)",
+   "kind": "ladder",
+   "arg": 8
+  },
+  {
+   "name": "split · one enum",
+   "figure": "Appendix Figure 4",
+   "operator": "split",
+   "method": "one enumerable argument per tool",
+   "kind": "spec",
+   "arg": "enum1.json"
+  },
+  {
+   "name": "split · all enums",
+   "figure": "Appendix Figure 4",
+   "operator": "split",
+   "method": "every enumerable argument",
+   "kind": "spec",
+   "arg": "enumfull.json"
+  },
+  {
+   "name": "rename · opaque",
+   "figure": "Appendix Figure 4",
+   "operator": "rename",
+   "method": "opaque identifiers",
+   "kind": "spec",
+   "arg": "s_obf.json"
+  },
+  {
+   "name": "semantic grouped merge · flat",
+   "figure": "Appendix (argument structure of a merged tool)",
+   "operator": "merge",
+   "method": "semantic groups, flat arguments",
+   "kind": "spec",
+   "arg": "merge_sem_flat.json"
+  },
+  {
+   "name": "semantic grouped merge · nested",
+   "figure": "Appendix (argument structure of a merged tool)",
+   "operator": "merge",
+   "method": "semantic groups, nested arguments",
+   "kind": "spec",
+   "arg": "merge_sem_nested.json"
+  },
+  {
+   "name": "semantic grouped merge · union",
+   "figure": "Appendix (argument structure of a merged tool)",
+   "operator": "merge",
+   "method": "semantic groups, union arguments",
+   "kind": "spec",
+   "arg": "merge_sem_union.json"
+  },
+  {
+   "name": "merge · domain, flat",
+   "figure": "Appendix (argument structure of a merged tool)",
+   "operator": "merge",
+   "method": "domain, flat arguments (same catalog as fully merged)",
+   "kind": "spec",
+   "arg": "merge_full_flat.json"
+  },
+  {
+   "name": "convention mixture 0.3x · flat",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all flat",
+   "kind": "spec",
+   "arg": "mix_r03_flat.json"
+  },
+  {
+   "name": "convention mixture 0.3x · nested",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all nested",
+   "kind": "spec",
+   "arg": "mix_r03_nested.json"
+  },
+  {
+   "name": "convention mixture 0.3x · union",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all union",
+   "kind": "spec",
+   "arg": "mix_r03_union.json"
+  },
+  {
+   "name": "convention mixture 0.3x · mixed rot0",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r03_rot0.json",
+   "note": "the mixed score averages rot0-rot2"
+  },
+  {
+   "name": "convention mixture 0.3x · mixed rot1",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r03_rot1.json",
+   "note": "the mixed score averages rot0-rot2"
+  },
+  {
+   "name": "convention mixture 0.3x · mixed rot2",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r03_rot2.json",
+   "note": "the mixed score averages rot0-rot2"
+  },
+  {
+   "name": "convention mixture 0.5x · flat",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all flat",
+   "kind": "spec",
+   "arg": "mix_r05_flat.json"
+  },
+  {
+   "name": "convention mixture 0.5x · nested",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all nested",
+   "kind": "spec",
+   "arg": "mix_r05_nested.json"
+  },
+  {
+   "name": "convention mixture 0.5x · union",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, all union",
+   "kind": "spec",
+   "arg": "mix_r05_union.json"
+  },
+  {
+   "name": "convention mixture 0.5x · mixed rot0",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r05_rot0.json",
+   "note": "the mixed score averages rot0-rot2"
+  },
+  {
+   "name": "convention mixture 0.5x · mixed rot1",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r05_rot1.json",
+   "note": "the mixed score averages rot0-rot2"
+  },
+  {
+   "name": "convention mixture 0.5x · mixed rot2",
+   "figure": "Appendix Table (convention mixture)",
+   "operator": "merge",
+   "method": "frozen semantic partition, structures rotated across groups",
+   "kind": "spec",
+   "arg": "mix_r05_rot2.json",
+   "note": "the mixed score averages rot0-rot2"
+  }
+ ]
+}

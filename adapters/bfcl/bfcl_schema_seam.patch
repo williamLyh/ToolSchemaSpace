@@ -1,0 +1,106 @@
+diff --git a/bfcl_eval/model_handler/local_inference/qwen_fc.py b/bfcl_eval/model_handler/local_inference/qwen_fc.py
+index 0af3a28..8a568b4 100644
+--- a/bfcl_eval/model_handler/local_inference/qwen_fc.py
++++ b/bfcl_eval/model_handler/local_inference/qwen_fc.py
+@@ -42,8 +42,78 @@ class QwenFCHandler(OSSHandler):
+             if type(item) == str:
+                 item = eval(item)
+             decoded_result.append({item["name"]: item["arguments"]})
++        # schema-variant: decode the model's variant-vocabulary calls back to the
++        # native (method, args) BEFORE rendering to call strings, so the backend
++        # executor + state/response checkers run natively. No-op when inactive.
++        decoded_result = self._maybe_decode_schema_variant(decoded_result)
+         return convert_to_function_call(decoded_result)
+ 
++    # --- schema-granularity variant hooks (no-op unless SCHEMA_VARIANT set) ---
++    def _get_schema_tls(self):
++        if not hasattr(self, "_schema_tls"):
++            import threading
++
++            self._schema_tls = threading.local()
++        return self._schema_tls
++
++    def _maybe_apply_schema_variant(self, test_entry, functions):
++        """Rewrite this entry's functions to the chosen granularity variant
++        (the union of its involved classes treated as one group) and stash the
++        decode map in thread-local storage for decode_execute. Each entry is
++        processed start-to-finish in a single worker thread, so thread-local is
++        race-free across concurrently running entries."""
++        tls = self._get_schema_tls()
++        tls.call_map = None
++        tls.control = "loose"
++        try:
++            from toolschema.schema_adapter import SchemaAdapter
++
++            adapter = SchemaAdapter.from_env()
++        except Exception:
++            adapter = None
++        if adapter is None:
++            return functions
++        tls.control = adapter.control
++        native_openai = [
++            {"type": "function", "function": {
++                "name": f["name"], "description": f.get("description", ""),
++                "parameters": f.get("parameters", {}) or {}}}
++            for f in functions
++        ]
++        group = "bfcl::" + ",".join(sorted(test_entry.get("involved_classes", [])))
++        variant = adapter.variant_openai_tools(group, native_openai)
++        tls.call_map = adapter.call_map_for(group)
++        return [
++            {"name": t["function"]["name"],
++             "description": t["function"]["description"],
++             "parameters": t["function"]["parameters"]}
++            for t in variant
++        ]
++
++    def _maybe_decode_schema_variant(self, decoded_result):
++        tls = self._get_schema_tls()
++        cmap = getattr(tls, "call_map", None)
++        if not cmap:
++            return decoded_result
++        control = getattr(tls, "control", "loose")
++        from toolschema.schema_adapter import classify_call
++
++        out = []
++        for call in decoded_result:
++            (name, args), = call.items()
++            action, nm, na = classify_call(cmap, control, name, args or {})
++            if action == "reject":
++                # off-schema function under hard control: rename to a
++                # guaranteed-absent method so the backend execution errors out
++                # (recorded as a failed call, no state change) instead of running
++                # the real native function.
++                out.append({f"{name}__OFF_SCHEMA": args or {}})
++                continue
++            if nm is None:  # malformed (e.g. execute without `operation`)
++                nm, na = name, args
++            out.append({nm: na})
++        return out
++
+     @override
+     def _format_prompt(self, messages, function):
+         """
+@@ -148,7 +218,13 @@ class QwenFCHandler(OSSHandler):
+             formatted_prompt += "# Tools\n\nYou may call one or more functions to assist with the user query.\n\nYou are provided with function signatures within <tools></tools> XML tags:\n<tools>"
+             for tool in function:
+                 formatted_prompt += f"\n{json.dumps(tool)}"
+-            formatted_prompt += '\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{"name": <function-name>, "arguments": <args-json-object>}\n</tool_call><|im_end|>\n'
++            formatted_prompt += '\n</tools>\n\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n<tool_call>\n{"name": <function-name>, "arguments": <args-json-object>}\n</tool_call>'
++            # schema-variant: instruct the model to use only the provided tools
++            if getattr(self._get_schema_tls(), "call_map", None):
++                from toolschema.schema_adapter import SchemaAdapter
++
++                formatted_prompt += "\n\n" + SchemaAdapter.INSTRUCTION
++            formatted_prompt += "<|im_end|>\n"
+ 
+         else:
+             if messages[0]["role"] == "system":
+@@ -241,6 +317,7 @@ class QwenFCHandler(OSSHandler):
+     @override
+     def _pre_query_processing_prompting(self, test_entry: dict) -> dict:
+         functions: list = test_entry["function"]
++        functions = self._maybe_apply_schema_variant(test_entry, functions)
+ 
+         # FC models use its own system prompt, so no need to add any message
+ 

@@ -1,0 +1,247 @@
+diff --git a/src/tau2/config.py b/src/tau2/config.py
+index d8a8ace..6a8da07 100644
+--- a/src/tau2/config.py
++++ b/src/tau2/config.py
+@@ -1,3 +1,6 @@
++import os
++
++
+ # =============================================================================
+ # SIMULATION DEFAULTS (overridable via CLI)
+ # =============================================================================
+@@ -21,9 +24,21 @@ DEFAULT_LLM_TEMPERATURE_USER = 0.0
+ DEFAULT_LLM_ARGS_AGENT = {"temperature": DEFAULT_LLM_TEMPERATURE_AGENT}
+ DEFAULT_LLM_ARGS_USER = {"temperature": DEFAULT_LLM_TEMPERATURE_USER}
+ 
+-DEFAULT_LLM_NL_ASSERTIONS = "gpt-4.1-2025-04-14"
++DEFAULT_LLM_NL_ASSERTIONS = os.environ.get(
++    "TAU2_NL_JUDGE_MODEL", "gpt-4.1-2025-04-14"
++)
+ DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE = 0.0
+-DEFAULT_LLM_NL_ASSERTIONS_ARGS = {"temperature": DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE}
++DEFAULT_LLM_NL_ASSERTIONS_ARGS = {
++    "temperature": DEFAULT_LLM_NL_ASSERTIONS_TEMPERATURE
++}
++if os.environ.get("TAU2_NL_JUDGE_BASE_URL"):
++    DEFAULT_LLM_NL_ASSERTIONS_ARGS.update(
++        {
++            "api_base": os.environ["TAU2_NL_JUDGE_BASE_URL"],
++            "api_key": os.environ.get("TAU2_NL_JUDGE_API_KEY", "EMPTY"),
++            "timeout": int(os.environ.get("TAU2_NL_JUDGE_TIMEOUT", "120")),
++        }
++    )
+ 
+ DEFAULT_LLM_ENV_INTERFACE = "gpt-4.1-2025-04-14"
+ DEFAULT_LLM_ENV_INTERFACE_TEMPERATURE = 0.0
+diff --git a/src/tau2/evaluator/evaluator_nl_assertions.py b/src/tau2/evaluator/evaluator_nl_assertions.py
+index 1f5397c..057bc76 100644
+--- a/src/tau2/evaluator/evaluator_nl_assertions.py
++++ b/src/tau2/evaluator/evaluator_nl_assertions.py
+@@ -118,13 +118,37 @@ class NLAssertionsEvaluator(EvaluatorBase[Message]):
+             UserMessage(role="user", content=user_prompt),
+         ]
+ 
+-        assistant_message = generate(
+-            model=DEFAULT_LLM_NL_ASSERTIONS,
+-            messages=messages,
+-            call_name="nl_assertions_eval",
+-            **DEFAULT_LLM_NL_ASSERTIONS_ARGS,
+-        )
+-        result_data = json.loads(assistant_message.content)
++        # Open-weight judges (the evaluated model itself in our runs) sometimes emit JSON with
++        # trailing commas or prose around it. Parse leniently and retry the judge call a few
++        # times before giving up, so a formatting slip is not recorded as an infrastructure error.
++        import re as _re
++        last_error = None
++        for attempt in range(3):
++            assistant_message = generate(
++                model=DEFAULT_LLM_NL_ASSERTIONS,
++                messages=messages if attempt == 0 else messages + [
++                    UserMessage(role="user", content="Your previous answer was not valid JSON. "
++                                "Reply with exactly one JSON object of the form shown, with no trailing commas and no text outside it.")],
++                call_name="nl_assertions_eval",
++                **DEFAULT_LLM_NL_ASSERTIONS_ARGS,
++            )
++            content = assistant_message.content or ""
++            object_start = content.find("{")
++            if object_start < 0:
++                last_error = json.JSONDecodeError("no JSON object in judge response", content, 0)
++                continue
++            candidate = content[object_start:]
++            for text in (candidate, _re.sub(r",\s*([}\]])", r"\1", candidate)):
++                try:
++                    result_data, _ = json.JSONDecoder().raw_decode(text)
++                    break
++                except json.JSONDecodeError as exc:
++                    last_error = exc
++                    result_data = None
++            if result_data is not None and isinstance(result_data, dict):
++                break
++        else:
++            raise last_error
+         return [
+             NLAssertionCheck(
+                 nl_assertion=result["expectedOutcome"],
+diff --git a/src/tau2/utils/llm_utils.py b/src/tau2/utils/llm_utils.py
+index e9d8156..c53814b 100644
+--- a/src/tau2/utils/llm_utils.py
++++ b/src/tau2/utils/llm_utils.py
+@@ -387,6 +387,76 @@ def generate(
+ 
+     litellm_messages = to_litellm_messages(messages)
+     tools_schema = [tool.openai_schema for tool in tools] if tools else None
++    # --- schema-variant injection (no-op unless SCHEMA_VARIANT is set) -------
++    # For the assistant agent only: replace the native tool schemas with the
++    # chosen granularity variant. The model then emits calls in the variant
++    # vocabulary; we decode them back to native below, so execution + scoring
++    # (which read the recorded tool_calls) stay native. See repo schema_adapter.
++    _schema_call_map = None
++    _schema_control = "loose"
++    _schema_seam = None
++    if tools_schema and call_name == "agent_response" and os.environ.get("SCHEMA_TAU2_CURRY"):
++        # Stateful Axis-C (curry) seam: >=2-param tools become begin/set/commit;
++        # meta calls are answered locally below, only committed native calls
++        # surface. See repo schema/curry_seam.py.
++        from toolschema.curry_seam import INSTRUCTION as _CURRY_INSTR, CurrySeam
++        _schema_seam = CurrySeam.get(litellm_messages, tools_schema)
++        tools_schema = _schema_seam.tools
++        if litellm_messages and litellm_messages[0].get("role") == "system":
++            litellm_messages[0] = {**litellm_messages[0],
++                "content": (litellm_messages[0].get("content") or "") + "\n\n" + _CURRY_INSTR}
++        else:
++            litellm_messages.insert(0, {"role": "system", "content": _CURRY_INSTR})
++    elif (tools_schema and call_name == "agent_response"
++          and os.environ.get("SCHEMA_TAU2_DISCLOSE")):
++        from toolschema.disclose_seam import INSTRUCTION as _DISCLOSE_INSTR, DiscloseSeam
++        _schema_seam = DiscloseSeam.get(
++            tools_schema, os.environ.get("SCHEMA_TAU2_DOMAIN"))
++        tools_schema = _schema_seam.tools
++        if litellm_messages and litellm_messages[0].get("role") == "system":
++            litellm_messages[0] = {
++                **litellm_messages[0],
++                "content": (litellm_messages[0].get("content") or "")
++                + "\n\n" + _DISCLOSE_INSTR,
++            }
++        else:
++            litellm_messages.insert(
++                0, {"role": "system", "content": _DISCLOSE_INSTR})
++    elif (tools_schema and call_name == "agent_response"
++          and os.environ.get("SCHEMA_TAU2_INDIRECT")):
++        from toolschema.indirect_seam import INSTRUCTION as _INDIRECT_INSTR, IndirectSeam
++        _schema_seam = IndirectSeam.get(tools_schema)
++        tools_schema = _schema_seam.tools
++        if litellm_messages and litellm_messages[0].get("role") == "system":
++            litellm_messages[0] = {
++                **litellm_messages[0],
++                "content": (litellm_messages[0].get("content") or "")
++                + "\n\n" + _INDIRECT_INSTR,
++            }
++        else:
++            litellm_messages.insert(
++                0, {"role": "system", "content": _INDIRECT_INSTR})
++    elif tools_schema and call_name == "agent_response":
++        try:
++            from toolschema.schema_adapter import SchemaAdapter
++
++            _adapter = SchemaAdapter.from_env()
++        except Exception:
++            _adapter = None
++        if _adapter is not None:
++            tools_schema, _schema_call_map = _adapter.transform(tools_schema)
++            _schema_control = _adapter.control
++            # tell the model to use only the provided (variant) tools
++            if litellm_messages and litellm_messages[0].get("role") == "system":
++                litellm_messages[0] = {
++                    **litellm_messages[0],
++                    "content": (litellm_messages[0].get("content") or "")
++                    + "\n\n" + _adapter.INSTRUCTION,
++                }
++            else:
++                litellm_messages.insert(
++                    0, {"role": "system", "content": _adapter.INSTRUCTION}
++                )
+     if tools_schema and tool_choice is None:
+         tool_choice = "auto"
+ 
+@@ -413,6 +483,32 @@ def generate(
+             tool_choice=tool_choice,
+             **kwargs,
+         )
++        # Stateful schema seam inner loop: answer meta calls locally, re-query
++        # until the model surfaces native actions or plain text.
++        if _schema_seam is not None:
++            _seam_natives = []
++            for _round in range(_schema_seam.MAX_META_ROUNDS):
++                _tcs = response.choices[0].message.tool_calls or []
++                if not _tcs:
++                    break
++                metas, natives = _schema_seam.process(_tcs)
++                _seam_natives.extend(natives)
++                if not metas:
++                    break
++                litellm_messages = litellm_messages + [{
++                    "role": "assistant",
++                    "content": response.choices[0].message.content or "",
++                    "tool_calls": [{"id": mid, "type": "function",
++                                    "function": {"name": mname, "arguments": margs}}
++                                   for mid, mname, margs, _ in metas],
++                }] + [{"role": "tool", "tool_call_id": mid, "content": mres}
++                      for mid, mname, margs, mres in metas]
++                if _seam_natives:      # don't re-query past surfaced actions
++                    break
++                response = completion(model=model, messages=litellm_messages,
++                                      tools=tools_schema, tool_choice=tool_choice,
++                                      **kwargs)
++            _schema_seam.decoded = _seam_natives
+     except Exception as e:
+         logger.error(e)
+         raise e
+@@ -441,7 +537,48 @@ def generate(
+         )
+         for tool_call in raw_tool_calls
+     ]
++    # Decode variant-vocabulary calls back to native (name, args) before they are
++    # recorded, so the trajectory the executor/evaluator reads is native. Under
++    # hard control, calls to functions not in the exposed variant are dropped
++    # (not executed); under loose control they pass through and run natively.
++    if _schema_seam is not None:
++        # Surface only the seam's decoded native actions; meta traffic stayed local.
++        tool_calls = [ToolCall(id=cid, name=nm, arguments=na)
++                      for cid, nm, na in _schema_seam.decoded]
++        if not tool_calls and not (content or "").strip():
++            content = ("I attempted a schema-mediated action but did not complete "
++                       "it; let me continue.")
++    elif _schema_call_map and tool_calls:
++        from toolschema.schema_adapter import classify_call
++
++        decoded = []
++        rejected = False
++        for tc in tool_calls:
++            action, nm, na = classify_call(
++                _schema_call_map, _schema_control, tc.name, tc.arguments
++            )
++            if action == "reject":
++                rejected = True
++                continue
++            if nm is None:  # malformed (e.g. execute without `operation`)
++                nm, na = tc.name, tc.arguments
++            decoded.append(ToolCall(id=tc.id, name=nm, arguments=na))
++        tool_calls = decoded
++        # If hard control dropped every call and there is no text, the message
++        # would be empty (invalid). Leave a note so the turn is a no-op action
++        # rather than a crash — the model failed to act within the schema.
++        if rejected and not tool_calls and not (content or "").strip():
++            content = (
++                "I can only use the tools provided to me, but the action I "
++                "attempted is not available among them."
++            )
+     tool_calls = tool_calls or None
++    # Thinking models (Qwen3.5 with the qwen3 reasoning parser) occasionally return a turn whose
++    # visible content is empty and whose tool call did not parse. tau2 would raise on the empty
++    # message and record an infrastructure error; treat it as a no-op turn instead so the episode
++    # is scored on its outcome (the same policy as the rejected-call note above).
++    if not tool_calls and not (content or "").strip():
++        content = "(no response)"
+ 
+     message = AssistantMessage(
+         role="assistant",
