@@ -139,6 +139,8 @@ task is exactly gradable under every variant).
 
 The data card, file formats and construction pipeline are in [`benchmarks/synthetic/README.md`](benchmarks/synthetic/README.md).
 [`registry.json`](benchmarks/synthetic/data/registry.json) maps every variant reported in the paper to its construction.
+The full tool schema of native and of every representative variant is stored in
+[`benchmarks/synthetic/data/schemas/`](benchmarks/synthetic/data/schemas), one file per variant.
 
 ## Evaluating a model
 
@@ -258,7 +260,7 @@ toolschema/                transformation framework (pip package)
 ├── curry_seam.py · indirect_seam.py · disclose_seam.py   multi-call protocols for real environments
 └── proxy.py                 OpenAI-compatible schema proxy
 benchmarks/synthetic/      the synthetic benchmark
-├── data/                    tools.json · queries.jsonl · specs/ · registry.json
+├── data/                    tools.json · queries.jsonl · specs/ · registry.json · schemas/
 ├── domains.py · build.py    catalog and task construction
 ├── generation/              LLM rewriting of task queries
 └── write_specs.py           regenerates data/specs
