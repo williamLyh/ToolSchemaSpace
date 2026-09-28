@@ -17,8 +17,8 @@ multiset — so spurious distractor-induced calls are penalized.
 Guard: every concrete gold value must remain recoverable (grounding >= 0.9) else
 the row keeps its un-hardened phrasing.
 
-Run:  MODEL=gemini-3.5-flash HARD_SAMPLE=30 python -m benchmarks.synthetic.generation.harden
-Out:  data/synthetic/queries_hard.jsonl
+Run:  LLM_MODEL=gemini-3.5-flash HARD_SAMPLE=30 python -m benchmarks.synthetic.generation.harden
+Out:  benchmarks/synthetic/data/generated/queries_hard.jsonl (released as data/queries.jsonl)
 """
 import asyncio
 import json
@@ -36,7 +36,7 @@ DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 IN = os.environ.get("HARD_IN", os.path.join(DATA, "generated", "queries_natural.jsonl"))
 if not os.path.exists(IN):
     IN = os.path.join(DATA, "generated", "queries_templated.jsonl")
-OUT = os.path.join(DATA, "queries.jsonl")
+OUT = os.environ.get("HARD_OUT", os.path.join(DATA, "generated", "queries_hard.jsonl"))  # released as data/queries.jsonl
 BASE_URL, API_KEY, MODEL = llm_client_kwargs()
 SAMPLE = int(os.environ.get("HARD_SAMPLE", "30"))
 WORKERS = int(os.environ.get("HARD_WORKERS", "10"))

@@ -107,7 +107,7 @@
   },
   {
    "name": "merge · domain 0.29x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "partial domain merge (0.29x of native function count)",
    "kind": "ladder",
@@ -115,7 +115,7 @@
   },
   {
    "name": "merge · domain 0.46x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "partial domain merge (0.46x of native function count)",
    "kind": "ladder",
@@ -123,7 +123,7 @@
   },
   {
    "name": "merge · domain 0.69x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "partial domain merge (0.69x of native function count)",
    "kind": "ladder",
@@ -131,7 +131,7 @@
   },
   {
    "name": "merge · domain 0.85x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "partial domain merge (0.85x of native function count)",
    "kind": "ladder",
@@ -139,7 +139,7 @@
   },
   {
    "name": "merge · domain, nested",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator); Appendix (argument structure of a merged tool)",
    "operator": "merge",
    "method": "domain, nested argument structure",
    "kind": "spec",
@@ -147,7 +147,7 @@
   },
   {
    "name": "merge · domain, union",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator); Appendix (argument structure of a merged tool)",
    "operator": "merge",
    "method": "domain, union argument structure",
    "kind": "spec",
@@ -155,7 +155,7 @@
   },
   {
    "name": "merge · semantic groups",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "semantic groups",
    "kind": "spec",
@@ -163,7 +163,7 @@
   },
   {
    "name": "merge · random groups",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "random groups",
    "kind": "spec",
@@ -171,7 +171,7 @@
   },
   {
    "name": "merge · anti-semantic groups",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "anti-semantic groups",
    "kind": "spec",
@@ -179,7 +179,7 @@
   },
   {
    "name": "merge · catalog, neutral names",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "class groups, neutral names",
    "kind": "spec",
@@ -187,7 +187,7 @@
   },
   {
    "name": "merge · catalog, random classes",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "random class-sized groups",
    "kind": "spec",
@@ -195,7 +195,7 @@
   },
   {
    "name": "merge · catalog, anti-classes",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "merge",
    "method": "anti-class groups",
    "kind": "spec",
@@ -203,7 +203,7 @@
   },
   {
    "name": "native · whole catalog",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "control",
    "method": "all 168 functions, native names",
    "kind": "hierarchy",
@@ -212,7 +212,7 @@
   },
   {
    "name": "split · enum 1.5x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "split",
    "method": "partial enum split (1.5x of native function count)",
    "kind": "ladder",
@@ -220,7 +220,7 @@
   },
   {
    "name": "split · enum 2.9x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "split",
    "method": "partial enum split (2.9x of native function count)",
    "kind": "ladder",
@@ -228,7 +228,7 @@
   },
   {
    "name": "split · enum 5.4x",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "split",
    "method": "partial enum split (5.4x of native function count)",
    "kind": "ladder",
@@ -236,7 +236,7 @@
   },
   {
    "name": "split · one enum",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "split",
    "method": "one enumerable argument per tool",
    "kind": "spec",
@@ -244,7 +244,7 @@
   },
   {
    "name": "split · all enums",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "split",
    "method": "every enumerable argument",
    "kind": "spec",
@@ -252,7 +252,7 @@
   },
   {
    "name": "rename · opaque",
-   "figure": "Appendix Figure 4",
+   "figure": "Appendix figure (remaining methods of each operator)",
    "operator": "rename",
    "method": "opaque identifiers",
    "kind": "spec",

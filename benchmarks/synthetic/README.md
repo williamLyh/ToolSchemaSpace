@@ -1,0 +1,82 @@
+# Synthetic benchmark
+
+This is a controlled tool-use benchmark built to span the schema-variant space. Its native catalog has:
+
+- many enumerable arguments, so the split operators have room to act;
+- tool names that repeat across domains, so class-level variants carry real information;
+- programmatic gold calls, so every task can be scored exactly under any variant.
+
+| | |
+|---|---|
+| domains | 12: calendar, car_cabin, climate, kitchen, laundry, media_player, navigation, security, smart_home, smartwatch, tv, vacuum |
+| native tools | 168, about 14 per domain; 261 enum arguments |
+| tasks | 2,748: 585 single-call, 1,747 compound, 416 compositional |
+| gold calls per task | 1 to 6 (1: 585, 2: 441, 3: 743, 4: 775, 5: 202, 6: 2) |
+| scoring | exact multiset match between executed native actions and gold calls |
+
+## Files
+
+```
+data/
+  tools.json        native catalog: [{uid, group, name, description, parameters}]
+  queries.jsonl     tasks, one per line (fields below)
+  specs/            operator specs for every variant (see ../../toolschema/operators.py)
+  registry.json     paper variant name -> construction (ladder step, spec file, or hierarchy arm)
+```
+
+Each line of `queries.jsonl` has these fields:
+
+| field | meaning |
+|---|---|
+| `id`, `domain`, `type` | task id; domain (= tool group); `single`, `compound` or `compositional` |
+| `system` | the domain's system prompt |
+| `query` | the released user request |
+| `gold_calls` | `[{name, arguments}]` in native form; `n_calls` is its length |
+| `query_base`, `query_llm` | the templated phrasing and the LLM-rewritten phrasing before hardening |
+| `grounded_frac`, `gen_model` | the share of gold values recoverable from `query`, and the rewriting model |
+
+Example:
+
+```json
+{"id": "navigation__set_lane_guidance__1", "domain": "navigation", "type": "single",
+ "query": "Ugh, it's pouring rain today and my morning commute is already a total disaster. Could you go into the navigation and make sure lane guidance is set to on, and, actually, let's also ensure junction view is turned on as well ...",
+ "gold_calls": [{"name": "set_lane_guidance", "arguments": {"state": "on", "junction_view": "on"}}]}
+```
+
+## Construction
+
+The pipeline below builds the release. `generation/` needs an OpenAI-compatible LLM, set with
+`LLM_BASE_URL`, `LLM_API_KEY` and `LLM_MODEL`; the release used `gemini-3.5-flash`.
+Intermediate files go to `data/generated/`.
+
+```bash
+python -m benchmarks.synthetic.build                        # tools.json + 1,248 templated tasks (deterministic)
+GEN_TYPES=single,compound,compositional GEN_SAMPLE=1248 \
+  python -m benchmarks.synthetic.generation.gen_complex      # natural phrasing, gold fixed
+HARD_SAMPLE=1248 python -m benchmarks.synthetic.generation.harden       # persona, context, distractors
+GEN_SAMPLE=1500 python -m benchmarks.synthetic.generation.gen_sampled   # 1,500 tasks over sampled tool combinations
+python -m benchmarks.synthetic.generation.assemble          # hardened + sampled -> generated/queries.jsonl
+python -m benchmarks.synthetic.write_specs                  # regenerate data/specs
+```
+
+- **Build.** `build.py` is deterministic and reproduces the released `tools.json` exactly.
+- **LLM rewriting.** The model only rewrites the phrasing; the gold calls are fixed before generation.
+  A rewrite is kept only if at least 90% of the concrete gold values can still be recovered from its text;
+  otherwise the task keeps its previous phrasing.
+- **Assembly.** Given the two intermediate files from our run, `assemble` reproduces the released
+  `queries.jsonl` byte for byte. The LLM steps themselves are not bit-reproducible, so a new run gives
+  new phrasings for the same gold calls.
+- **Specs.** `write_specs` reproduces every shipped spec file byte for byte.
+
+## Validity
+
+Every variant is checked to be lossless before use. For every task, the gold calls are encoded with
+the variant's oracle and decoded back; under hard control this must reproduce the gold exactly, with
+no rejections. The checks cover:
+
+- `tests/test_ladder.py`: the merge/split ladder;
+- `tests/test_spec_files.py`: every file in `data/specs`;
+- `tests/test_hierarchy.py`: the hierarchy arms;
+- `tests/test_simenv.py`: the same condition, run through the simulated environment.
+
+A measured difference between variants is therefore a difference in how the model uses the interface, not in the task.

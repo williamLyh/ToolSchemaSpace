@@ -11,9 +11,9 @@ be recoverable from the generated text (lenient grounding check). Rows that fail
 keep their original phrasing; we record the grounded fraction either way.
 
 Run (after setting the LLM_* environment variables):
-  MODEL=gemini-3.5-flash python -m benchmarks.synthetic.generation.gen_complex            # 30-row trial
+  LLM_MODEL=gemini-3.5-flash python -m benchmarks.synthetic.generation.gen_complex            # 30-row trial
   GEN_SAMPLE=400 GEN_WORKERS=12 python -m benchmarks.synthetic.generation.gen_complex     # scale up
-Output: data/synthetic/queries_complex.jsonl  (id, type, gold_calls, query_base,
+Output: benchmarks/synthetic/data/generated/queries_natural.jsonl  (id, type, gold_calls, query_base,
         query_llm, query, grounded_frac, gen_model).
 """
 import asyncio

@@ -1,16 +1,15 @@
 """Build the synthetic dataset artifacts from `domains.DOMAINS`.
 
-Emits (under data/synthetic/):
-  - tools.json    : grouped canonical schemas (group = domain). Drop-in for
-                    `schema_variants.py` / `schema_adapter.py` (same shape as the
-                    other datasets' tools.json).
-  - queries.jsonl : one NL task per line, with programmatic GOLD calls. ~75%
+Emits (under benchmarks/synthetic/data/generated/):
+  - tools.json    : grouped canonical schemas (group = domain), the shape that
+                    `toolschema.schema_adapter` and `toolschema.operators` take.
+  - queries_templated.jsonl : one NL task per line, with programmatic GOLD calls. ~75%
                     single-call (one per tool x sampled enum combos) + ~25%
                     multi-call (domain scenarios).
 
 Deterministic (fixed seed) so the gold is reproducible. The natural-language
-phrasing here is the *base* form; `paraphrase.py` optionally rewrites `query`
-into more organic phrasings while keeping `gold_calls` fixed.
+phrasing here is the *base* form; generation/gen_complex.py and generation/harden.py
+rewrite `query` into the released phrasing while keeping `gold_calls` fixed.
 
 Run:  python -m benchmarks.synthetic.build      (from repo root)
 """
@@ -236,7 +235,7 @@ def main():
         json.dump(tools, f, ensure_ascii=False, indent=2)
 
     rows = build_queries()
-    with open(os.path.join(OUT_DIR, "queries.jsonl"), "w", encoding="utf-8") as f:
+    with open(os.path.join(OUT_DIR, "queries_templated.jsonl"), "w", encoding="utf-8") as f:
         for r in rows:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     with open(os.path.join(OUT_DIR, "tasks.json"), "w", encoding="utf-8") as f:

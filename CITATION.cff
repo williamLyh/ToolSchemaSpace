@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this code or benchmark, please cite the paper."
+title: "ToolSchemaSpace"
+repository-code: "https://github.com/williamLyh/ToolSchemaSpace"
+license: CC-BY-4.0
+authors:
+  - family-names: Liu
+    given-names: Yinhong
+  - family-names: Tan
+    given-names: Zhili
+  - family-names: Wang
+    given-names: Zilin
+  - family-names: Guo
+    given-names: Zhijiang
+preferred-citation:
+  type: article
+  title: "Action-Space Shaping for LLM Agents: Measuring and Mitigating Tool-Schema Bias"
+  authors:
+    - family-names: Liu
+      given-names: Yinhong
+    - family-names: Tan
+      given-names: Zhili
+    - family-names: Wang
+      given-names: Zilin
+    - family-names: Guo
+      given-names: Zhijiang
+  year: 2026
