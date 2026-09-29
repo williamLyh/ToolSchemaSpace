@@ -7,6 +7,7 @@ Qwen3.5-27B,fully merged,BFCL,accuracy,200,0.2100,-0.5150,
 Qwen3.5-27B,fully merged,AutomationBench,mean partial credit,599,0.3161,-0.2188,0.0768
 Qwen3.5-27B,class dispatch,τ² airline,mean reward,50,0.8000,+0.0000,
 Qwen3.5-27B,class dispatch,BFCL,accuracy,200,0.4200,-0.3050,
+Qwen3.5-27B,class dispatch,AutomationBench,mean partial credit,599,0.3362,-0.1988,0.0768
 Qwen3.5-27B,fully split,τ² airline,mean reward,50,0.7400,-0.0600,
 Qwen3.5-27B,fully split,BFCL,accuracy,200,0.7300,+0.0050,
 Qwen3.5-27B,interval split,τ² airline,mean reward,50,0.7400,-0.0600,

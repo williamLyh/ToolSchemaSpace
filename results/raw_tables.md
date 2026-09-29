@@ -51,7 +51,7 @@ The numbers behind the figures in [README.md](README.md). In each table the firs
 |---|---:|---:|---:|---:|---:|
 | native (score) | **0.800** |   | **0.725** | **0.535** |   |
 | fully merged | -0.040 |   | -0.515 | -0.219 |   |
-| class dispatch | +0.000 |   | -0.305 |   |   |
+| class dispatch | +0.000 |   | -0.305 | -0.199 |   |
 | fully split | -0.060 |   | +0.005 |   |   |
 | interval split | -0.060 | n/a | +0.015 |   |   |
 | nested args | -0.060 |   | -0.060 |   |   |
