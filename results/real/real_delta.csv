@@ -1,6 +1,6 @@
 variant,τ² airline,τ² retail,BFCL,AutomationBench,MCP-Atlas
 native,0.800,,0.725,0.535,
-fully merged,-0.040,,-0.515,,
+fully merged,-0.040,,-0.515,-0.219,
 class dispatch,+0.000,,-0.305,,
 fully split,-0.060,,+0.005,,
 interval split,-0.060,n/a,+0.015,,
