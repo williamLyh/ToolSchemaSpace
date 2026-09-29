@@ -12,12 +12,15 @@ Qwen3.5-27B,class dispatch,τ² retail,mean reward,114,0.4298,-0.0526,
 Qwen3.5-27B,class dispatch,BFCL,accuracy,200,0.4200,-0.3050,
 Qwen3.5-27B,class dispatch,AutomationBench,mean partial credit,599,0.3362,-0.1988,0.0768
 Qwen3.5-27B,fully split,τ² airline,mean reward,50,0.7400,-0.0600,
+Qwen3.5-27B,fully split,τ² retail,mean reward,114,0.4035,-0.0789,
 Qwen3.5-27B,fully split,BFCL,accuracy,200,0.7300,+0.0050,
 Qwen3.5-27B,fully split,AutomationBench,mean partial credit,599,0.4534,-0.0816,0.1185
 Qwen3.5-27B,interval split,τ² airline,mean reward,50,0.7400,-0.0600,
 Qwen3.5-27B,interval split,BFCL,accuracy,200,0.7400,+0.0150,
 Qwen3.5-27B,nested args,τ² airline,mean reward,50,0.7400,-0.0600,
+Qwen3.5-27B,nested args,τ² retail,mean reward,114,0.4298,-0.0526,
 Qwen3.5-27B,nested args,BFCL,accuracy,200,0.6650,-0.0600,
+Qwen3.5-27B,nested args,AutomationBench,mean partial credit,599,0.5148,-0.0202,0.1503
 Qwen3.5-27B,namespaced names,τ² airline,mean reward,50,0.8400,+0.0400,
 Qwen3.5-27B,namespaced names,BFCL,accuracy,200,0.7150,-0.0100,
 Qwen3.5-27B,namespaced names,AutomationBench,mean partial credit,599,0.5235,-0.0114,0.1619
@@ -26,6 +29,7 @@ Qwen3.5-27B,strip descriptions,BFCL,accuracy,200,0.5050,-0.2200,
 Qwen3.5-27B,strip descriptions,AutomationBench,mean partial credit,599,0.4220,-0.1130,0.0952
 Qwen3.5-27B,reorder arguments,τ² airline,mean reward,50,0.8000,+0.0000,
 Qwen3.5-27B,reorder arguments,BFCL,accuracy,200,0.7350,+0.0100,
+Qwen3.5-27B,reorder arguments,AutomationBench,mean partial credit,599,0.5350,+0.0001,0.1603
 Qwen3.5-27B,transaction,τ² airline,mean reward,50,0.7200,-0.0800,
 Qwen3.5-27B,transaction,BFCL,accuracy,200,0.7050,-0.0200,
 Qwen3.5-27B,schema discovery,τ² airline,mean reward,50,0.7600,-0.0400,
