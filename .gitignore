@@ -5,4 +5,5 @@ __pycache__/
 .env
 results/*
 !results/README.md
+!results/synthetic/
 generated/
