@@ -7,5 +7,6 @@ results/*
 !results/README.md
 !results/synthetic/
 !results/real/
+!results/mitigation/
 !results/raw_tables.md
 generated/

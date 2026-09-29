@@ -62,3 +62,22 @@ The numbers behind the figures in [README.md](README.md). In each table the firs
 | reference resolution | n/a | n/a | n/a | n/a | n/a |
 | schema discovery | -0.040 |   | +0.020 |   |   |
 | composed | -0.040 |   | -0.160 |   |   |
+
+## Mitigation: Qwen3-4B, synthetic benchmark (paper Table 3)
+
+Base = success of the untrained model; other columns = change from Base. † = the variant is in that method's training data; – = not applicable.
+
+| variant | Base | Instruction | Decoding | SFT native | SFT mixed | RL native | RL mixed |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Native | 0.773 | – | +0.003 | +0.021 † | -0.075 † | +0.054 † | +0.042 † |
+| Fully merged | 0.364 | +0.278 | +0.289 | +0.108 | +0.343 † | +0.111 | +0.435 † |
+| Class dispatch | 0.661 | +0.008 | -0.018 | -0.260 | -0.005 | +0.049 | +0.055 |
+| Fully split | 0.760 | +0.004 | -0.003 | +0.045 | -0.061 † | +0.060 | +0.047 † |
+| Interval split | 0.759 | +0.005 | -0.043 | -0.090 | -0.073 | +0.053 | +0.048 |
+| Nested args | 0.771 | +0.005 | +0.006 | +0.020 | -0.079 | +0.056 | +0.045 |
+| Namespaced names | 0.697 | +0.002 | +0.001 | +0.031 | +0.008 † | +0.066 | +0.056 † |
+| Strip descriptions | 0.783 | -0.001 | +0.001 | -0.003 | -0.098 | +0.039 | +0.028 |
+| Reorder arguments | 0.777 | +0.008 | -0.003 | +0.017 | -0.080 | +0.056 | +0.043 |
+| Transaction | 0.281 | +0.064 | -0.109 | -0.100 | +0.230 † | +0.018 | +0.336 † |
+| Reference resolution | 0.775 | +0.026 | +0.067 | -0.135 | -0.041 † | +0.057 | +0.108 † |
+| Schema discovery | 0.072 | +0.450 | +0.016 | -0.051 | +0.666 † | +0.062 | +0.683 † |

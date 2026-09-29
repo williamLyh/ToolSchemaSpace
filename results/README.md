@@ -42,6 +42,29 @@ the benchmark's own score:
 
 <p align="center"><img src="real/real_delta.png" alt="Real benchmarks: change in score from native, Qwen3.5-27B x representative variants" width="75%"></p>
 
+## Mitigation: can training remove schema bias?
+
+This is Table 3 of the paper. Qwen3-4B on the synthetic benchmark, 2,748 tasks per cell, over the 12
+representative variants. **Base** is the untrained model's success. Every other column is the change from Base on
+the same variant:
+
+| column | method |
+|---|---|
+| Instruction | a one-sentence description of the variant's calling convention, added to the prompt |
+| Decoding | the first call is forced to be schema-valid by constrained decoding |
+| SFT native | supervised fine-tuning on native-schema traces |
+| SFT mixed | supervised fine-tuning on traces rotating over seven variants |
+| RL native | on-policy RL (GRPO) on native-schema tasks |
+| RL mixed | on-policy RL (GRPO) on tasks rotating over seven variants |
+
+The SFT columns average several seeds, as do the RL mixed columns; RL native is a single run.
+
+Shading is as above. A **red frame** marks a variant that is in that method's training data. The seven variants in
+the mixed data are native, fully merged, fully split, namespaced names, transaction, reference resolution and
+schema discovery.
+
+<p align="center"><img src="mitigation/mitigation_delta.png" alt="Mitigation: change in success from the untrained model, Qwen3-4B" width="80%"></p>
+
 ## Files
 
 | file | contents |
@@ -52,8 +75,9 @@ the benchmark's own score:
 | `synthetic/appendix_*` | the same for the appendix variants (open models) |
 | `real/real_long.csv` | one row per variant × benchmark: metric, number of tasks, score, change from native, pass rate (AutomationBench) |
 | `real/real_{score,delta}.csv` | scores, and change from native, as variant × benchmark matrices |
+| `mitigation/mitigation_{score,delta}.csv` | Table 3: absolute success per method, and change from Base, with the methods whose training data contain each variant |
 | `*/..._delta.{png,svg}` | the figures |
 
 The failure-mode rates are shares of all tasks; with the success rate they sum to 1, and they are the segments of
 Figure 2. All files are regenerated from the raw per-episode records by `analysis/export_open_results.py` and
-`analysis/export_real_results.py` in the research code base.
+`analysis/export_real_results.py` and `analysis/export_mitigation_results.py` in the research code base.
