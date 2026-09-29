@@ -80,24 +80,103 @@ vllm serve Qwen/Qwen3-4B-Instruct-2507 --enable-auto-tool-choice --tool-call-par
 
 ## Quick start
 
+The Quick start shows the core use of the framework: **transforming a tool schema**. You give it your native tools
+and an operator spec. It returns
+
+1. the **variant schema** to show the model,
+2. a **decoder** that turns the model's calls in that variant back into native calls, which your environment
+   executes unchanged,
+3. an **oracle encoder** that writes any native call in the variant's vocabulary, i.e. how a perfect model would
+   act. The equivalence tests use it.
+
+### Example: merge two tools into one dispatcher
+
+**Native schema.** Two tools, in the canonical `{name, description, parameters}` form. OpenAI-format
+`{"type": "function", "function": {...}}` tools work too.
+
 ```python
 from toolschema.operators import compile_spec
 
-tools = [...]   # native catalog: [{"name", "description", "parameters"}]
-spec = {"ops": [{"op": "merge", "tools": ["set_window", "set_seat_heat"],
-                 "into": "execute", "encoding": "nested"}]}
-
-comp = compile_spec(tools, spec)
-comp.tools                                  # the variant catalog the model sees: [execute]
-calls = comp.encode_episode(gold_calls)     # oracle: how a perfect model acts in this variant
-native, flags = comp.decode_seq(calls)      # decoded native calls == gold_calls, flags == []
+native_tools = [
+    {"name": "set_window", "description": "Open, close, or vent a car window.",
+     "parameters": {"type": "object",
+                    "properties": {"position": {"type": "string", "enum": ["front_left", "front_right"]},
+                                   "state": {"type": "string", "enum": ["open", "closed", "vent"]}},
+                    "required": ["position", "state"]}},
+    {"name": "set_seat_heat", "description": "Set the heating level of a seat.",
+     "parameters": {"type": "object",
+                    "properties": {"seat": {"type": "string"}, "level": {"type": "integer"}},
+                    "required": ["seat", "level"]}},
+]
 ```
 
-- [`examples/quickstart.py`](examples/quickstart.py) runs offline. It shows merge, split, transaction, rename and the
-  merge/split ladder on a two-tool catalog.
-- [`examples/agent_loop.py`](examples/agent_loop.py) puts a variant in front of your own agent loop. The model sees the
-  variant tools, and `toolschema.simenv.SimEnv` decodes each call, answers protocol calls and rejects off-schema calls.
-  Your environment then executes native actions only.
+**1. Transform.** The operator spec merges both tools into one `execute` dispatcher with nested arguments:
+
+```python
+spec = {"ops": [{"op": "merge", "tools": ["set_window", "set_seat_heat"],
+                 "into": "execute", "encoding": "nested"}]}
+variant = compile_spec(native_tools, spec)
+variant.tools          # the schema to give the model
+```
+
+```json
+[{"name": "execute",
+  "description": "Dispatch entry point handling ONLY these 2 operations: set_window, set_seat_heat. Set `operation`, then put that operation's own arguments inside `arguments`. ...",
+  "parameters": {"type": "object",
+                 "properties": {"operation": {"type": "string", "enum": ["set_window", "set_seat_heat"]},
+                                "arguments": {"type": "object",
+                                              "properties": {"position": {...}, "state": {...},
+                                                             "seat": {...}, "level": {...}}}},
+                 "required": ["operation", "arguments"]}}]
+```
+
+**2. Decode what the model does.** The model answers in the variant's vocabulary, and the decoder gives back the
+native call to execute:
+
+```python
+model_calls = [("execute", {"operation": "set_window",
+                            "arguments": {"position": "front_left", "state": "vent"}})]
+native_calls, flags = variant.decode_seq(model_calls)
+# native_calls == [("set_window", {"position": "front_left", "state": "vent"})],  flags == []
+```
+
+A call that is invalid in the variant is flagged, not silently executed:
+
+```python
+variant.decode_seq([("execute", {"operation": "open_trunk", "arguments": {}})])
+# flags == [("bad_execute", "operation must be one of ['set_window', 'set_seat_heat']"), ...]
+```
+
+**3. Oracle.** This expresses a native call in the variant, which is what the equivalence tests use:
+
+```python
+variant.encode_episode([{"name": "set_seat_heat", "arguments": {"seat": "driver", "level": 2}}])
+# [("execute", {"operation": "set_seat_heat", "arguments": {"seat": "driver", "level": 2}})]
+```
+
+### The same native call under other operators
+
+Changing only the spec gives a different variant of the same action space. Here is how
+`set_window(position="front_left", state="vent")` looks in each; the interval-split row uses
+`set_seat_heat(seat="driver", level=3)`.
+
+| spec | tools the model sees | the model's call(s) |
+|---|---|---|
+| `{"op":"merge","tools":[…],"into":"execute"}` | `execute` | `execute(operation="set_window", set_window::position="front_left", set_window::state="vent")` |
+| `{"op":"split_enum","tool":"set_window","params":["state"]}` | `set_window__state_open`, `…_closed`, `…_vent`, `set_seat_heat` | `set_window__state_vent(position="front_left")` |
+| `{"op":"split_predicate","tool":"set_seat_heat","param":"level","cuts":[2]}` | `set_window`, `set_seat_heat__level_lt_2`, `set_seat_heat__level_ge_2` | `set_seat_heat__level_ge_2(seat="driver", level=3)` |
+| `{"op":"arg_lower","tool":"set_window","into":"options","params":[…]}` | `set_window`, `set_seat_heat` | `set_window(options={"position": "front_left", "state": "vent"})` |
+| `{"op":"rename","tool":"set_window","to":"fn_d8abb4"}` | `fn_d8abb4`, `set_seat_heat` | `fn_d8abb4(position="front_left", state="vent")` |
+| `{"op":"curry","tool":"set_window"}` | `begin_set_window`, `set_set_window__position`, `set_set_window__state`, `commit_set_window`, … | `begin_set_window()` → `set_set_window__position(txn_id, …)` → `set_set_window__state(txn_id, …)` → `commit_set_window(txn_id)` |
+
+Every row decodes back to the same native call.
+
+### Further examples
+
+- [`examples/quickstart.py`](examples/quickstart.py) runs everything above offline, with no model.
+- [`examples/agent_loop.py`](examples/agent_loop.py) puts a variant in front of a live model.
+  `toolschema.simenv.SimEnv` decodes each call, answers protocol calls itself (such as transaction begin and set),
+  and rejects off-schema calls, so your environment only ever executes native actions.
 
 ## Schema operators
 
