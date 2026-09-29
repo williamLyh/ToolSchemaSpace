@@ -1,0 +1,18 @@
+{
+"calculate": "utility",
+"cancel_pending_order": "order",
+"exchange_delivered_order_items": "order",
+"find_user_id_by_email": "user",
+"find_user_id_by_name_zip": "user",
+"get_item_details": "product",
+"get_order_details": "order",
+"get_product_details": "product",
+"get_user_details": "user",
+"list_all_product_types": "product",
+"modify_pending_order_address": "order",
+"modify_pending_order_items": "order",
+"modify_pending_order_payment": "order",
+"modify_user_address": "user",
+"return_delivered_order_items": "order",
+"transfer_to_human_agents": "utility"
+}

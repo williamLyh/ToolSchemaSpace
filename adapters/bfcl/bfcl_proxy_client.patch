@@ -1,0 +1,38 @@
+diff --git a/bfcl_eval/constants/model_config.py b/bfcl_eval/constants/model_config.py
+index e42fe1c..d7bfc8d 100644
+--- a/bfcl_eval/constants/model_config.py
++++ b/bfcl_eval/constants/model_config.py
+@@ -117,6 +117,19 @@ class ModelConfig:
+ 
+ # Inference through API calls
+ api_inference_model_map = {
++    # ToolSchemaSpace: any model behind the schema proxy (OPENAI_BASE_URL); the proxy sets the upstream model
++    "schema-proxy-FC": ModelConfig(
++        model_name="schema-proxy",
++        display_name="Model behind the ToolSchemaSpace schema proxy (FC)",
++        url="https://github.com/williamLyh/ToolSchemaSpace",
++        org="ToolSchemaSpace",
++        license="apache-2.0",
++        model_handler=OpenAICompletionsHandler,
++        input_price=None,
++        output_price=None,
++        is_fc_model=True,
++        underscore_to_dot=True,
++    ),
+     "gorilla-openfunctions-v2": ModelConfig(
+         model_name="gorilla-openfunctions-v2",
+         display_name="Gorilla-OpenFunctions-v2 (FC)",
+diff --git a/bfcl_eval/model_handler/api_inference/openai_completion.py b/bfcl_eval/model_handler/api_inference/openai_completion.py
+index 357584f..236ac21 100644
+--- a/bfcl_eval/model_handler/api_inference/openai_completion.py
++++ b/bfcl_eval/model_handler/api_inference/openai_completion.py
+@@ -47,6 +47,9 @@ class OpenAICompletionsHandler(BaseHandler):
+         if headers_env := os.getenv("OPENAI_DEFAULT_HEADERS"):
+             kwargs["default_headers"] = json.loads(headers_env)
+ 
++        if timeout_env := os.getenv("OPENAI_TIMEOUT"):  # ToolSchemaSpace: long agent turns
++            kwargs["timeout"] = float(timeout_env)
++
+         return kwargs
+ 
+     def decode_ast(self, result, language, has_tool_call_tag):

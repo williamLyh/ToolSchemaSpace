@@ -10,7 +10,7 @@ PORT="${PORT:-8100}"; AB_DIR="${AB_DIR:?set AB_DIR to your AutomationBench check
 OUT="${OUT:-$ROOT/results/automationbench/$OP}"; mkdir -p "$(dirname "$OUT")"
 
 cd "$ROOT"
-python -m toolschema.proxy --op "$OP" --upstream "$UPSTREAM" --port "$PORT" \
+python -m toolschema.proxy --op "$OP" --upstream "$UPSTREAM" --port "$PORT" --classes adapters/automationbench/classes.json \
   --temperature 0 --model "$MODEL" > "$OUT.proxy.log" 2>&1 &
 PROXY=$!; trap 'kill $PROXY' EXIT
 until curl -sf "http://127.0.0.1:$PORT/stats" > /dev/null; do sleep 1; done

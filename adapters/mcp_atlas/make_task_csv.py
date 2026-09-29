@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Write the MCP-Atlas task subset used in the paper as a CSV that `run_eval.py --input` accepts.
 
-The subset is the 118 tasks whose MCP servers all ran in the public sandbox without
-private credentials; their ids are listed in task_ids.txt.
+The subset is the 89 tasks whose reference trajectory calls only tools that the key-free
+sandbox exposes (all 20 servers online); their ids are listed in task_ids.txt.
     python adapters/mcp_atlas/make_task_csv.py tasks.csv
 """
 import csv

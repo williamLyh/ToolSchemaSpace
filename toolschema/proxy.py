@@ -17,10 +17,20 @@ The harness keeps its native tools, executor, and scorer. Per request the proxy
      the native tool calls the harness echoes, so the model's history stays in the
      variant form.
 
-Operators (--op): native, merge (one dispatcher over all task tools), merge_app (one
-dispatcher per app prefix), split (k-ladder finest enum split), nest (arguments into
-one object), rename_opaque, rename_ns (app__tool), strip (descriptions), reorder
-(parameter order), transaction (begin/set/commit for tools with >=2 parameters).
+Operators (--op), named after the paper's representative variants:
+  native            the harness's own tools
+  merge             fully merged: one dispatcher over all task tools
+  merge_app         class dispatch: one dispatcher per class (app / server prefix, or --classes)
+  split             fully split: every required enum/boolean argument baked into names
+  pred              interval split: every required numeric argument split at one cut (--cuts)
+  nest              nested args: arguments moved into one object
+  rename_ns         namespaced names: <class>__<tool>
+  rename_opaque     opaque names (appendix variant)
+  strip             strip descriptions
+  reorder           reorder arguments
+  transaction       begin/set/commit for tools with >=2 parameters
+  disclose          schema discovery: list_methods(class) + invoke(class, method, arguments)
+  composed          odd-indexed tools merged, even-indexed tools split on enum and numeric arguments
 
 Run:
     python -m toolschema.proxy --op merge --upstream http://127.0.0.1:8000/v1 --port 8100
@@ -43,18 +53,24 @@ os.environ.setdefault("SCHEMA_K", "10")
 
 from aiohttp import ClientSession, ClientTimeout, web  # noqa: E402
 
+from .hierarchy import HierEnv, build_arm  # noqa: E402
 from .operators import compile_spec  # noqa: E402
 from .schema_adapter import TOOL_INSTRUCTION, SchemaAdapter, _canonicalize, _to_openai  # noqa: E402
 
 log = logging.getLogger("schema_proxy")
 OPS = ("native", "merge", "merge_app", "split", "nest", "rename_opaque", "rename_ns",
-       "strip", "reorder", "transaction")
+       "strip", "reorder", "transaction", "pred", "disclose", "composed")
 PROTOCOL_NOTE = {
     "transaction": ("Some actions are transactional: call the begin_* function first, read "
                     "the returned txn_id, set each argument with the set_* functions (passing "
                     "that exact txn_id), then call commit_* to execute. Nothing happens until "
                     "commit."),
+    "disclose": ("Tool argument schemas are progressively disclosed. First call "
+                 "`list_methods` for the relevant class, then call `invoke` using the exact "
+                 "method name and argument schema returned by that result."),
 }
+CLASSES = {}   # tool name -> class (--classes); default: the app / server prefix of the name
+CUTS = {}      # "tool.param" -> interval cut (--cuts); default: declared default, else 10
 
 
 # ---------------------------------------------------------------------------
@@ -62,6 +78,45 @@ PROTOCOL_NOTE = {
 # ---------------------------------------------------------------------------
 def app_of(name):
     return name.split("_", 1)[0] if "_" in name else name
+
+
+def class_of(name):
+    return CLASSES.get(name) or app_of(name)
+
+
+def _props(t):
+    return t["parameters"].get("properties", {})
+
+
+def _required(t):
+    return set(t["parameters"].get("required", []))
+
+
+def required_numeric(t):
+    """Required quantity-like numeric arguments; identifiers (names ending in "id") are not split."""
+    return [p for p, d in _props(t).items() if p in _required(t) and d.get("type") in ("integer", "number")
+            and not p.lower().endswith("id")]
+
+
+def required_enumerable(t):
+    return [p for p, d in _props(t).items()
+            if p in _required(t) and ("enum" in d or d.get("type") == "boolean")]
+
+
+def cut_for(t, p):
+    """One interval cut per required numeric argument: a per-benchmark value from --cuts
+    (median of the values in the benchmark's reference solutions), else the declared
+    default, else 10."""
+    key = f"{t['name']}.{p}"
+    if key in CUTS:
+        return CUTS[key]
+    d = _props(t)[p].get("default")
+    return d if isinstance(d, (int, float)) and not isinstance(d, bool) else 10
+
+
+def pred_ops(t, skip=()):
+    return [{"op": "split_predicate", "tool": t["name"], "param": p, "cuts": [cut_for(t, p)]}
+            for p in required_numeric(t) if p not in skip]
 
 
 def spec_for(op, canon):
@@ -73,7 +128,7 @@ def spec_for(op, canon):
     if op == "merge_app":
         groups = OrderedDict()
         for n in names:
-            groups.setdefault(app_of(n), []).append(n)
+            groups.setdefault(class_of(n), []).append(n)
         return {"ops": [{"op": "merge", "tools": g, "into": f"{a}_execute"} for a, g in groups.items()]}
     if op == "nest":
         return {"ops": [{"op": "arg_lower", "tool": t["name"], "into": "options",
@@ -83,7 +138,7 @@ def spec_for(op, canon):
         return {"ops": [{"op": "rename", "tool": n,
                          "to": "fn_" + hashlib.sha1(n.encode()).hexdigest()[:6]} for n in names]}
     if op == "rename_ns":
-        return {"ops": [{"op": "rename", "tool": n, "to": f"{app_of(n)}__{n}"} for n in names]}
+        return {"ops": [{"op": "rename", "tool": n, "to": f"{class_of(n)}__{n}"} for n in names]}
     if op == "strip":
         return {"ops": [{"op": "strip_desc", "tool": n} for n in names]}
     if op == "reorder":
@@ -91,6 +146,20 @@ def spec_for(op, canon):
     if op == "transaction":
         return {"ops": [{"op": "curry", "tool": t["name"]} for t in canon
                         if len(t["parameters"]["properties"]) >= 2]}
+    if op == "split":                              # fully split: every REQUIRED enum/boolean argument baked
+        return {"ops": [{"op": "split_enum", "tool": t["name"], "params": required_enumerable(t)}   # into names
+                        for t in canon if required_enumerable(t)]}     # (an omitted optional one has no split tool)
+    if op == "pred":                               # interval split
+        return {"ops": [o for t in canon for o in pred_ops(t)]}
+    if op == "composed":                           # the synthetic `mixed` recipe without reference resolution:
+        ops = []                                   # odd-indexed tools merged into one dispatcher, even-indexed
+        if len(names[1::2]) >= 2:                  # tools split on every required enum and numeric argument
+            ops.append({"op": "merge", "tools": names[1::2], "into": "execute"})
+        for t in canon[0::2]:
+            if required_enumerable(t):
+                ops.append({"op": "split_enum", "tool": t["name"], "params": required_enumerable(t)})
+            ops += pred_ops(t, skip=required_enumerable(t))     # an enum-typed number is only enum-split
+        return {"ops": ops}
     raise ValueError(op)
 
 
@@ -100,9 +169,12 @@ class Variant:
     def __init__(self, op, native_tools):
         canon = [_canonicalize(t) for t in native_tools]
         self.native_names = {t["name"] for t in canon}
-        if op == "split":
-            tools, cmap = SchemaAdapter(k=9, control="hard").transform(native_tools)
-            self.tools, self.cmap, self.comp = tools, cmap, None
+        self.hier = None
+        if op == "disclose":                     # schema discovery: list_methods(class) + invoke
+            rows = [dict(t, group=class_of(t["name"])) for t in canon]
+            self.hier = build_arm("disclose", rows)
+            self.tools = [_to_openai(t) for t in self.hier.tools]
+            self.cmap, self.comp = self.hier.call_map, None
         else:
             comp = compile_spec(canon, spec_for(op, canon))
             self.comp = comp                       # oracle encoder for the equivalence gate
@@ -124,6 +196,7 @@ class Conversation:
         self.n_rejected = 0
         self.n_meta = 0
         self.issued = set()        # native tool_call ids handed to the harness
+        self.env = None            # HierEnv for the schema-discovery variant (created on first call)
 
 
 CONVS = OrderedDict()
@@ -176,6 +249,8 @@ def tool_msg(call_id, payload):
 def process_calls(conv, calls, control):
     """-> (native_calls [(id, name, args)], internal_results [tool messages])."""
     from .schema_adapter import classify_call
+    if conv.v.hier is not None:
+        return process_disclose(conv, calls, control)
     natives, internal = [], []
     for c in calls:
         cid = c.get("id") or f"call_{uuid.uuid4().hex[:12]}"
@@ -226,6 +301,35 @@ def process_calls(conv, calls, control):
     return natives, internal
 
 
+def process_disclose(conv, calls, control):
+    """Schema discovery: list_methods is answered here; a valid invoke becomes one native call."""
+    if conv.env is None:
+        conv.env = HierEnv(conv.v.hier, control=control)
+    natives, internal = [], []
+    for c in calls:
+        cid = c.get("id") or f"call_{uuid.uuid4().hex[:12]}"
+        try:
+            args = json.loads(c["function"].get("arguments") or "{}")
+            if not isinstance(args, dict):
+                raise ValueError("arguments must be an object")
+        except Exception as e:
+            conv.n_rejected += 1
+            internal.append(tool_msg(cid, {"error": f"Could not parse arguments: {e}"}))
+            continue
+        before, rejected = len(conv.env.native_actions), conv.env.n_rejected
+        result = conv.env.call(c["function"]["name"], args)
+        if len(conv.env.native_actions) > before:
+            qualified, native_args = conv.env.native_actions[-1]
+            natives.append((cid, qualified.split(".", 1)[1], native_args))
+            continue
+        if conv.env.n_rejected > rejected:
+            conv.n_rejected += 1
+        else:
+            conv.n_meta += 1
+        internal.append({"role": "tool", "tool_call_id": cid, "content": result})
+    return natives, internal
+
+
 # ---------------------------------------------------------------------------
 # HTTP
 # ---------------------------------------------------------------------------
@@ -241,6 +345,10 @@ async def upstream_chat(app, body):
                 if r.status >= 500 or r.status == 429:
                     raise RuntimeError(f"upstream {r.status}: {str(data)[:200]}")
                 return r.status, data
+        except asyncio.TimeoutError:               # ran past the upstream timeout (e.g. a degenerate generation):
+            # at temperature 0 a retry degenerates again, so answer with a status OpenAI clients do not retry
+            # (they retry 408/409/429/5xx); the task fails either way, 30 min in instead of 90+
+            return 422, {"error": {"message": "proxy: model call exceeded the upstream timeout (degenerate generation)"}}
         except Exception as e:                     # transient: retry with backoff
             if attempt == 5:
                 return 502, {"error": {"message": f"proxy upstream failure: {e}"}}
@@ -356,7 +464,13 @@ def main():
     ap.add_argument("--model", default=None, help="force this upstream model id on every request")
     ap.add_argument("--temperature", type=float, default=None, help="override sampling temperature (0 = paper protocol)")
     ap.add_argument("--no-instruction", action="store_true")
+    ap.add_argument("--classes", default=None, help="JSON {tool name: class} (default: app/server prefix)")
+    ap.add_argument("--cuts", default=None, help='JSON {"tool.param": cut} for interval split')
     a = ap.parse_args()
+    if a.classes:
+        CLASSES.update(json.load(open(a.classes)))
+    if a.cuts:
+        CUTS.update(json.load(open(a.cuts)))
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
     async def on_start(app):

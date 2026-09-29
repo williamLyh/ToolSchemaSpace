@@ -14,7 +14,7 @@ University of Cambridge · Yinwang · Huawei · LARK, HKUST (GZ) · HKUST
 [![Tests](https://img.shields.io/badge/equivalence%20tests-8%20suites-brightgreen.svg)](#tests)
 
 [Paper](https://arxiv.org/abs/2609.34971) · [Overview](#overview) · [Installation](#installation) · [Quick start](#quick-start) · [Operators](#schema-operators) ·
-[Synthetic benchmark](#synthetic-benchmark) · [Evaluation](#evaluating-a-model) · [Real benchmarks](#real-benchmarks) ·
+[Synthetic benchmark](#synthetic-benchmark) · [Real benchmarks](#real-benchmarks) ·
 [Reproduction](#reproducing-the-paper) · [Citation](#citation)
 
 </div>
@@ -47,7 +47,7 @@ This repository provides:
 - **A synthetic benchmark** (`benchmarks/synthetic/`): 12 domains, 168 tools and 2,748 tasks with programmatic gold calls,
   plus the spec file of every variant in the paper.
 - **Adapters for four existing benchmarks** (`adapters/`): τ²-bench, BFCL v3 multi-turn, AutomationBench and MCP-Atlas.
-  Two are patches; the other two use an OpenAI-compatible **schema proxy** that works with any agent harness unchanged.
+  All four run through an OpenAI-compatible **schema proxy** that works with any agent harness, unchanged.
 - **Equivalence tests** (`tests/`). Every variant is proven lossless before use: a perfect model scores 1.0 on all of them.
 
 ### Findings
@@ -72,11 +72,8 @@ pip install -e .            # installs the `toolschema` package (depends on open
 ```
 
 Python 3.10 or newer is required. Run the benchmark, evaluation and test modules from the repository root
-(`python -m ...`). Evaluation needs an OpenAI-compatible endpoint that supports tool calling, for example vLLM:
-
-```bash
-vllm serve Qwen/Qwen3-4B-Instruct-2507 --enable-auto-tool-choice --tool-call-parser hermes --port 8000
-```
+(`python -m ...`). The transformation framework itself needs no model. Evaluation needs an inference server;
+see [Reproducing the paper](#reproducing-the-paper).
 
 ## Quick start
 
@@ -222,25 +219,152 @@ The data card, file formats and construction pipeline are in [`benchmarks/synthe
 The full tool schema of native and of every representative variant is stored in
 [`benchmarks/synthetic/data/schemas/`](benchmarks/synthetic/data/schemas), one file per variant.
 
-## Evaluating a model
+## Real benchmarks
+
+All four real benchmarks run through the **schema proxy** (`toolschema/proxy.py`), with no change to their
+environments or scorers. The proxy is an OpenAI-compatible server between each harness and the model, and it:
+
+- rewrites each request's native `tools` into the variant;
+- decodes every call the model makes back into native calls;
+- answers protocol-internal calls itself (transaction begin and set, `list_methods`);
+- rejects off-schema calls with a recoverable error;
+- keeps the model's conversation history in the variant vocabulary.
+
+| benchmark | tasks used | upstream | adapter |
+|---|---|---|---|
+| τ²-bench | airline (50), retail (114) | [sierra-research/tau2-bench](https://github.com/sierra-research/tau2-bench) | [`adapters/tau2`](adapters/tau2) |
+| BFCL v3 | `multi_turn_base` (200) | [ShishirPatil/gorilla](https://github.com/ShishirPatil/gorilla) | [`adapters/bfcl`](adapters/bfcl) (small client patch) |
+| AutomationBench | `limited_zapier`, 599 of 600 tasks | [zapier/AutomationBench](https://github.com/zapier/AutomationBench) | [`adapters/automationbench`](adapters/automationbench) |
+| MCP-Atlas | 89 tasks runnable in the key-free sandbox | [scaleapi/mcp-atlas](https://github.com/scaleapi/mcp-atlas) | [`adapters/mcp_atlas`](adapters/mcp_atlas) |
 
 ```bash
-export REMOTE_OPENAI_BASE_URL=http://localhost:8000/v1 SYN_MODEL=Qwen/Qwen3-4B-Instruct-2507
-
-# one ladder step, one operator spec, one hierarchy arm, one class grouping
-SCHEMA_VARIANT=0 SCHEMA_DATASET=synthetic SCHEMA_CONTROL=hard OUT_JSONL=v0.jsonl python -m eval.run_agentic
-SCHEMA_SPEC=benchmarks/synthetic/data/specs/curry.json SCHEMA_DATASET=synthetic python -m eval.run_agentic
-HIER_ARM=dispatch python -m eval.run_hierarchy
-SCHEMA_SPEC=benchmarks/synthetic/data/specs/class_neutral.json python -m eval.run_class_grouping
+python -m toolschema.proxy --op merge --upstream http://127.0.0.1:8000/v1 --port 8100 \
+    [--classes adapters/<benchmark>/classes.json] [--cuts adapters/<benchmark>/cuts.json]
+# then point the harness's OpenAI base URL at http://127.0.0.1:8100/v1
 ```
 
-- **Episodes.** An episode runs up to 16 turns. The model's calls are executed by the simulated environment.
+**Operators.** `--op` selects the variant:
+
+| `--op` | variant |
+|---|---|
+| `native` | native schema |
+| `merge` | fully merged |
+| `merge_app` | class dispatch |
+| `split` | fully split (required enum arguments) |
+| `pred` | interval split |
+| `nest` | nested args |
+| `rename_ns` | namespaced names |
+| `strip` | strip descriptions |
+| `reorder` | reorder arguments |
+| `transaction` | transaction |
+| `disclose` | schema discovery |
+| `composed` | composed |
+| `rename_opaque` | opaque names (appendix variant) |
+
+Reference resolution needs a value table drawn from the task data, so it is available through the synthetic
+benchmark and the τ² patch, not the proxy.
+
+**Classes and cuts.** For each benchmark, `--classes` gives the class of every tool (the app, API or entity) and
+`--cuts` the interval-split cut of every required numeric argument. `python -m tests.test_proxy <catalog>
+<task_tools> --classes … --cuts …` checks that every operator is lossless on a catalog.
+
+Each adapter directory has setup notes, a run script, and the benchmark-specific pitfalls we hit.
+
+## Reproducing the paper
+
+Reproducing the paper takes three steps:
+1. start an inference server for the model under test;
+2. run the evaluation against it;
+3. summarise the per-episode records.
+
+### 1. Start an inference server
+
+The evaluation talks to any **OpenAI-compatible Chat Completions endpoint with tool calling**. We served every open
+model with [vLLM](https://github.com/vllm-project/vllm):
+
+```bash
+pip install vllm
+vllm serve Qwen/Qwen3-4B-Instruct-2507 --port 8000 \
+    --enable-auto-tool-choice --tool-call-parser hermes \
+    --max-model-len 32768 --enable-prefix-caching
+```
+
+For larger models, spread them over GPUs with `--tensor-parallel-size` and `--data-parallel-size`. For example,
+Qwen3.5-27B on 8 × 32 GB GPUs: `--tensor-parallel-size 4 --data-parallel-size 2`, or two such servers behind a
+load balancer.
+
+The tool-call parser (and, for thinking models, the reasoning parser) must match the model family:
+
+| model family | vLLM flags |
+|---|---|
+| Qwen2.5, Qwen3 (instruct) | `--tool-call-parser hermes` |
+| Qwen3.5 (thinking) | `--tool-call-parser qwen3_xml --reasoning-parser qwen3` |
+| Llama-3.1 | `--tool-call-parser llama3_json --chat-template examples/tool_chat_template_llama3.1_json.jinja` (the template ships with vLLM) |
+| Gemma-4 | `--tool-call-parser gemma4` |
+
+Check the server before running anything:
+
+```bash
+curl http://localhost:8000/v1/models
+```
+
+- **Prefix caching:** agent episodes resend the whole conversation every turn, so `--enable-prefix-caching` speeds
+  them up a lot. Hybrid-attention models such as Qwen3.5 do not enable it by default.
+- **Concurrency:** keep the total concurrency across your evaluation jobs at or below what the server runs at once
+  (`vllm:num_requests_running` in `/metrics`, with `vllm:num_requests_waiting` near 0). Requests that wait in the
+  server's queue count against the harness timeouts.
+- **Closed models:** the same runners work against an API endpoint. Set `REMOTE_OPENAI_BASE_URL` and
+  `REMOTE_OPENAI_API_KEY`, and `SYN_API=responses` for the OpenAI Responses API.
+
+### 2. Run the evaluation
+
+Point the runners at the server:
+
+```bash
+export REMOTE_OPENAI_BASE_URL=http://localhost:8000/v1
+export SYN_MODEL=Qwen/Qwen3-4B-Instruct-2507      # the served model name
+```
+
+**All variants of a paper figure or table.** `eval/run_registry.py` looks each variant up in
+[`registry.json`](benchmarks/synthetic/data/registry.json) and runs it with the right runner and settings:
+
+```bash
+python -m eval.run_registry --list                                     # every variant and how it is built
+python -m eval.run_registry --figure "Figure 2" --out results/qwen3-4b # the representative variants
+python -m eval.run_registry --figure "Appendix" --out results/qwen3-4b # every appendix figure and table
+```
+
+| paper artefact | variants | command |
+|---|---|---|
+| Figure 1 (B), Figure 2: representative variants | 13 | `run_registry --figure "Figure 2"` |
+| Appendix figure: remaining methods of each operator (`operator · method`) | 19 | `run_registry --figure "remaining methods"` |
+| Appendix: argument structure of a merged tool | 6 | `run_registry --figure "argument structure"` |
+| Appendix: convention-mixture test | 12 | `run_registry --figure "convention mixture"` |
+| Real-benchmark results | 12 variants × 4 benchmarks | see [Real benchmarks](#real-benchmarks) and [`adapters/`](adapters) |
+
+**A single variant.** Each variant type has its own runner:
+
+```bash
+SCHEMA_VARIANT=0 SCHEMA_DATASET=synthetic SCHEMA_CONTROL=hard OUT_JSONL=v0.jsonl \
+    python -m eval.run_agentic                                            # a merge/split ladder step
+SCHEMA_SPEC=benchmarks/synthetic/data/specs/curry.json SCHEMA_DATASET=synthetic \
+    python -m eval.run_agentic                                            # an operator spec (transaction)
+HIER_ARM=dispatch python -m eval.run_hierarchy                            # a class-level arm
+SCHEMA_SPEC=benchmarks/synthetic/data/specs/class_neutral.json \
+    python -m eval.run_class_grouping                                     # a class-grouping arm
+```
+
+- **Episodes.** An episode runs up to 16 turns. The simulated environment executes the model's decoded calls.
 - **Scoring.** An episode succeeds when the multiset of executed native actions equals the gold calls.
-- **Control modes.** `SCHEMA_CONTROL=hard` (the paper's setting) rejects off-schema calls with a recoverable error.
+- **Control modes.** `SCHEMA_CONTROL=hard` (the paper's setting) rejects off-schema calls with a recoverable error;
   `loose` executes them anyway.
 - **Outputs.** `OUT_CSV` receives per-domain aggregates; `OUT_JSONL` receives one record per episode.
+- **Other settings.** `SYN_WORKERS` (concurrency), `SYN_TEMP` (0 in the paper), `SYN_SEED`, `SYN_TOOLCHOICE`,
+  `SYN_EXTRA_BODY` (e.g. `{"chat_template_kwargs":{"enable_thinking":false}}`) and `MAX_TURNS`.
 
-**Failure taxonomy.** `eval/taxonomy.py` assigns every failed episode one of seven modes: livelock, transaction handle,
+### 3. Summarise
+
+`eval/taxonomy.py` assigns every failed episode one of seven failure modes: livelock, transaction handle,
 rejected-and-stuck, wrong class, under-execution, over-execution or wrong arguments.
 
 ```python
@@ -249,61 +373,6 @@ from eval.taxonomy import profile
 rows = [json.loads(line) for line in open("v0.jsonl")]
 profile(rows)   # {'n': .., 'success': .., 'livelock': .., 'txn_handle': .., ...}
 ```
-
-Other environment variables: `SYN_WORKERS` (concurrency), `SYN_TEMP`, `SYN_SEED`, `SYN_TOOLCHOICE`,
-`SYN_EXTRA_BODY` (for example `{"chat_template_kwargs":{"enable_thinking":false}}`), `MAX_TURNS`, and `SYN_API=responses`
-for the OpenAI Responses API.
-
-## Real benchmarks
-
-| benchmark | tasks used | upstream | integration |
-|---|---|---|---|
-| τ²-bench | airline, retail (all tasks) | [sierra-research/tau2-bench](https://github.com/sierra-research/tau2-bench) | patch · [`adapters/tau2`](adapters/tau2) |
-| BFCL v3 | `multi_turn_base` (200) | [ShishirPatil/gorilla](https://github.com/ShishirPatil/gorilla) | patch · [`adapters/bfcl`](adapters/bfcl) |
-| AutomationBench | `limited_zapier` (570) | [zapier/AutomationBench](https://github.com/zapier/AutomationBench) | schema proxy · [`adapters/automationbench`](adapters/automationbench) |
-| MCP-Atlas | 118 tasks with public servers | [scaleapi/mcp-atlas](https://github.com/scaleapi/mcp-atlas) | schema proxy · [`adapters/mcp_atlas`](adapters/mcp_atlas) |
-
-**Patches (τ², BFCL).** Each patch adds two hooks to the benchmark's model call:
-
-- **before the call**, it swaps the agent's tool list for the variant;
-- **after the call**, it decodes the model's calls back to native ones.
-
-The benchmark's executor and scorer are untouched.
-
-**Schema proxy (AutomationBench, MCP-Atlas).** The proxy is an OpenAI-compatible server between the harness and the
-model; the harness needs no code change. It:
-
-- rewrites each request's native `tools` into the variant;
-- decodes every call the model makes back into native calls;
-- answers protocol-internal calls itself, such as transaction begin and set;
-- rejects off-schema calls with a recoverable error;
-- keeps the model's conversation history in the variant vocabulary.
-
-```bash
-python -m toolschema.proxy --op merge --upstream http://127.0.0.1:8000/v1 --port 8100
-# then point the harness's OpenAI base URL at http://127.0.0.1:8100/v1
-```
-
-The proxy supports `native`, `merge`, `merge_app`, `split`, `nest`, `rename_opaque`, `rename_ns`, `strip`, `reorder` and
-`transaction`. Each adapter directory has setup instructions and a run script.
-
-## Reproducing the paper
-
-`eval/run_registry.py` runs every synthetic variant of a figure or table with the right runner and settings:
-
-```bash
-python -m eval.run_registry --list                                    # all variants and how each is built
-python -m eval.run_registry --figure "Figure 2" --out results/<model> # the representative variants of Figure 2
-python -m eval.run_registry --figure "Appendix" --out results/<model> # every appendix figure and table
-```
-
-| paper artefact | variants | how to run |
-|---|---|---|
-| Figure 1 (B), Figure 2: representative variants | 13 | `run_registry --figure "Figure 2"` |
-| Appendix figure: remaining methods of each operator (`operator · method`) | 19 | `run_registry --figure "remaining methods"` |
-| Appendix: argument structure of a merged tool | 6 | `run_registry --figure "argument structure"` |
-| Appendix: convention-mixture test | 12 | `run_registry --figure "convention mixture"` |
-| Real-benchmark results | 10 operators × 4 benchmarks | [`adapters/`](adapters) |
 
 Model outputs and figure data will be released under [`results/`](results).
 
@@ -321,11 +390,12 @@ python -m tests.test_spec_files        # every shipped spec file              (1
 python -m tests.test_merge_encodings   # flat / nested / union structures and mixtures
 python -m tests.test_hierarchy         # class-level arms
 python -m tests.test_simenv            # the same, through the simulated environment
-python -m tests.test_proxy             # the schema proxy, all 10 operators
+python -m tests.test_proxy             # the schema proxy, all 13 operators
 ```
 
-`tests.test_proxy catalog.json task_tools.json` runs the same check on any real tool catalog. On AutomationBench it
-covers 48,650 round trips.
+`tests.test_proxy catalog.json task_tools.json [--classes …] [--cuts …]` runs the same check on any real tool
+catalog. Each tool is checked with only its required arguments and with optional ones, and numeric values are sampled
+on both sides of every cut. All 13 operators pass on the AutomationBench, τ²-bench, BFCL and MCP-Atlas catalogs.
 
 ## Repository structure
 
@@ -370,6 +440,7 @@ If you use the framework or the benchmark, please cite:
 This repository is released under [CC BY 4.0](LICENSE). Third-party material keeps its own license:
 
 - the adapter patches modify τ²-bench (MIT) and BFCL (Apache-2.0);
+- `adapters/mcp_atlas/sandbox/` is a small launcher override for the MCP-Atlas sandbox (MIT);
 - `adapters/tau2/data/tasks.json` is derived from τ²-bench (MIT);
 - AutomationBench and MCP-Atlas (both MIT) are not redistributed and are fetched from their upstream repositories.
 

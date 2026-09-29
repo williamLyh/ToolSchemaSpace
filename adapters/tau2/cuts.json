@@ -1,0 +1,7 @@
+{
+"book_reservation.nonfree_baggages": 1,
+"book_reservation.total_baggages": 1,
+"send_certificate.amount": 150,
+"update_reservation_baggages.nonfree_baggages": 1,
+"update_reservation_baggages.total_baggages": 2
+}

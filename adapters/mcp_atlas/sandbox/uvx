@@ -1,0 +1,3 @@
+#!/bin/sh
+# Run every uvx-launched MCP server with mcp<2: the servers pinned by MCP-Atlas break on the mcp 2.x API.
+exec /usr/local/bin/uv tool run --constraints /etc/uvconf/constraints.txt "$@"
