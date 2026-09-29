@@ -1,0 +1,14 @@
+variant,τ² airline,τ² retail,BFCL,AutomationBench,MCP-Atlas
+native,0.800,,0.725,0.535,
+fully merged,0.760,,0.210,,
+class dispatch,0.800,,0.420,,
+fully split,0.740,,0.730,,
+interval split,0.740,n/a,0.740,,
+nested args,0.740,,0.665,,
+namespaced names,0.840,,0.715,0.524,
+strip descriptions,0.780,,0.505,,
+reorder arguments,0.800,,0.735,,
+transaction,0.720,,0.705,,
+reference resolution,n/a,n/a,n/a,n/a,n/a
+schema discovery,0.760,,0.745,,
+composed,,,0.565,,
