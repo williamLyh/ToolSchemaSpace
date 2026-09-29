@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "If you use this code or benchmark, please cite the paper."
 title: "ToolSchemaSpace"
 repository-code: "https://github.com/williamLyh/ToolSchemaSpace"
+url: "https://arxiv.org/abs/2609.34971"
 license: CC-BY-4.0
 authors:
   - family-names: Liu
@@ -14,6 +15,11 @@ authors:
     given-names: Zhijiang
 preferred-citation:
   type: article
+  url: "https://arxiv.org/abs/2609.34971"
+  identifiers:
+    - type: other
+      value: "arXiv:2609.34971"
+      description: "arXiv preprint"
   title: "Action-Space Shaping for LLM Agents: Measuring and Mitigating Tool-Schema Bias"
   authors:
     - family-names: Liu

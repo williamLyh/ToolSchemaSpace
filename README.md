@@ -2,17 +2,18 @@
 
 # ToolSchemaSpace
 
-**Action-Space Shaping for LLM Agents: Measuring and Mitigating Tool-Schema Bias**
+**[Action-Space Shaping for LLM Agents: Measuring and Mitigating Tool-Schema Bias](https://arxiv.org/abs/2609.34971)**
 
 Yinhong Liu, Zhili Tan, Zilin Wang, Zhijiang Guo
 
 University of Cambridge · Yinwang · Huawei · LARK, HKUST (GZ) · HKUST
 
+[![arXiv](https://img.shields.io/badge/arXiv-2609.34971-b31b1b.svg)](https://arxiv.org/abs/2609.34971)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![Tests](https://img.shields.io/badge/equivalence%20tests-8%20suites-brightgreen.svg)](#tests)
 
-[Overview](#overview) · [Installation](#installation) · [Quick start](#quick-start) · [Operators](#schema-operators) ·
+[Paper](https://arxiv.org/abs/2609.34971) · [Overview](#overview) · [Installation](#installation) · [Quick start](#quick-start) · [Operators](#schema-operators) ·
 [Synthetic benchmark](#synthetic-benchmark) · [Evaluation](#evaluating-a-model) · [Real benchmarks](#real-benchmarks) ·
 [Reproduction](#reproducing-the-paper) · [Citation](#citation)
 
@@ -279,7 +280,9 @@ If you use the framework or the benchmark, please cite:
 @article{liu2026actionspace,
   title   = {Action-Space Shaping for {LLM} Agents: Measuring and Mitigating Tool-Schema Bias},
   author  = {Liu, Yinhong and Tan, Zhili and Wang, Zilin and Guo, Zhijiang},
-  year    = {2026}
+  journal = {arXiv preprint arXiv:2609.34971},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2609.34971}
 }
 ```
 
