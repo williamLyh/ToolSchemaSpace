@@ -56,9 +56,9 @@ The numbers behind the figures in [README.md](README.md). In each table the firs
 | interval split | -0.060 | n/a | +0.015 |   |   |
 | nested args | -0.060 |   | -0.060 |   |   |
 | namespaced names | +0.040 |   | -0.010 | -0.011 |   |
-| strip descriptions | -0.020 |   | -0.220 |   |   |
+| strip descriptions | -0.020 |   | -0.220 | -0.113 |   |
 | reorder arguments | +0.000 |   | +0.010 |   |   |
 | transaction | -0.080 |   | -0.020 |   |   |
 | reference resolution | n/a | n/a | n/a | n/a | n/a |
 | schema discovery | -0.040 |   | +0.020 |   |   |
-| composed |   |   | -0.160 |   |   |
+| composed | -0.040 |   | -0.160 |   |   |
