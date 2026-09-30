@@ -17,6 +17,7 @@ Qwen3.5-27B,fully split,BFCL,accuracy,200,0.7300,+0.0050,
 Qwen3.5-27B,fully split,AutomationBench,mean partial credit,599,0.4534,-0.0816,0.1185
 Qwen3.5-27B,interval split,τ² airline,mean reward,50,0.7400,-0.0600,
 Qwen3.5-27B,interval split,BFCL,accuracy,200,0.7400,+0.0150,
+Qwen3.5-27B,interval split,AutomationBench,mean partial credit,599,0.4857,-0.0492,0.1386
 Qwen3.5-27B,nested args,τ² airline,mean reward,50,0.7400,-0.0600,
 Qwen3.5-27B,nested args,τ² retail,mean reward,114,0.4298,-0.0526,
 Qwen3.5-27B,nested args,BFCL,accuracy,200,0.6650,-0.0600,
