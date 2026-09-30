@@ -268,6 +268,12 @@ benchmark and the τ² patch, not the proxy.
 `--cuts` the interval-split cut of every required numeric argument. `python -m tests.test_proxy <catalog>
 <task_tools> --classes … --cuts …` checks that every operator is lossless on a catalog.
 
+**Budgets.** Under hard control a rejected call is answered with an error, and the model is re-queried within the
+same harness turn. That loop ends after `--max-inner` model calls (16), or after `--turn-budget` seconds (3600),
+whichever comes first, and the turn then ends as text. `--call-timeout` (1800 s) caps one upstream model call. A
+timed-out or repeatedly failing upstream call is answered with a non-retryable 422, so harnesses that retry 5xx
+responses do not loop on a degenerate generation.
+
 Each adapter directory has setup notes, a run script, and the benchmark-specific pitfalls we hit.
 
 ## Reproducing the paper
