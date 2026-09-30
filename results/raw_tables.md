@@ -53,7 +53,7 @@ The numbers behind the figures in [README.md](README.md). In each table the firs
 | fully merged | -0.040 | -0.333 | -0.515 | -0.219 |   |
 | class dispatch | +0.000 | -0.053 | -0.305 | -0.199 |   |
 | fully split | -0.060 | -0.079 | +0.005 | -0.082 |   |
-| interval split | -0.060 | n/a | +0.015 |   |   |
+| interval split | -0.060 | n/a | +0.015 | -0.049 |   |
 | nested args | -0.060 | -0.053 | -0.060 | -0.020 |   |
 | namespaced names | +0.040 | +0.018 | -0.010 | -0.011 |   |
 | strip descriptions | -0.020 | -0.088 | -0.220 | -0.113 |   |
