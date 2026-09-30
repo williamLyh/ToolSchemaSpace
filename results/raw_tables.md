@@ -58,10 +58,10 @@ The numbers behind the figures in [README.md](README.md). In each table the firs
 | namespaced names | +0.040 | +0.018 | -0.010 | -0.011 |   |
 | strip descriptions | -0.020 | -0.088 | -0.220 | -0.113 |   |
 | reorder arguments | +0.000 | +0.000 | +0.010 | +0.000 |   |
-| transaction | -0.080 | -0.009 | -0.020 |   |   |
+| transaction | -0.080 | -0.009 | -0.020 | -0.032 |   |
 | reference resolution | n/a | n/a | n/a | n/a | n/a |
 | schema discovery | -0.040 | -0.044 | +0.020 | -0.043 |   |
-| composed | -0.040 | -0.061 | -0.160 |   |   |
+| composed | -0.040 | -0.061 | -0.160 | -0.129 |   |
 
 ## Mitigation: Qwen3-4B, synthetic benchmark (paper Table 3)
 

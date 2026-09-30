@@ -36,6 +36,7 @@ Qwen3.5-27B,reorder arguments,AutomationBench,mean partial credit,599,0.5350,+0.
 Qwen3.5-27B,transaction,τ² airline,mean reward,50,0.7200,-0.0800,
 Qwen3.5-27B,transaction,τ² retail,mean reward,114,0.4737,-0.0088,
 Qwen3.5-27B,transaction,BFCL,accuracy,200,0.7050,-0.0200,
+Qwen3.5-27B,transaction,AutomationBench,mean partial credit,599,0.5033,-0.0316,0.1469
 Qwen3.5-27B,schema discovery,τ² airline,mean reward,50,0.7600,-0.0400,
 Qwen3.5-27B,schema discovery,τ² retail,mean reward,114,0.4386,-0.0439,
 Qwen3.5-27B,schema discovery,BFCL,accuracy,200,0.7450,+0.0200,
@@ -43,3 +44,4 @@ Qwen3.5-27B,schema discovery,AutomationBench,mean partial credit,599,0.4915,-0.0
 Qwen3.5-27B,composed,τ² airline,mean reward,50,0.7600,-0.0400,
 Qwen3.5-27B,composed,τ² retail,mean reward,114,0.4211,-0.0614,
 Qwen3.5-27B,composed,BFCL,accuracy,200,0.5650,-0.1600,
+Qwen3.5-27B,composed,AutomationBench,mean partial credit,599,0.4057,-0.1293,0.1002
