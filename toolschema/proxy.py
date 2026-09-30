@@ -350,8 +350,8 @@ async def upstream_chat(app, body):
             # (they retry 408/409/429/5xx); the task fails either way, 30 min in instead of 90+
             return 422, {"error": {"message": "proxy: model call exceeded the upstream timeout (degenerate generation)"}}
         except Exception as e:                     # transient: retry with backoff
-            if attempt == 5:
-                return 502, {"error": {"message": f"proxy upstream failure: {e}"}}
+            if attempt == 5:                       # persistent failure: non-retryable, like a timeout
+                return 422, {"error": {"message": f"proxy: upstream failed repeatedly: {e}"}}
             await asyncio.sleep(2 ** attempt)
 
 
@@ -399,7 +399,11 @@ async def chat(request):
     pending = []                                   # variant messages not yet surfaced to the harness
     usage = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
     data = None
+    t0 = time.time()
+    exhausted = True                               # set False once the turn yields native calls or text
     for _ in range(app["max_inner"]):
+        if time.time() - t0 > app["turn_budget"]:  # re-query loop ran too long: treat like a spent budget
+            break
         status, data = await upstream_chat(app, dict(req, messages=messages + pending))
         if status >= 400 or "choices" not in data:
             return respond(data, status, stream)
@@ -411,6 +415,7 @@ async def chat(request):
                        **({"tool_calls": calls} if calls else {})}
         if not calls:                              # final text turn
             conv.seg_by_text[text_key(msg.get("content"))] = pending + [variant_msg]
+            exhausted = False
             break
         natives, internal = process_calls(conv, calls, app["control"])
         if natives:
@@ -422,9 +427,12 @@ async def chat(request):
             data["choices"][0]["message"] = {"role": "assistant", "content": msg.get("content"),
                                              "tool_calls": out}
             data["choices"][0]["finish_reason"] = "tool_calls"
+            exhausted = False
             break
         pending += [variant_msg] + internal        # only meta/rejected calls: answer and re-query
-    else:                                          # inner budget exhausted: end the turn as text
+    if exhausted:                                  # re-query budget (count or time) spent: end the turn as text
+        data = data or {"id": "proxy", "object": "chat.completion", "created": int(time.time()),
+                        "model": body.get("model"), "choices": [{"index": 0}]}
         data["choices"][0]["message"] = {"role": "assistant",
                                          "content": "I was unable to complete the tool calls."}
         data["choices"][0]["finish_reason"] = "stop"
@@ -461,6 +469,8 @@ def main():
     ap.add_argument("--port", type=int, default=8100)
     ap.add_argument("--control", choices=("hard", "loose"), default="hard")
     ap.add_argument("--max-inner", type=int, default=16, help="model calls per harness turn (paper protocol: 16)")
+    ap.add_argument("--turn-budget", type=float, default=3600, help="wall-clock seconds per harness turn")
+    ap.add_argument("--call-timeout", type=float, default=1800, help="seconds per upstream model call")
     ap.add_argument("--model", default=None, help="force this upstream model id on every request")
     ap.add_argument("--temperature", type=float, default=None, help="override sampling temperature (0 = paper protocol)")
     ap.add_argument("--no-instruction", action="store_true")
@@ -474,14 +484,14 @@ def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
     async def on_start(app):
-        app["session"] = ClientSession(timeout=ClientTimeout(total=1800))
+        app["session"] = ClientSession(timeout=ClientTimeout(total=a.call_timeout))
 
     async def on_stop(app):
         await app["session"].close()
 
     app = web.Application(client_max_size=64 * 1024 ** 2)
     app.update(op=a.op, upstream=a.upstream, upstream_key=os.environ.get(a.upstream_key_env, ""),
-               control=a.control, max_inner=a.max_inner, instruction=not a.no_instruction,
+               control=a.control, max_inner=a.max_inner, turn_budget=a.turn_budget, instruction=not a.no_instruction,
                temperature=a.temperature, model=a.model)
     app.on_startup.append(on_start)
     app.on_cleanup.append(on_stop)
