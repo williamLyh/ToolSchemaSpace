@@ -1,48 +1,60 @@
 model,variant,benchmark,metric,n,score,delta_vs_native,pass_rate
-Qwen3.5-27B,native,τ² airline,mean reward,50,0.8000,+0.0000,
-Qwen3.5-27B,native,τ² retail,mean reward,114,0.4825,+0.0000,
-Qwen3.5-27B,native,BFCL,accuracy,200,0.7250,+0.0000,
-Qwen3.5-27B,native,AutomationBench,mean partial credit,599,0.5350,+0.0000,0.1536
-Qwen3.5-27B,fully merged,τ² airline,mean reward,50,0.7600,-0.0400,
-Qwen3.5-27B,fully merged,τ² retail,mean reward,114,0.1491,-0.3333,
-Qwen3.5-27B,fully merged,BFCL,accuracy,200,0.2100,-0.5150,
-Qwen3.5-27B,fully merged,AutomationBench,mean partial credit,599,0.3161,-0.2188,0.0768
-Qwen3.5-27B,class dispatch,τ² airline,mean reward,50,0.8000,+0.0000,
-Qwen3.5-27B,class dispatch,τ² retail,mean reward,114,0.4298,-0.0526,
-Qwen3.5-27B,class dispatch,BFCL,accuracy,200,0.4200,-0.3050,
-Qwen3.5-27B,class dispatch,AutomationBench,mean partial credit,599,0.3362,-0.1988,0.0768
-Qwen3.5-27B,fully split,τ² airline,mean reward,50,0.7400,-0.0600,
-Qwen3.5-27B,fully split,τ² retail,mean reward,114,0.4035,-0.0789,
-Qwen3.5-27B,fully split,BFCL,accuracy,200,0.7300,+0.0050,
-Qwen3.5-27B,fully split,AutomationBench,mean partial credit,599,0.4534,-0.0816,0.1185
-Qwen3.5-27B,interval split,τ² airline,mean reward,50,0.7400,-0.0600,
-Qwen3.5-27B,interval split,BFCL,accuracy,200,0.7400,+0.0150,
-Qwen3.5-27B,interval split,AutomationBench,mean partial credit,599,0.4857,-0.0492,0.1386
-Qwen3.5-27B,nested args,τ² airline,mean reward,50,0.7400,-0.0600,
-Qwen3.5-27B,nested args,τ² retail,mean reward,114,0.4298,-0.0526,
-Qwen3.5-27B,nested args,BFCL,accuracy,200,0.6650,-0.0600,
-Qwen3.5-27B,nested args,AutomationBench,mean partial credit,599,0.5148,-0.0202,0.1503
-Qwen3.5-27B,namespaced names,τ² airline,mean reward,50,0.8400,+0.0400,
-Qwen3.5-27B,namespaced names,τ² retail,mean reward,114,0.5000,+0.0175,
-Qwen3.5-27B,namespaced names,BFCL,accuracy,200,0.7150,-0.0100,
-Qwen3.5-27B,namespaced names,AutomationBench,mean partial credit,599,0.5235,-0.0114,0.1619
-Qwen3.5-27B,strip descriptions,τ² airline,mean reward,50,0.7800,-0.0200,
-Qwen3.5-27B,strip descriptions,τ² retail,mean reward,114,0.3947,-0.0877,
-Qwen3.5-27B,strip descriptions,BFCL,accuracy,200,0.5050,-0.2200,
-Qwen3.5-27B,strip descriptions,AutomationBench,mean partial credit,599,0.4220,-0.1130,0.0952
-Qwen3.5-27B,reorder arguments,τ² airline,mean reward,50,0.8000,+0.0000,
-Qwen3.5-27B,reorder arguments,τ² retail,mean reward,114,0.4825,+0.0000,
-Qwen3.5-27B,reorder arguments,BFCL,accuracy,200,0.7350,+0.0100,
-Qwen3.5-27B,reorder arguments,AutomationBench,mean partial credit,599,0.5350,+0.0001,0.1603
-Qwen3.5-27B,transaction,τ² airline,mean reward,50,0.7200,-0.0800,
-Qwen3.5-27B,transaction,τ² retail,mean reward,114,0.4737,-0.0088,
-Qwen3.5-27B,transaction,BFCL,accuracy,200,0.7050,-0.0200,
-Qwen3.5-27B,transaction,AutomationBench,mean partial credit,599,0.5033,-0.0316,0.1469
-Qwen3.5-27B,schema discovery,τ² airline,mean reward,50,0.7600,-0.0400,
-Qwen3.5-27B,schema discovery,τ² retail,mean reward,114,0.4386,-0.0439,
-Qwen3.5-27B,schema discovery,BFCL,accuracy,200,0.7450,+0.0200,
-Qwen3.5-27B,schema discovery,AutomationBench,mean partial credit,599,0.4915,-0.0435,0.1336
-Qwen3.5-27B,composed,τ² airline,mean reward,50,0.7600,-0.0400,
-Qwen3.5-27B,composed,τ² retail,mean reward,114,0.4211,-0.0614,
-Qwen3.5-27B,composed,BFCL,accuracy,200,0.5650,-0.1600,
-Qwen3.5-27B,composed,AutomationBench,mean partial credit,599,0.4057,-0.1293,0.1002
+qwen3.5-27b,native,τ² airline,mean reward,50,0.8000,+0.0000,
+qwen3.5-27b,native,τ² retail,mean reward,114,0.4825,+0.0000,
+qwen3.5-27b,native,BFCL,accuracy,200,0.7250,+0.0000,
+qwen3.5-27b,native,AutomationBench,mean partial credit,599,0.5350,+0.0000,0.1536
+qwen3.5-27b,native,MCP-Atlas,mean claim coverage,89,0.5893,+0.0000,0.6180
+qwen3.5-27b,fully merged,τ² airline,mean reward,50,0.7600,-0.0400,
+qwen3.5-27b,fully merged,τ² retail,mean reward,114,0.1491,-0.3333,
+qwen3.5-27b,fully merged,BFCL,accuracy,200,0.2100,-0.5150,
+qwen3.5-27b,fully merged,AutomationBench,mean partial credit,599,0.3161,-0.2188,0.0768
+qwen3.5-27b,fully merged,MCP-Atlas,mean claim coverage,89,0.3690,-0.2203,0.4157
+qwen3.5-27b,class dispatch,τ² airline,mean reward,50,0.8000,+0.0000,
+qwen3.5-27b,class dispatch,τ² retail,mean reward,114,0.4298,-0.0526,
+qwen3.5-27b,class dispatch,BFCL,accuracy,200,0.4200,-0.3050,
+qwen3.5-27b,class dispatch,AutomationBench,mean partial credit,599,0.3362,-0.1988,0.0768
+qwen3.5-27b,class dispatch,MCP-Atlas,mean claim coverage,89,0.4325,-0.1568,0.4494
+qwen3.5-27b,fully split,τ² airline,mean reward,50,0.7400,-0.0600,
+qwen3.5-27b,fully split,τ² retail,mean reward,114,0.4035,-0.0789,
+qwen3.5-27b,fully split,BFCL,accuracy,200,0.7300,+0.0050,
+qwen3.5-27b,fully split,AutomationBench,mean partial credit,599,0.4534,-0.0816,0.1185
+qwen3.5-27b,fully split,MCP-Atlas,mean claim coverage,89,0.5299,-0.0594,0.5618
+qwen3.5-27b,interval split,τ² airline,mean reward,50,0.7400,-0.0600,
+qwen3.5-27b,interval split,BFCL,accuracy,200,0.7400,+0.0150,
+qwen3.5-27b,interval split,AutomationBench,mean partial credit,599,0.4857,-0.0492,0.1386
+qwen3.5-27b,interval split,MCP-Atlas,mean claim coverage,89,0.5969,+0.0076,0.6180
+qwen3.5-27b,nested args,τ² airline,mean reward,50,0.7400,-0.0600,
+qwen3.5-27b,nested args,τ² retail,mean reward,114,0.4298,-0.0526,
+qwen3.5-27b,nested args,BFCL,accuracy,200,0.6650,-0.0600,
+qwen3.5-27b,nested args,AutomationBench,mean partial credit,599,0.5148,-0.0202,0.1503
+qwen3.5-27b,nested args,MCP-Atlas,mean claim coverage,89,0.5552,-0.0341,0.5955
+qwen3.5-27b,namespaced names,τ² airline,mean reward,50,0.8400,+0.0400,
+qwen3.5-27b,namespaced names,τ² retail,mean reward,114,0.5000,+0.0175,
+qwen3.5-27b,namespaced names,BFCL,accuracy,200,0.7150,-0.0100,
+qwen3.5-27b,namespaced names,AutomationBench,mean partial credit,599,0.5235,-0.0114,0.1619
+qwen3.5-27b,namespaced names,MCP-Atlas,mean claim coverage,89,0.5622,-0.0271,0.5730
+qwen3.5-27b,strip descriptions,τ² airline,mean reward,50,0.7800,-0.0200,
+qwen3.5-27b,strip descriptions,τ² retail,mean reward,114,0.3947,-0.0877,
+qwen3.5-27b,strip descriptions,BFCL,accuracy,200,0.5050,-0.2200,
+qwen3.5-27b,strip descriptions,AutomationBench,mean partial credit,599,0.4220,-0.1130,0.0952
+qwen3.5-27b,strip descriptions,MCP-Atlas,mean claim coverage,89,0.5389,-0.0504,0.5506
+qwen3.5-27b,reorder arguments,τ² airline,mean reward,50,0.8000,+0.0000,
+qwen3.5-27b,reorder arguments,τ² retail,mean reward,114,0.4825,+0.0000,
+qwen3.5-27b,reorder arguments,BFCL,accuracy,200,0.7350,+0.0100,
+qwen3.5-27b,reorder arguments,AutomationBench,mean partial credit,599,0.5350,+0.0001,0.1603
+qwen3.5-27b,reorder arguments,MCP-Atlas,mean claim coverage,89,0.5354,-0.0539,0.5506
+qwen3.5-27b,transaction,τ² airline,mean reward,50,0.7200,-0.0800,
+qwen3.5-27b,transaction,τ² retail,mean reward,114,0.4737,-0.0088,
+qwen3.5-27b,transaction,BFCL,accuracy,200,0.7050,-0.0200,
+qwen3.5-27b,transaction,AutomationBench,mean partial credit,599,0.5033,-0.0316,0.1469
+qwen3.5-27b,transaction,MCP-Atlas,mean claim coverage,89,0.5916,+0.0023,0.6292
+qwen3.5-27b,schema discovery,τ² airline,mean reward,50,0.7600,-0.0400,
+qwen3.5-27b,schema discovery,τ² retail,mean reward,114,0.4386,-0.0439,
+qwen3.5-27b,schema discovery,BFCL,accuracy,200,0.7450,+0.0200,
+qwen3.5-27b,schema discovery,AutomationBench,mean partial credit,599,0.4915,-0.0435,0.1336
+qwen3.5-27b,schema discovery,MCP-Atlas,mean claim coverage,89,0.4592,-0.1301,0.4944
+qwen3.5-27b,composed,τ² airline,mean reward,50,0.7600,-0.0400,
+qwen3.5-27b,composed,τ² retail,mean reward,114,0.4211,-0.0614,
+qwen3.5-27b,composed,BFCL,accuracy,200,0.5650,-0.1600,
+qwen3.5-27b,composed,AutomationBench,mean partial credit,599,0.4057,-0.1293,0.1002
+qwen3.5-27b,composed,MCP-Atlas,mean claim coverage,89,0.4806,-0.1087,0.5056

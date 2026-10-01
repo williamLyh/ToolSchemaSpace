@@ -34,11 +34,11 @@ the benchmark's own score:
 | τ² retail | 114 | mean reward |
 | BFCL | 200 (v3 `multi_turn_base`) | accuracy |
 | AutomationBench | 599 (`limited_zapier`) | mean partial credit |
-| MCP-Atlas | 89 (key-free sandbox) | judge coverage score |
+| MCP-Atlas | 89 (key-free sandbox) | mean claim coverage, judged by Qwen3.8-27B |
 
 - **n/a:** reference resolution is not run on real benchmarks, because it needs value tables drawn from the task
   data. Interval split does not apply to τ² retail, which has no numeric arguments.
-- **Blank:** the run has not finished yet. The table fills in as runs complete.
+- All cells are final.
 
 <p align="center"><img src="real/real_delta.png" alt="Real benchmarks: change in score from native, Qwen3.5-27B x representative variants" width="75%"></p>
 
