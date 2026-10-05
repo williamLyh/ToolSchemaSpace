@@ -54,6 +54,29 @@ except τ² airline.
 
 <p align="center"><img src="real/qwen3-4b/real_delta.png" alt="Real benchmarks: change in score from native, Qwen3-4B zero-shot" width="75%"></p>
 
+## Mitigation: can training remove schema bias?
+
+This is Table 3 of the paper. Qwen3-4B on the synthetic benchmark, 2,748 tasks per cell, over the 12
+representative variants. **Base** is the untrained model's success. Every other column is the change from Base on
+the same variant:
+
+| column | method |
+|---|---|
+| Instruction | a one-sentence description of the variant's calling convention, added to the prompt |
+| Decoding | the first call is forced to be schema-valid by constrained decoding |
+| SFT native | supervised fine-tuning on native-schema traces |
+| SFT mixed | supervised fine-tuning on traces rotating over seven variants |
+| RL native | on-policy RL (GRPO) on native-schema tasks |
+| RL mixed | on-policy RL (GRPO) on tasks rotating over seven variants |
+
+The SFT columns average several seeds, as do the RL mixed columns; RL native is a single run.
+
+Shading is as above. A **red frame** marks a variant that is in that method's training data. The seven variants in
+the mixed data are native, fully merged, fully split, namespaced names, transaction, reference resolution and
+schema discovery.
+
+<p align="center"><img src="mitigation/mitigation_delta.png" alt="Mitigation: change in success from the untrained model, Qwen3-4B" width="80%"></p>
+
 ## Mitigation on real benchmarks: RL on mixed-variant data
 
 This is the RL mixed column of Table 3 (seed 42), evaluated on the real benchmarks. Each cell is the trained model's
@@ -96,29 +119,6 @@ The 36-task sample comes close to the split-half bound throughout. Of the query-
 is the most useful for untrained models. After RL the probes no longer track task difficulty. The trained model
 passes nearly every isolated probe (compliance 0.97 to 0.99), and its call likelihood is anti-correlated with task
 success on BFCL (−0.54).
-
-## Mitigation: can training remove schema bias?
-
-This is Table 3 of the paper. Qwen3-4B on the synthetic benchmark, 2,748 tasks per cell, over the 12
-representative variants. **Base** is the untrained model's success. Every other column is the change from Base on
-the same variant:
-
-| column | method |
-|---|---|
-| Instruction | a one-sentence description of the variant's calling convention, added to the prompt |
-| Decoding | the first call is forced to be schema-valid by constrained decoding |
-| SFT native | supervised fine-tuning on native-schema traces |
-| SFT mixed | supervised fine-tuning on traces rotating over seven variants |
-| RL native | on-policy RL (GRPO) on native-schema tasks |
-| RL mixed | on-policy RL (GRPO) on tasks rotating over seven variants |
-
-The SFT columns average several seeds, as do the RL mixed columns; RL native is a single run.
-
-Shading is as above. A **red frame** marks a variant that is in that method's training data. The seven variants in
-the mixed data are native, fully merged, fully split, namespaced names, transaction, reference resolution and
-schema discovery.
-
-<p align="center"><img src="mitigation/mitigation_delta.png" alt="Mitigation: change in success from the untrained model, Qwen3-4B" width="80%"></p>
 
 ## Files
 
