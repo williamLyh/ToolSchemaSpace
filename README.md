@@ -268,9 +268,15 @@ benchmark and the τ² patch, not the proxy.
 `--cuts` the interval-split cut of every required numeric argument. `python -m tests.test_proxy <catalog>
 <task_tools> --classes … --cuts …` checks that every operator is lossless on a catalog.
 
-**Budgets.** Under hard control a rejected call is answered with an error, and the model is re-queried within the
-same harness turn. That loop ends after `--max-inner` model calls (16), or after `--turn-budget` seconds (3600),
-whichever comes first, and the turn then ends as text. `--call-timeout` (1800 s) caps one upstream model call. A
+**Protocol.** `--protocol` sets what happens to a call the variant schema rejects:
+
+- `nofeedback` (the setting of the paper's real-benchmark results): the call is dropped, with no error and no retry,
+  and a turn left with no valid call ends as text. The multi-step protocols (transaction, schema discovery) still
+  answer their own steps, for at most eight model calls per turn.
+- `feedback` (default): the call is answered with an error and the model is re-queried in the same turn.
+
+**Budgets.** Under `feedback`, the re-query loop ends after `--max-inner` model calls (16), or after `--turn-budget`
+seconds (3600), whichever comes first, and the turn then ends as text. `--call-timeout` (1800 s) caps one upstream model call. A
 timed-out or repeatedly failing upstream call is answered with a non-retryable 422, so harnesses that retry 5xx
 responses do not loop on a degenerate generation.
 

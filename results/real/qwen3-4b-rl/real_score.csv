@@ -1,14 +1,14 @@
 variant,τ² airline,τ² retail,BFCL,AutomationBench,MCP-Atlas
-native,0.420,0.184,0.305,0.132,0.111
-fully merged,0.400,0.254,0.025,0.125,0.078
-class dispatch,0.400,0.167,0.055,0.141,0.053
-fully split,0.460,0.237,0.305,0.126,0.095
-interval split,0.340,n/a,0.290,0.110,0.103
-nested args,0.420,0.254,0.305,0.121,0.113
-namespaced names,0.360,0.298,0.150,0.141,0.082
-strip descriptions,0.400,0.246,0.190,0.101,0.108
-reorder arguments,0.420,0.281,0.320,0.150,0.088
-transaction,0.480,0.289,0.255,0.094,0.147
+native,0.380,0.333,0.320,0.135,0.071
+fully merged,0.340,0.289,0.005,0.117,0.043
+class dispatch,0.360,0.219,0.040,0.145,0.028
+fully split,0.320,0.325,0.320,0.122,0.079
+interval split,0.320,n/a,0.265,0.051,0.083
+nested args,0.280,0.316,0.325,0.115,0.054
+namespaced names,0.360,0.316,0.120,0.137,0.067
+strip descriptions,0.340,0.272,0.210,0.097,0.071
+reorder arguments,0.420,0.316,0.290,0.142,0.085
+transaction,0.300,0.211,0.255,0.081,0.077
 reference resolution,n/a,n/a,n/a,n/a,n/a
-schema discovery,0.420,0.149,0.095,0.065,0.099
-composed,0.340,0.053,0.020,0.072,0.053
+schema discovery,0.340,0.254,0.095,0.073,0.050
+composed,0.400,0.079,0.025,0.036,0.055

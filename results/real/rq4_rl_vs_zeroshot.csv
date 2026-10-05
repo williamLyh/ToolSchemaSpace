@@ -1,60 +1,60 @@
 variant,in_training_data,benchmark,zero_shot,rl_mixed7,change
-native,True,τ² airline,0.440,0.420,-0.020
-native,True,τ² retail,0.272,0.184,-0.088
-native,True,BFCL,0.335,0.305,-0.030
-native,True,AutomationBench,0.166,0.132,-0.034
-native,True,MCP-Atlas,0.167,0.111,-0.056
-fully merged,True,τ² airline,0.460,0.400,-0.060
-fully merged,True,τ² retail,0.053,0.254,+0.202
-fully merged,True,BFCL,0.000,0.025,+0.025
-fully merged,True,AutomationBench,0.001,0.125,+0.124
-fully merged,True,MCP-Atlas,0.028,0.078,+0.050
-class dispatch,False,τ² airline,0.360,0.400,+0.040
-class dispatch,False,τ² retail,0.167,0.167,+0.000
-class dispatch,False,BFCL,0.035,0.055,+0.020
-class dispatch,False,AutomationBench,0.138,0.141,+0.003
-class dispatch,False,MCP-Atlas,0.054,0.053,-0.002
-fully split,True,τ² airline,0.340,0.460,+0.120
-fully split,True,τ² retail,0.211,0.237,+0.026
-fully split,True,BFCL,0.335,0.305,-0.030
-fully split,True,AutomationBench,0.125,0.126,+0.000
-fully split,True,MCP-Atlas,0.153,0.095,-0.058
-interval split,False,τ² airline,0.440,0.340,-0.100
-interval split,False,BFCL,0.335,0.290,-0.045
-interval split,False,AutomationBench,0.153,0.110,-0.043
-interval split,False,MCP-Atlas,0.177,0.103,-0.074
-nested args,False,τ² airline,0.480,0.420,-0.060
-nested args,False,τ² retail,0.237,0.254,+0.018
-nested args,False,BFCL,0.315,0.305,-0.010
-nested args,False,AutomationBench,0.108,0.121,+0.013
-nested args,False,MCP-Atlas,0.153,0.113,-0.040
-namespaced names,True,τ² airline,0.320,0.360,+0.040
-namespaced names,True,τ² retail,0.263,0.298,+0.035
-namespaced names,True,BFCL,0.140,0.150,+0.010
-namespaced names,True,AutomationBench,0.163,0.141,-0.022
-namespaced names,True,MCP-Atlas,0.165,0.082,-0.083
-strip descriptions,False,τ² airline,0.420,0.400,-0.020
-strip descriptions,False,τ² retail,0.263,0.246,-0.018
-strip descriptions,False,BFCL,0.240,0.190,-0.050
-strip descriptions,False,AutomationBench,0.090,0.101,+0.011
-strip descriptions,False,MCP-Atlas,0.110,0.108,-0.002
-reorder arguments,False,τ² airline,0.360,0.420,+0.060
-reorder arguments,False,τ² retail,0.281,0.281,+0.000
-reorder arguments,False,BFCL,0.325,0.320,-0.005
-reorder arguments,False,AutomationBench,0.162,0.150,-0.012
-reorder arguments,False,MCP-Atlas,0.151,0.088,-0.063
-transaction,True,τ² airline,0.400,0.480,+0.080
-transaction,True,τ² retail,0.193,0.289,+0.096
-transaction,True,BFCL,0.285,0.255,-0.030
-transaction,True,AutomationBench,0.066,0.094,+0.029
-transaction,True,MCP-Atlas,0.154,0.147,-0.007
-schema discovery,True,τ² airline,0.420,0.420,+0.000
-schema discovery,True,τ² retail,0.088,0.149,+0.061
-schema discovery,True,BFCL,0.025,0.095,+0.070
-schema discovery,True,AutomationBench,0.041,0.065,+0.024
-schema discovery,True,MCP-Atlas,0.037,0.099,+0.062
-composed,False,τ² airline,0.400,0.340,-0.060
-composed,False,τ² retail,0.079,0.053,-0.026
-composed,False,BFCL,0.035,0.020,-0.015
-composed,False,AutomationBench,0.070,0.072,+0.002
-composed,False,MCP-Atlas,0.097,0.053,-0.043
+native,True,τ² airline,0.260,0.380,+0.120
+native,True,τ² retail,0.254,0.333,+0.079
+native,True,BFCL,0.330,0.320,-0.010
+native,True,AutomationBench,0.166,0.135,-0.031
+native,True,MCP-Atlas,0.172,0.071,-0.100
+fully merged,True,τ² airline,0.400,0.340,-0.060
+fully merged,True,τ² retail,0.079,0.289,+0.211
+fully merged,True,BFCL,0.000,0.005,+0.005
+fully merged,True,AutomationBench,0.000,0.117,+0.117
+fully merged,True,MCP-Atlas,0.029,0.043,+0.014
+class dispatch,False,τ² airline,0.260,0.360,+0.100
+class dispatch,False,τ² retail,0.193,0.219,+0.026
+class dispatch,False,BFCL,0.025,0.040,+0.015
+class dispatch,False,AutomationBench,0.119,0.145,+0.026
+class dispatch,False,MCP-Atlas,0.053,0.028,-0.025
+fully split,True,τ² airline,0.240,0.320,+0.080
+fully split,True,τ² retail,0.272,0.325,+0.053
+fully split,True,BFCL,0.325,0.320,-0.005
+fully split,True,AutomationBench,0.120,0.122,+0.002
+fully split,True,MCP-Atlas,0.112,0.079,-0.033
+interval split,False,τ² airline,0.340,0.320,-0.020
+interval split,False,BFCL,0.245,0.265,+0.020
+interval split,False,AutomationBench,0.101,0.051,-0.049
+interval split,False,MCP-Atlas,0.124,0.083,-0.041
+nested args,False,τ² airline,0.340,0.280,-0.060
+nested args,False,τ² retail,0.316,0.316,+0.000
+nested args,False,BFCL,0.280,0.325,+0.045
+nested args,False,AutomationBench,0.109,0.115,+0.005
+nested args,False,MCP-Atlas,0.139,0.054,-0.085
+namespaced names,True,τ² airline,0.360,0.360,+0.000
+namespaced names,True,τ² retail,0.228,0.316,+0.088
+namespaced names,True,BFCL,0.100,0.120,+0.020
+namespaced names,True,AutomationBench,0.160,0.137,-0.023
+namespaced names,True,MCP-Atlas,0.122,0.067,-0.056
+strip descriptions,False,τ² airline,0.280,0.340,+0.060
+strip descriptions,False,τ² retail,0.263,0.272,+0.009
+strip descriptions,False,BFCL,0.235,0.210,-0.025
+strip descriptions,False,AutomationBench,0.084,0.097,+0.012
+strip descriptions,False,MCP-Atlas,0.102,0.071,-0.031
+reorder arguments,False,τ² airline,0.260,0.420,+0.160
+reorder arguments,False,τ² retail,0.298,0.316,+0.018
+reorder arguments,False,BFCL,0.325,0.290,-0.035
+reorder arguments,False,AutomationBench,0.165,0.142,-0.022
+reorder arguments,False,MCP-Atlas,0.124,0.085,-0.039
+transaction,True,τ² airline,0.240,0.300,+0.060
+transaction,True,τ² retail,0.211,0.211,+0.000
+transaction,True,BFCL,0.270,0.255,-0.015
+transaction,True,AutomationBench,0.043,0.081,+0.039
+transaction,True,MCP-Atlas,0.102,0.077,-0.024
+schema discovery,True,τ² airline,0.340,0.340,+0.000
+schema discovery,True,τ² retail,0.105,0.254,+0.149
+schema discovery,True,BFCL,0.020,0.095,+0.075
+schema discovery,True,AutomationBench,0.041,0.073,+0.032
+schema discovery,True,MCP-Atlas,0.034,0.050,+0.017
+composed,False,τ² airline,0.400,0.400,+0.000
+composed,False,τ² retail,0.079,0.079,+0.000
+composed,False,BFCL,0.025,0.025,+0.000
+composed,False,AutomationBench,0.031,0.036,+0.005
+composed,False,MCP-Atlas,0.048,0.055,+0.007

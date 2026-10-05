@@ -69,6 +69,15 @@ PROTOCOL_NOTE = {
                  "`list_methods` for the relevant class, then call `invoke` using the exact "
                  "method name and argument schema returned by that result."),
 }
+# --protocol e3 reproduces the E3 tau2 seam (environment/tau_bench/src/tau2/utils/llm_utils.py) on any benchmark:
+# a call the variant schema rejects is dropped with no error and no retry, and a turn left with no call ends as text
+# (E3_DROP_NOTE); the multi-step protocols answer their own steps locally and return protocol errors, for at most
+# E3_META_ROUNDS model calls per turn (E3_SEAM_NOTE when none surfaces a native action); the model's history holds
+# the decoded native calls, not its own variant calls.
+E3_META_OPS = {"transaction", "disclose"}
+E3_META_ROUNDS = 8
+E3_DROP_NOTE = "I can only use the tools provided to me, but the action I attempted is not available among them."
+E3_SEAM_NOTE = "I attempted a schema-mediated action but did not complete it; let me continue."
 CLASSES = {}   # tool name -> class (--classes); default: the app / server prefix of the name
 CUTS = {}      # "tool.param" -> interval cut (--cuts); default: declared default, else 10
 
@@ -384,7 +393,10 @@ async def chat(request):
         return respond(data, status, stream)
 
     conv = get_conv(app["op"], body["messages"], tools)
-    messages = splice_history(conv, body["messages"])
+    e3 = app["protocol"] in ("e3", "nofeedback")
+    # e3 only: the history keeps the harness's decoded native calls, as the E3 tau2 seam did. The model then copies
+    # native names from its history and those calls are rejected; nofeedback shows the model its own variant calls.
+    messages = body["messages"] if app["protocol"] == "e3" else splice_history(conv, body["messages"])
     if app["instruction"]:
         note = TOOL_INSTRUCTION + ("\n\n" + PROTOCOL_NOTE[app["op"]] if app["op"] in PROTOCOL_NOTE else "")
         if messages and messages[0].get("role") == "system":
@@ -401,7 +413,8 @@ async def chat(request):
     data = None
     t0 = time.time()
     exhausted = True                               # set False once the turn yields native calls or text
-    for _ in range(app["max_inner"]):
+    max_inner = (E3_META_ROUNDS if app["op"] in E3_META_OPS else 1) if e3 else app["max_inner"]
+    for _ in range(max_inner):
         if time.time() - t0 > app["turn_budget"]:  # re-query loop ran too long: treat like a spent budget
             break
         status, data = await upstream_chat(app, dict(req, messages=messages + pending))
@@ -414,10 +427,21 @@ async def chat(request):
         variant_msg = {"role": "assistant", "content": msg.get("content"),
                        **({"tool_calls": calls} if calls else {})}
         if not calls:                              # final text turn
+            if e3 and not (msg.get("content") or "").strip():
+                # E3 turned an empty turn into "(no response)"; harnesses that retry an empty reply (AutomationBench:
+                # 40 times) would otherwise re-ask a deterministic model for the same empty turn
+                msg["content"] = variant_msg["content"] = "(no response)"
             conv.seg_by_text[text_key(msg.get("content"))] = pending + [variant_msg]
             exhausted = False
             break
         natives, internal = process_calls(conv, calls, app["control"])
+        if e3 and app["op"] not in E3_META_OPS:    # E3: a rejected call is dropped, with no error and no retry
+            internal = [m for m in internal if "error" not in json.loads(m["content"])]
+            if not natives:
+                data["choices"][0]["message"] = {"role": "assistant", "content": msg.get("content") or E3_DROP_NOTE}
+                data["choices"][0]["finish_reason"] = "stop"
+                exhausted = False
+                break
         if natives:
             seg = pending + [variant_msg] + internal
             conv.seg_by_call[natives[0][0]] = seg
@@ -434,7 +458,7 @@ async def chat(request):
         data = data or {"id": "proxy", "object": "chat.completion", "created": int(time.time()),
                         "model": body.get("model"), "choices": [{"index": 0}]}
         data["choices"][0]["message"] = {"role": "assistant",
-                                         "content": "I was unable to complete the tool calls."}
+                                         "content": E3_SEAM_NOTE if e3 else "I was unable to complete the tool calls."}
         data["choices"][0]["finish_reason"] = "stop"
     data["usage"] = usage
     data.setdefault("proxy", {})["variant"] = app["op"]
@@ -469,6 +493,10 @@ def main():
     ap.add_argument("--port", type=int, default=8100)
     ap.add_argument("--control", choices=("hard", "loose"), default="hard")
     ap.add_argument("--max-inner", type=int, default=16, help="model calls per harness turn (paper protocol: 16)")
+    ap.add_argument("--protocol", choices=("feedback", "nofeedback", "e3"), default="feedback",
+                    help="feedback: a rejected call is answered with an error and the model is re-queried; "
+                         "nofeedback: a rejected call is dropped with no error and no retry (see E3_META_OPS); "
+                         "e3: nofeedback with the E3 history (decoded native calls)")
     ap.add_argument("--turn-budget", type=float, default=3600, help="wall-clock seconds per harness turn")
     ap.add_argument("--call-timeout", type=float, default=1800, help="seconds per upstream model call")
     ap.add_argument("--model", default=None, help="force this upstream model id on every request")
@@ -491,7 +519,7 @@ def main():
 
     app = web.Application(client_max_size=64 * 1024 ** 2)
     app.update(op=a.op, upstream=a.upstream, upstream_key=os.environ.get(a.upstream_key_env, ""),
-               control=a.control, max_inner=a.max_inner, turn_budget=a.turn_budget, instruction=not a.no_instruction,
+               control=a.control, max_inner=a.max_inner, protocol=a.protocol, turn_budget=a.turn_budget, instruction=not a.no_instruction,
                temperature=a.temperature, model=a.model)
     app.on_startup.append(on_start)
     app.on_cleanup.append(on_stop)

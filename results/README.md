@@ -25,8 +25,11 @@ The variants of the paper's appendix operator figure, for the 9 open-weight mode
 
 ## Real benchmarks: Qwen3.5-27B × representative variants
 
-Every benchmark runs through the schema proxy under hard control, with Qwen3.5-27B served by vLLM. Each column uses
-the benchmark's own score:
+Every benchmark runs through the schema proxy under hard control, with Qwen3.5-27B served by vLLM, and with no
+self-correction (`--protocol nofeedback`). A call that the variant schema rejects is dropped, with no error and no
+retry; a turn left with no valid call ends as text. The multi-step protocols (transaction, schema discovery) answer
+their own steps, for at most eight model calls per turn. On τ², the model under test is also the user simulator and
+the natural-language judge. Each column uses the benchmark's own score:
 
 | column | tasks | score |
 |---|---|---|
@@ -45,7 +48,7 @@ the benchmark's own score:
 ## Real benchmarks: Qwen3-4B × representative variants
 
 The same runs with Qwen3-4B-Instruct-2507 as the agent, with no training (zero-shot). Everything else is
-unchanged, including the Qwen3.5-27B user simulator and NL judge of τ². The small model is far more sensitive to the
+unchanged; on τ², Qwen3-4B is its own user simulator and NL judge. The small model is far more sensitive to the
 schema. Fully merged, class dispatch, schema discovery and composed cost it most of its score on every benchmark
 except τ² airline.
 
@@ -55,8 +58,9 @@ except τ² airline.
 
 This is the RL mixed column of Table 3 (seed 42), evaluated on the real benchmarks. Each cell is the trained model's
 score minus the untrained model's score, on the same variant and benchmark. A **red frame** marks a variant that is
-in the training data. The gains are confined to trained variants (fully merged, schema discovery), and native drops
-on every benchmark. The trained model's own table, with changes from its native score, is in
+in the training data. The gains are confined to trained variants (fully merged, schema discovery): their mean change
+is +0.03, against +0.003 for the variants outside the training data. Native rises on τ², where the trained model is
+also the user simulator, and drops on BFCL, AutomationBench and MCP-Atlas. The trained model's own table, with changes from its native score, is in
 `real/qwen3-4b-rl/`.
 
 <p align="center"><img src="real/rq4_rl_vs_zeroshot.png" alt="Real benchmarks: RL mixed7 minus zero-shot, Qwen3-4B" width="75%"></p>
@@ -73,25 +77,25 @@ between the estimate and the model's full score over the variants (`real/rq3_est
 - **36-task sample:** 36 random tasks, scored against the tasks not drawn.
 
 **Split-half** is the rank agreement between two random halves of the tasks. It bounds what any estimator can
-reach. The table keeps the cells where it is at least 0.65; on τ² airline, and τ² retail for the 27B model, the
-variants differ by less than the task noise.
+reach. The table keeps the cells where it is at least 0.65; in the others, mostly on τ², the variants differ by less
+than the task noise.
 
 | model | benchmark | split-half | compliance | exact call | likelihood | 36-task sample |
 |---|---|---:|---:|---:|---:|---:|
-| Qwen3.5-27B | BFCL | 0.81 | 0.20 | 0.62 | 0.20 | 0.81 |
-| Qwen3.5-27B | AutomationBench | 0.97 | 0.43 | 0.75 | 0.64 | 0.87 |
-| Qwen3.5-27B | MCP-Atlas | 0.70 | 0.53 | 0.81 | 0.55 | 0.71 |
-| Qwen3-4B | τ² retail | 0.74 | 0.68 | 0.68 | 0.66 | 0.74 |
-| Qwen3-4B | BFCL | 0.85 | 0.28 | 0.63 | 0.59 | 0.85 |
-| Qwen3-4B | AutomationBench | 0.95 | 0.80 | 0.85 | 0.62 | 0.87 |
-| Qwen3-4B RL | τ² retail | 0.66 | 0.27 | 0.27 | 0.32 | 0.61 |
-| Qwen3-4B RL | BFCL | 0.89 | 0.53 | 0.34 | −0.57 | 0.87 |
-| Qwen3-4B RL | AutomationBench | 0.88 | 0.53 | 0.52 | −0.20 | 0.69 |
+| Qwen3.5-27B | BFCL | 0.82 | 0.50 | 0.67 | 0.25 | 0.80 |
+| Qwen3.5-27B | AutomationBench | 0.98 | 0.36 | 0.71 | 0.66 | 0.92 |
+| Qwen3.5-27B | MCP-Atlas | 0.75 | 0.51 | 0.87 | 0.50 | 0.76 |
+| Qwen3-4B | τ² retail | 0.75 | 0.67 | 0.68 | 0.67 | 0.73 |
+| Qwen3-4B | BFCL | 0.92 | 0.34 | 0.67 | 0.56 | 0.88 |
+| Qwen3-4B | AutomationBench | 0.94 | 0.80 | 0.84 | 0.52 | 0.91 |
+| Qwen3-4B | MCP-Atlas | 0.75 | 0.85 | 0.64 | 0.67 | 0.73 |
+| Qwen3-4B RL | BFCL | 0.94 | 0.53 | 0.40 | −0.54 | 0.90 |
+| Qwen3-4B RL | AutomationBench | 0.92 | 0.61 | 0.56 | −0.15 | 0.78 |
 
 The 36-task sample comes close to the split-half bound throughout. Of the query-free probes, the exact-call check
 is the most useful for untrained models. After RL the probes no longer track task difficulty. The trained model
 passes nearly every isolated probe (compliance 0.97 to 0.99), and its call likelihood is anti-correlated with task
-success on BFCL.
+success on BFCL (−0.54).
 
 ## Mitigation: can training remove schema bias?
 
